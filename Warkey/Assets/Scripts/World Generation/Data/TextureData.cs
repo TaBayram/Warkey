@@ -22,9 +22,6 @@ public class TextureData : UpdateableData
         material.SetFloatArray("baseTextureScales", layers.Select(x => x.textureScale).ToArray());
         Texture2DArray texture2DArray = GenerateTextureArray(layers.Select(x => x.texture).ToArray());
         material.SetTexture("baseTextures", texture2DArray);
-
-
-        
     }
 
     private Texture2DArray GenerateTextureArray(Texture2D[] textures) {

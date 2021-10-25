@@ -8,6 +8,8 @@ public class MapPreview : MonoBehaviour
     public MeshSettings meshSettings;
     public HeightMapSettings heightMapSettings;
     public TextureData textureData;
+    public GroundSettings groundSettings;
+    private EnviromentObjectData enviromentObjectData;
     public enum DrawMode { NoiseMap, DrawMesh, FallOff };
     public DrawMode drawMode;
     public Material terrainMaterial;
@@ -18,6 +20,12 @@ public class MapPreview : MonoBehaviour
     public Renderer textureRenderer;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
+
+    private void Start() {
+        foreach (Transform child in meshFilter.transform) {
+            GameObject.DestroyImmediate(child.gameObject);
+        }
+    }
 
     public void DrawTexture(Texture2D texture){
         textureRenderer.sharedMaterial.mainTexture = texture;
@@ -48,6 +56,15 @@ public class MapPreview : MonoBehaviour
             DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
+
+        
+        List<Vector2> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], heightMap.values01, groundSettings.poissonDiscSettings);
+        if(enviromentObjectData != null) {
+            enviromentObjectData.DestroyObjects();
+        }
+        enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[0],gameObject.transform);
+        enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
+
     }
 
 
@@ -75,6 +92,10 @@ public class MapPreview : MonoBehaviour
         if (textureData != null) {
             textureData.OnValuesUpdated -= OnTextureValuesUpdated;
             textureData.OnValuesUpdated += OnTextureValuesUpdated;
+        }
+        if (groundSettings != null) {
+            groundSettings.OnValuesUpdated -= OnValuesUpdated;
+            groundSettings.OnValuesUpdated += OnValuesUpdated;
         }
     }
 }

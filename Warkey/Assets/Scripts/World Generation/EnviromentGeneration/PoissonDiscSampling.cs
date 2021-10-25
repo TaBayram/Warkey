@@ -5,27 +5,27 @@ using UnityEngine;
 public static class PoissonDiscSampling
 {
     
-    public static List<Vector2> GeneratePoints(int seed, float radius, Vector2 sampleRegionSize, int sampleCountBeforeRejection = 30) {
+    public static List<Vector2> GeneratePoints(PoissonDiscSettings settings, float radius) {
         float cellSize = radius / Mathf.Sqrt(2);
 
-        Random.InitState(seed);
+        Random.InitState(settings.seed);
 
-        int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
+        int[,] grid = new int[Mathf.CeilToInt(settings.sampleRegionSize.x / cellSize), Mathf.CeilToInt(settings.sampleRegionSize.y / cellSize)];
         List<Vector2> points = new List<Vector2>();
         List<Vector2> spawnPoints = new List<Vector2>();
 
-        spawnPoints.Add(sampleRegionSize / 2);
-
-        while(spawnPoints.Count < 0) {
+        spawnPoints.Add(settings.sampleRegionSize / 2);
+        while(spawnPoints.Count > 0) {
             int spawnIndex = Random.Range(0, spawnPoints.Count);
             Vector2 spawnCenter = spawnPoints[spawnIndex];
             bool candidateAccepted = false;
-            for (int i = 0; i < sampleCountBeforeRejection; i++) {
+
+            for (int i = 0; i < settings.sampleCountBeforeRejection; i++) {
                 float angle = (float)(Random.value * Mathf.PI * 2);
                 Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
-                Vector2 candidate = spawnCenter + direction * Random.Range(radius, 2*radius);
+                Vector2 candidate = spawnCenter + direction * Random.Range(radius, 2* radius);
                 
-                if (IsValid(candidate,sampleRegionSize,cellSize,radius,points,grid)) {
+                if (IsValid(candidate, settings.sampleRegionSize,cellSize, radius,points,grid)) {
                     points.Add(candidate);
                     spawnPoints.Add(candidate);
                     grid[(int)(candidate.x / cellSize), (int)(candidate.y / cellSize)] = points.Count;
@@ -50,10 +50,10 @@ public static class PoissonDiscSampling
             int searchStartX = Mathf.Max(0, cellX - 2);
             int searchEndX = Mathf.Min(grid.GetLength(0)-1, cellX + 2);
             int searchStartY = Mathf.Max(0, cellY - 2);
-            int searchEndY = Mathf.Min(grid.GetLength(1) - 1, cellX + 2);
+            int searchEndY = Mathf.Min(grid.GetLength(1) - 1, cellY + 2);
 
-            for(int x = searchStartX; x < searchEndX; x++) {
-                for(int y = searchStartY; y < searchEndY; y++) {
+            for(int x = searchStartX; x <= searchEndX; x++) {
+                for(int y = searchStartY; y <= searchEndY; y++) {
                     int pointIndex = grid[x, y] - 1;
                     if(pointIndex != -1) {
                         float sqrDistance = (candidate - points[pointIndex]).sqrMagnitude;
@@ -74,3 +74,11 @@ public static class PoissonDiscSampling
 
 }
 
+
+[System.Serializable]
+public class PoissonDiscSettings
+{
+    public int seed;
+    public Vector2 sampleRegionSize;
+    public int sampleCountBeforeRejection;
+}

@@ -28,6 +28,7 @@ public class TerrainChunk
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
+    GroundSettings groundSettings;
 
     Transform viewer;
 
@@ -37,12 +38,13 @@ public class TerrainChunk
         }
     }
 
-    public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings, LODInfo[] detailLevels, int colliderLODIndex, Transform parent, Transform viewer, Material material) {
+    public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings,GroundSettings groundSettings , LODInfo[] detailLevels, int colliderLODIndex, Transform parent, Transform viewer, Material material) {
         this.coord = coord;
         this.detailLevels = detailLevels;
         this.colliderLODIndex = colliderLODIndex;
         this.heightMapSettings = heightMapSettings;
         this.meshSettings = meshSettings;
+        this.groundSettings = groundSettings;
         this.viewer = viewer;
 
         sampleCenter = coord * meshSettings.MeshWorldSize / meshSettings.scale;
@@ -75,11 +77,19 @@ public class TerrainChunk
         isMapDataRecieved = true;
         this.heightMap = (HeightMap)heightMap;
 
+        groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
+        List<Vector2> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], this.heightMap.values01, groundSettings.poissonDiscSettings);
+
+        new EnviromentObjectData(grid,groundSettings.enviromentObjects[0],meshObject.transform).CreateObjects(this.heightMap.values,meshObject.transform);
+
+
         UpdateTerrainChunk();
     }
 
     public void Load() {
         ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, sampleCenter), OnHeightMapReceived);
+
+
     }
 
     public void UpdateTerrainChunk() {

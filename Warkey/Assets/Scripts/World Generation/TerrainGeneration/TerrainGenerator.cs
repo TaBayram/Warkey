@@ -10,7 +10,9 @@ public class TerrainGenerator : MonoBehaviour
     public MeshSettings meshSettings;
     public HeightMapSettings heightMapSettings;
     public TextureData textureData;
+    public GroundSettings groundSettings;
 
+    public Vector2 chunkSize;
     public int colliderLODIndex;
     public LODInfo[] LODInfos;
 
@@ -71,14 +73,26 @@ public class TerrainGenerator : MonoBehaviour
                         terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk();
                     }
                     else {
-                        TerrainChunk terrainChunk = new TerrainChunk(viewedChunkCoord, heightMapSettings, meshSettings, LODInfos, colliderLODIndex, transform, viewer, mapMaterial);
-                        terrainChunkDictionary.Add(viewedChunkCoord, terrainChunk);
-                        terrainChunk.onVisibleChanged += OnTerrainChunkVisibilityChanged;
-                        terrainChunk.Load();
+                        if (CanCreateTerrainChunk(viewedChunkCoord)) {
+                            TerrainChunk terrainChunk = new TerrainChunk(viewedChunkCoord, heightMapSettings, meshSettings,groundSettings ,LODInfos, colliderLODIndex, transform, viewer, mapMaterial);
+                            terrainChunkDictionary.Add(viewedChunkCoord, terrainChunk);
+                            terrainChunk.onVisibleChanged += OnTerrainChunkVisibilityChanged;
+                            terrainChunk.Load();
+                        }
+                        
                     }
                 }
             }
         }
+    }
+
+    private bool CanCreateTerrainChunk(Vector2 nextChunkCoord) {
+        if (chunkSize.x == 0 || chunkSize.y == 0) return true;
+        int maxX = (int)chunkSize.x / 2 + 1;
+        int maxY = (int)chunkSize.y / 2 + 1;
+
+        return (nextChunkCoord.x < maxX && nextChunkCoord.x > -maxX) && (nextChunkCoord.y < maxY && nextChunkCoord.y > -maxY);
+
     }
 
     private void OnTerrainChunkVisibilityChanged(TerrainChunk chunk, bool isVisible) {
