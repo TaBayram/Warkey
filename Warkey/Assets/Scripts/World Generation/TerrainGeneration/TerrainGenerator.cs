@@ -9,7 +9,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public MeshSettings meshSettings;
     public HeightMapSettings heightMapSettings;
-    public TextureData textureData;
+    public TextureSettings textureData;
     public GroundSettings groundSettings;
 
     public Vector2 chunkSize;

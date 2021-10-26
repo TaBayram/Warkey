@@ -7,7 +7,7 @@ public class MapPreview : MonoBehaviour
 
     public MeshSettings meshSettings;
     public HeightMapSettings heightMapSettings;
-    public TextureData textureData;
+    public TextureSettings textureData;
     public GroundSettings groundSettings;
     private EnviromentObjectData enviromentObjectData;
     public enum DrawMode { NoiseMap, DrawMesh, FallOff };
