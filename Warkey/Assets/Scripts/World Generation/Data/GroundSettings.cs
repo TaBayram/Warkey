@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu()]
 public class GroundSettings : UpdateableData
@@ -14,6 +15,7 @@ public class GroundSettings : UpdateableData
 [System.Serializable]
 public class EnviromentObject
 {
+    public bool enabled;
     public GameObject gameObject;
     public float blockRadius;
     [Range(0,1)]
@@ -25,5 +27,7 @@ public class EnviromentObject
     public bool lessenTowardsEdges;
     [Range(0, 1)]
     public float lessenScale;
+    [Range(0, 1)]
+    public float jitterScale;
 
 }
