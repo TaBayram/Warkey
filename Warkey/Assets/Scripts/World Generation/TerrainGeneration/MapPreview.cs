@@ -9,7 +9,7 @@ public class MapPreview : MonoBehaviour
     public HeightMapSettings heightMapSettings;
     public TextureSettings textureData;
     public GroundSettings groundSettings;
-    private EnviromentObjectData enviromentObjectData;
+    private List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
     public enum DrawMode { NoiseMap, DrawMesh, FallOff };
     public DrawMode drawMode;
     public Material terrainMaterial;
@@ -56,14 +56,21 @@ public class MapPreview : MonoBehaviour
             DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
-
-        
-        List<Vector2> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], heightMap.values01, groundSettings.poissonDiscSettings);
-        if(enviromentObjectData != null) {
+        foreach(EnviromentObjectData enviromentObjectData in enviromentObjectDatas) {
             enviromentObjectData.DestroyObjects();
         }
-        enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[0],gameObject.transform);
-        enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
+        enviromentObjectDatas.Clear();
+        
+        for(int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
+            if (groundSettings.enviromentObjects[i].enabled) {
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[0], gameObject.transform);
+                enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
+                enviromentObjectDatas.Add(enviromentObjectData);
+            }
+        }
+
+        
 
     }
 

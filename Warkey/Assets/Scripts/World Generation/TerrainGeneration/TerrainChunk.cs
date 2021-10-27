@@ -78,9 +78,13 @@ public class TerrainChunk
         this.heightMap = (HeightMap)heightMap;
 
         groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
-        List<Vector2> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], this.heightMap.values01, groundSettings.poissonDiscSettings);
-
-        new EnviromentObjectData(grid,groundSettings.enviromentObjects[0],meshObject.transform).CreateObjects(this.heightMap.values,meshObject.transform);
+        for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
+            if (groundSettings.enviromentObjects[i].enabled) {
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[i], this.heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], meshObject.transform);
+                enviromentObjectData.CreateObjects(this.heightMap.values, meshObject.transform);
+            }
+        }
 
 
         UpdateTerrainChunk();
