@@ -18,8 +18,7 @@ public class EnviromentObject
     public bool enabled;
     public GameObject gameObject;
     public float blockRadius;
-    [Range(0,1)]
-    public float density = 0;
+    public float elevation = 0;
     [Range(0,2)]
     public float minThreshold;
     [Range(0, 2)]
@@ -29,5 +28,6 @@ public class EnviromentObject
     public float lessenScale;
     [Range(0, 1)]
     public float jitterScale;
+    public bool correctRotation;
 
 }

@@ -63,8 +63,8 @@ public class MapPreview : MonoBehaviour
         
         for(int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
             if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], heightMap.values01, groundSettings.poissonDiscSettings);
-                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[0], gameObject.transform);
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], gameObject.transform);
                 enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
                 enviromentObjectDatas.Add(enviromentObjectData);
             }

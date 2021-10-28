@@ -56,6 +56,7 @@ public static class EnviromentObjectGenerator
 }
 public class EnviromentObjectData
 {
+    const int rotationSampleRadius = 5;
     List<ValidPoint> validPoints;
     EnviromentObject enviromentObject;
     List<GameObject> gameObjects = new List<GameObject>();
@@ -71,11 +72,38 @@ public class EnviromentObjectData
         for(int i = 0; i < validPoints.Count; i++) {
             Vector2 vector2 = validPoints[i].point;
             Vector2 jitter = validPoints[i].jitter;
+            Vector2 point = validPoints[i].point + validPoints[i].jitter;
 
             GameObject gameObject = MonoBehaviour.Instantiate(enviromentObject.gameObject,parent);
-            gameObject.transform.localPosition = new Vector3((vector2.x + jitter.x) - heightMap.GetLength(0)/2, heightMap[(int)vector2.x, (int)vector2.y], -(vector2.y + jitter.y) + heightMap.GetLength(1)/2);
+            Vector2 heightIndex = new Vector2((int)(point.x), (int)(point.y));
+            float height = IndexExists(heightIndex.x,heightIndex.y,heightMap) ? heightMap[(int)heightIndex.x, (int)heightIndex.y] : heightMap[(int)vector2.x, (int)vector2.y];
+            gameObject.transform.localPosition = new Vector3(point.x - heightMap.GetLength(0)/2, height + enviromentObject.elevation, -point.y + heightMap.GetLength(1)/2);
+
+            if (enviromentObject.correctRotation) {
+                
+                Vector2[] xRotationIndex = new Vector2[] { new Vector2(point.x + rotationSampleRadius, point.y), new Vector2(point.x - rotationSampleRadius, point.y) };
+                Vector2[] zRotationIndex = new Vector2[] { new Vector2(point.x, point.y + rotationSampleRadius), new Vector2(point.x, point.y - rotationSampleRadius) };
+
+                if (IndexExists(xRotationIndex[0].x, xRotationIndex[0].y, heightMap) && IndexExists(xRotationIndex[1].x, xRotationIndex[1].y, heightMap)) {
+                    float[] xHeights = new float[] { heightMap[(int)xRotationIndex[0].x, (int)xRotationIndex[0].y], heightMap[(int)xRotationIndex[1].x, (int)xRotationIndex[1].y] };
+                    float rotation = (xHeights[0] - xHeights[1]) / (xRotationIndex[0].x - xRotationIndex[1].x);
+                    gameObject.transform.Rotate(0, 0, Mathf.Tan(rotation) * 180 / Mathf.PI);
+
+                }
+
+                if (IndexExists(zRotationIndex[0].x, zRotationIndex[0].y, heightMap) && IndexExists(zRotationIndex[1].x, zRotationIndex[1].y, heightMap)) {
+                    float[] zHeights = new float[] { heightMap[(int)zRotationIndex[0].x, (int)zRotationIndex[0].y], heightMap[(int)zRotationIndex[1].x, (int)zRotationIndex[1].y] };
+                    float rotation = (zHeights[0] - zHeights[1]) / (zRotationIndex[0].y - zRotationIndex[1].y);
+                    gameObject.transform.Rotate(Mathf.Tan(rotation) * 180 / Mathf.PI, 0, 0);
+
+                }
+            }
             gameObjects.Add(gameObject);
         }
+    }
+
+    private bool IndexExists(float x, float y,float[,] heightMap) {
+        return (x >= 0 && x < heightMap.GetLength(0) && y >= 0 && y < heightMap.GetLength(1));
     }
 
     public void DestroyObjects() {
