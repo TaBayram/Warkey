@@ -56,16 +56,16 @@ public class MapPreview : MonoBehaviour
             DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
-        foreach(EnviromentObjectData enviromentObjectData in enviromentObjectDatas) {
-            enviromentObjectData.DestroyObjects();
+        for(int i = meshFilter.transform.childCount-1; i >= 0; --i) {
+            GameObject.DestroyImmediate(meshFilter.transform.GetChild(i).gameObject);
         }
         enviromentObjectDatas.Clear();
         
         for(int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
             if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
-                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], gameObject.transform);
-                enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], meshFilter.transform, heightMap.values);
+                enviromentObjectData.CreateObjects(true);
                 enviromentObjectDatas.Add(enviromentObjectData);
             }
         }

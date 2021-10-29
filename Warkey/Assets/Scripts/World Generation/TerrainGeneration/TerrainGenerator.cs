@@ -42,11 +42,12 @@ public class TerrainGenerator : MonoBehaviour
 
     private void Update() {
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
+        bool isPosSame = viewerPosition == viewerPositionOld;
         if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate) {
             viewerPositionOld = viewerPosition;
             UpdateVisibleChunks();
         }
-        if (viewerPosition != viewerPositionOld) {
+        if (!isPosSame) {
             foreach (TerrainChunk terrainChunk in visibleTerrainChunks) {
                 terrainChunk.UpdateCollisionMesh();
             }

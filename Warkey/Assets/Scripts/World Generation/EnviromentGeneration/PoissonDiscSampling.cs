@@ -8,7 +8,7 @@ public static class PoissonDiscSampling
     public static List<Vector2> GeneratePoints(PoissonDiscSettings settings, float radius) {
         float cellSize = radius / Mathf.Sqrt(2);
 
-        Random.InitState(settings.seed);
+        System.Random random = new System.Random(settings.seed);
 
         int[,] grid = new int[Mathf.CeilToInt(settings.sampleRegionSize.x / cellSize), Mathf.CeilToInt(settings.sampleRegionSize.y / cellSize)];
         List<Vector2> points = new List<Vector2>();
@@ -16,14 +16,14 @@ public static class PoissonDiscSampling
 
         spawnPoints.Add(settings.sampleRegionSize / 2);
         while(spawnPoints.Count > 0) {
-            int spawnIndex = Random.Range(0, spawnPoints.Count);
+            int spawnIndex = RandomHelper.Range(0, spawnPoints.Count,ref random);
             Vector2 spawnCenter = spawnPoints[spawnIndex];
             bool candidateAccepted = false;
 
             for (int i = 0; i < settings.sampleCountBeforeRejection; i++) {
-                float angle = (float)(Random.value * Mathf.PI * 2);
+                float angle = (float)(RandomHelper.Range(ref random) * Mathf.PI * 2);
                 Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
-                Vector2 candidate = spawnCenter + direction * Random.Range(radius, 2* radius);
+                Vector2 candidate = spawnCenter + direction * RandomHelper.Range(radius, 2* radius,ref random);
                 
                 if (IsValid(candidate, settings.sampleRegionSize,cellSize, radius,points,grid)) {
                     points.Add(candidate);

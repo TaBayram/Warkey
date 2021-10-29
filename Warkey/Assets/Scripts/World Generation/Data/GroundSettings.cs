@@ -7,13 +7,13 @@ using System.Linq;
 public class GroundSettings : UpdateableData
 {
     public PoissonDiscSettings poissonDiscSettings;
-    public EnviromentObject[] enviromentObjects;
+    public EnviromentObjectSettings[] enviromentObjects;
 
 }
 
 
 [System.Serializable]
-public class EnviromentObject
+public class EnviromentObjectSettings
 {
     public bool enabled;
     public GameObject gameObject;

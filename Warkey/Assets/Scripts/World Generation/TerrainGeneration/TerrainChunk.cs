@@ -25,6 +25,9 @@ public class TerrainChunk
     int previousLODIndex = -1;
     bool hasSetCollider;
     float maxViewDistance;
+    bool hasSetObjects;
+    List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
+
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
@@ -57,6 +60,7 @@ public class TerrainChunk
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;
+        meshObject.layer = LayerMask.NameToLayer("Ground");
 
         meshObject.transform.position = new Vector3(position.x, 0, position.y);
         meshObject.transform.parent = parent;
@@ -72,29 +76,32 @@ public class TerrainChunk
         }
         maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
     }
+    public void Load() {
+        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, sampleCenter), OnHeightMapReceived);
+    }
 
     private void OnHeightMapReceived(object heightMap) {
         isMapDataRecieved = true;
         this.heightMap = (HeightMap)heightMap;
-
-        groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
-        for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
-            if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[i], this.heightMap.values01, groundSettings.poissonDiscSettings);
-                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], meshObject.transform);
-                enviromentObjectData.CreateObjects(this.heightMap.values, meshObject.transform);
-            }
-        }
-
-
+        RequestEnviromentObjectDatas();
         UpdateTerrainChunk();
     }
 
-    public void Load() {
-        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, sampleCenter), OnHeightMapReceived);
-
-
+    private void RequestEnviromentObjectDatas() {
+        groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
+        Transform transform = meshObject.transform;
+        ThreadDataRequest.RequestData(() => EnviromentObjectGenerator.GenerateEnviromentDatas(heightMap, groundSettings, transform), OnEnviromentObjectDataListRecieved);
     }
+
+    private void OnEnviromentObjectDataListRecieved(object enviromentObjects) {
+        this.hasSetObjects = true;
+        this.enviromentObjectDatas = (List<EnviromentObjectData>)enviromentObjects;
+        foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
+            objectData.CreateObjects(false);
+        }
+    }
+
+   
 
     public void UpdateTerrainChunk() {
         if (!isMapDataRecieved) return;
@@ -118,14 +125,26 @@ public class TerrainChunk
                 if (lodMesh.hasMesh) {
                     previousLODIndex = lodIndex;
                     meshFilter.mesh = lodMesh.mesh;
+                    if(lodIndex <= 1) {
+                        if (hasSetObjects) {
+                            foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
+                                objectData.Visible(true);
+                            }
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+                        foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
+                            objectData.Visible(false);
+                        }
+                    }
                 }
                 else if (!lodMesh.hasRequestedMesh) {
                     lodMesh.RequestMesh(heightMap,meshSettings);
                 }
             }
-
-
-
         }
 
         if (wasVisible != visible) {
