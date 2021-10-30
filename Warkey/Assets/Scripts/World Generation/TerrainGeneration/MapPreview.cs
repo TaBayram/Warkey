@@ -22,9 +22,7 @@ public class MapPreview : MonoBehaviour
     public MeshRenderer meshRenderer;
 
     private void Start() {
-        foreach (Transform child in meshFilter.transform) {
-            GameObject.DestroyImmediate(child.gameObject);
-        }
+        gameObject.SetActive(false);
     }
 
     public void DrawTexture(Texture2D texture){

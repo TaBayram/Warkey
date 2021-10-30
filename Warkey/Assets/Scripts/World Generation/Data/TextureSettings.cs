@@ -17,6 +17,10 @@ public class TextureSettings : UpdateableData
     float savedMinHeight;
     float savedMaxHeight;
 
+    [Range(0, 1)]
+    public float textureStrength;
+    public float textureScale;
+
     public bool resetLayers;
 
     public void ApplyToMaterial(Material material) {
@@ -47,7 +51,9 @@ public class TextureSettings : UpdateableData
             material.SetTexture("_textures", GenerateTextureArray(texture2Ds));
             material.SetFloat("_texturesCount", (texture2Ds).Length);
         }
-        
+        material.SetFloat("_texturesScale", textureScale);
+        material.SetFloat("_texturesStrength", textureStrength);
+
     }
 
     private Texture2D[] LayerTexturesArray() {
@@ -102,9 +108,9 @@ public class TextureSettings : UpdateableData
         public float time;
         public readonly GradientColorKey colorKey;
         public Texture2D texture;
-        [Range(0, 1)]
+        /*[Range(0, 1)]
         public float textureStrength;
-        public float textureScale;
+        public float textureScale;*/
 
         public Layer(GradientColorKey colorKey) {
             this.colorKey = colorKey;

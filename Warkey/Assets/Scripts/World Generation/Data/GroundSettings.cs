@@ -16,6 +16,8 @@ public class GroundSettings : UpdateableData
 public class EnviromentObjectSettings
 {
     public bool enabled;
+    [Range(0, MeshSettings.lodCount - 1)]
+    public int visibleMaxLod;
     public GameObject gameObject;
     public float blockRadius;
     public float elevation = 0;

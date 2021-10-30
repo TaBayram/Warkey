@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class TerrainChunk
 {
@@ -15,6 +17,9 @@ public class TerrainChunk
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
     MeshCollider meshCollider;
+    NavMeshSurface navMeshSurface;
+    
+    
 
     LODInfo[] detailLevels;
     LODMesh[] lODMeshes;
@@ -55,15 +60,22 @@ public class TerrainChunk
         bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
 
-        meshObject = new GameObject("Terrain Chunk");
+        GameObject gameObject = new GameObject("Chunk");
+        
+        meshObject = new GameObject("Terrain");
+        meshObject.transform.parent = gameObject.transform;
+        
+
+        navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
         meshCollider = meshObject.AddComponent<MeshCollider>();
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;
         meshObject.layer = LayerMask.NameToLayer("Ground");
 
+
         meshObject.transform.position = new Vector3(position.x, 0, position.y);
-        meshObject.transform.parent = parent;
+        gameObject.transform.parent = parent;
         SetVisible(false);
 
         lODMeshes = new LODMesh[detailLevels.Length];
@@ -130,6 +142,11 @@ public class TerrainChunk
                             foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
                                 objectData.Visible(true);
                             }
+
+                            //navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+                            //navMeshSurface.layerMask = LayerMask.NameToLayer("Ground");
+                            navMeshSurface.collectObjects = CollectObjects.Children;
+                            navMeshSurface.BuildNavMesh();
                         }
                         else {
 

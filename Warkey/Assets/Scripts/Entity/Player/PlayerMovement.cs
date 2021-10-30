@@ -15,16 +15,30 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    public GameObject prefab;
+    public Transform spawner;
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H)) {
+            GameObject prefa = Instantiate(prefab, spawner.position, Quaternion.identity, this.transform.parent);
+            prefa.GetComponent<ArtificialIntelligence>().player = this.transform;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 movement;
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            movement = move * speed * 2 * Time.deltaTime;
+        }
+        else {
+            movement = move * speed * Time.deltaTime;
 
-        characterController.Move(move * speed * Time.deltaTime);
+        }
+        characterController.Move(movement);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask.value);
 
@@ -37,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
         else {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * 2 * Time.deltaTime;
         }
         characterController.Move(velocity * Time.deltaTime);
     }

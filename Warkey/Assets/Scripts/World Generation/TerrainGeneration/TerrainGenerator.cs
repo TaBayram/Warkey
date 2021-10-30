@@ -14,6 +14,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public Vector2 chunkSize;
     public int colliderLODIndex;
+    public int objectCreationLODIndex;
     public LODInfo[] LODInfos;
 
     public Transform viewer;
@@ -23,6 +24,8 @@ public class TerrainGenerator : MonoBehaviour
 
     float meshWorldSize;
     int chunkSizeVisibleInViewDistance;
+
+    bool hasFilled = false;
 
     Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
     List<TerrainChunk> visibleTerrainChunks = new List<TerrainChunk>();
@@ -42,18 +45,22 @@ public class TerrainGenerator : MonoBehaviour
 
     private void Update() {
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
-        bool isPosSame = viewerPosition == viewerPositionOld;
+        
         if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate) {
             viewerPositionOld = viewerPosition;
             UpdateVisibleChunks();
         }
+        bool isPosSame = viewerPosition == viewerPositionOld;
         if (!isPosSame) {
-            foreach (TerrainChunk terrainChunk in visibleTerrainChunks) {
-                terrainChunk.UpdateCollisionMesh();
-            }
+            UpdateChunkCollisions();   
         }
 
+    }
 
+    private void UpdateChunkCollisions() {
+        foreach (TerrainChunk terrainChunk in visibleTerrainChunks) {
+            terrainChunk.UpdateCollisionMesh();
+        }
     }
 
     private void UpdateVisibleChunks() {
@@ -89,16 +96,24 @@ public class TerrainGenerator : MonoBehaviour
 
     private bool CanCreateTerrainChunk(Vector2 nextChunkCoord) {
         if (chunkSize.x == 0 || chunkSize.y == 0) return true;
-        int maxX = (int)chunkSize.x / 2 + 1;
-        int maxY = (int)chunkSize.y / 2 + 1;
+        int maxX = (int)chunkSize.x / 2 +1;
+        int maxY = (int)chunkSize.y / 2 +1;
+        int xModifier = (chunkSize.x % 2 == 0) ? 1 : 0;
+        int yModifier = (chunkSize.y % 2 == 0) ? 1 : 0;
 
-        return (nextChunkCoord.x < maxX && nextChunkCoord.x > -maxX) && (nextChunkCoord.y < maxY && nextChunkCoord.y > -maxY);
+
+
+        return (nextChunkCoord.x < maxX && nextChunkCoord.x > -maxX+ xModifier) && (nextChunkCoord.y < maxY && nextChunkCoord.y > -maxY+ yModifier);
 
     }
 
     private void OnTerrainChunkVisibilityChanged(TerrainChunk chunk, bool isVisible) {
         if (isVisible) {
             visibleTerrainChunks.Add(chunk);
+            if(!hasFilled && visibleTerrainChunks.Count > 2) {
+                UpdateChunkCollisions();
+                hasFilled = true;
+            }
         }
         else {
             visibleTerrainChunks.Remove(chunk);
@@ -114,7 +129,6 @@ public struct LODInfo
     [Range(0,MeshSettings.lodCount-1)]
     public int lod;
     public float visibleDistanceThreshold;
-    public bool useForCollider;
 
     public float sqrVisibleThreshold {
         get {

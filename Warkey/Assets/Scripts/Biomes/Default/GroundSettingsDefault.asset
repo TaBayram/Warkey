@@ -18,7 +18,7 @@ MonoBehaviour:
     sampleRegionSize: {x: 245, y: 245}
     sampleCountBeforeRejection: 25
   enviromentObjects:
-  - enabled: 1
+  - enabled: 0
     gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
     blockRadius: 10
     elevation: -0.25
@@ -28,7 +28,7 @@ MonoBehaviour:
     lessenScale: 0
     jitterScale: 0
     correctRotation: 0
-  - enabled: 1
+  - enabled: 0
     gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
     blockRadius: 5
     elevation: -40.75
