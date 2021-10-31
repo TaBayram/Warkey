@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayMenu : MonoBehaviour
 {
-    GameObject settingsMenu;
+    GameObject settingsMenu, audioSettingsMenu, graphicSettingsMenu;
     void Start()
     {
         settingsMenu = GameObject.Find("settingsMenu");
         settingsMenu.SetActive(false);
+        audioSettingsMenu = GameObject.Find("audioSettingsMenu");
+        audioSettingsMenu.SetActive(false);
+        graphicSettingsMenu = GameObject.Find("graphicSettingsMenu");
+        graphicSettingsMenu.SetActive(false);
     }
 
     void Update()

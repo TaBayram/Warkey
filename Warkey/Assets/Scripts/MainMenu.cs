@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    GameObject changeCharacterMenu, settingsMenu, inventoryMenu, partyMenu;
+    GameObject changeCharacterMenu, settingsMenu, inventoryMenu, partyMenu, audioSettingsMenu, graphicSettingsMenu;
   void Start()
   {
         changeCharacterMenu = GameObject.Find("changeCharacterMenu");
@@ -16,6 +16,10 @@ public class MainMenu : MonoBehaviour
         inventoryMenu.SetActive(false);
         partyMenu = GameObject.Find("partyMenu");
         partyMenu.SetActive(false);
+        audioSettingsMenu = GameObject.Find("audioSettingsMenu");
+        audioSettingsMenu.SetActive(false);
+        graphicSettingsMenu = GameObject.Find("graphicSettingsMenu");
+        graphicSettingsMenu.SetActive(false);
     }
 
     void Update()
