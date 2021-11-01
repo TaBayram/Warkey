@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : IWidget
+public class Unit : MonoBehaviour,IWidget
 {
     
 
@@ -17,6 +17,6 @@ public class Unit : IWidget
     }
 
     public void TakeDamage(float damage) {
-        throw new System.NotImplementedException();
+        Debug.Log("Damaged!");
     }
 }

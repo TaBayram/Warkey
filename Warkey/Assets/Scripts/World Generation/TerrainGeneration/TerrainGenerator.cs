@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
+using System.Linq;
 
 public class TerrainGenerator : MonoBehaviour
 {
@@ -31,6 +33,7 @@ public class TerrainGenerator : MonoBehaviour
     List<TerrainChunk> visibleTerrainChunks = new List<TerrainChunk>();
 
     public Material mapMaterial;
+    public NavMeshSurface navMeshSurface;
 
     private void Start() {
         textureData.ApplyToMaterial(mapMaterial);
@@ -53,6 +56,18 @@ public class TerrainGenerator : MonoBehaviour
         bool isPosSame = viewerPosition == viewerPositionOld;
         if (!isPosSame) {
             UpdateChunkCollisions();   
+        }
+
+        int count = (int)chunkSize.x * (int)chunkSize.y;
+        count = (count == 0) ? 4 : count;
+        bool bake = true;
+        foreach(TerrainChunk terrainChunk in visibleTerrainChunks) {
+            if (!terrainChunk.meshIsSet) bake = false;
+        }
+        if (!hasFilled && visibleTerrainChunks.Count >= count && bake) {
+            UpdateChunkCollisions();
+            navMeshSurface.BuildNavMesh();
+            hasFilled = true;
         }
 
     }
@@ -87,7 +102,6 @@ public class TerrainGenerator : MonoBehaviour
                             terrainChunk.onVisibleChanged += OnTerrainChunkVisibilityChanged;
                             terrainChunk.Load();
                         }
-                        
                     }
                 }
             }
@@ -101,19 +115,20 @@ public class TerrainGenerator : MonoBehaviour
         int xModifier = (chunkSize.x % 2 == 0) ? 1 : 0;
         int yModifier = (chunkSize.y % 2 == 0) ? 1 : 0;
 
-
-
         return (nextChunkCoord.x < maxX && nextChunkCoord.x > -maxX+ xModifier) && (nextChunkCoord.y < maxY && nextChunkCoord.y > -maxY+ yModifier);
-
     }
 
     private void OnTerrainChunkVisibilityChanged(TerrainChunk chunk, bool isVisible) {
         if (isVisible) {
             visibleTerrainChunks.Add(chunk);
-            if(!hasFilled && visibleTerrainChunks.Count > 2) {
+            /*int count = (int)chunkSize.x * (int)chunkSize.y;
+            count = (count == 0) ? 4 : count;
+            if(!hasFilled && visibleTerrainChunks.Count >= count ) {
                 UpdateChunkCollisions();
+                Debug.Log("build");
+                navMeshSurface.BuildNavMesh();
                 hasFilled = true;
-            }
+            }*/
         }
         else {
             visibleTerrainChunks.Remove(chunk);

@@ -39,6 +39,7 @@ public class TerrainChunk
     GroundSettings groundSettings;
 
     Transform viewer;
+    public bool meshIsSet = false;
 
     Vector2 ViewerPosition {
         get {
@@ -60,13 +61,13 @@ public class TerrainChunk
         bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
 
-        GameObject gameObject = new GameObject("Chunk");
+       // GameObject gameObject = new GameObject("Chunk");
         
         meshObject = new GameObject("Terrain");
-        meshObject.transform.parent = gameObject.transform;
+        //meshObject.transform.parent = gameObject.transform;
         
 
-        navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
+       // navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
         meshCollider = meshObject.AddComponent<MeshCollider>();
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
@@ -75,7 +76,8 @@ public class TerrainChunk
 
 
         meshObject.transform.position = new Vector3(position.x, 0, position.y);
-        gameObject.transform.parent = parent;
+        //gameObject.transform.parent = parent;
+        meshObject.transform.parent = parent;
         SetVisible(false);
 
         lODMeshes = new LODMesh[detailLevels.Length];
@@ -117,6 +119,7 @@ public class TerrainChunk
 
     public void UpdateTerrainChunk() {
         if (!isMapDataRecieved) return;
+        meshIsSet = false;
         float viewerDistanceFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(ViewerPosition));
 
         bool wasVisible = IsVisible();
@@ -137,16 +140,17 @@ public class TerrainChunk
                 if (lodMesh.hasMesh) {
                     previousLODIndex = lodIndex;
                     meshFilter.mesh = lodMesh.mesh;
+                    meshIsSet = true;
                     if(lodIndex <= 1) {
                         if (hasSetObjects) {
                             foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
                                 objectData.Visible(true);
                             }
 
-                            //navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
-                            //navMeshSurface.layerMask = LayerMask.NameToLayer("Ground");
+                            /*navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+                            navMeshSurface.layerMask = LayerMask.NameToLayer("Ground");
                             navMeshSurface.collectObjects = CollectObjects.Children;
-                            navMeshSurface.BuildNavMesh();
+                            navMeshSurface.BuildNavMesh();*/
                         }
                         else {
 

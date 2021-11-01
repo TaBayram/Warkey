@@ -110,11 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b3b02553425e34babd70727e57a1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiSettings:
-    patrolRange: 30
-    sightRange: 0
-    attackRange: 0
-    attackSpeed: 0
+  passiveAISettings: {fileID: 11400000, guid: 16452b592770c074a88d02f91e731a86, type: 2}
+  aggresiveAISettings: {fileID: 11400000, guid: 3228aa129856fbe42823d95cc9d3fc74, type: 2}
   navMeshAgent: {fileID: 7258323911612345828}
   origin: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
@@ -123,7 +120,7 @@ MonoBehaviour:
     m_Bits: 64
   playerLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 128
 --- !u!195 &7258323911612345828
 NavMeshAgent:
   m_ObjectHideFlags: 0
