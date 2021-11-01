@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb63b1c48247ba84ba3c1557e08e9ee6, type: 3}
   m_Name: DefaultPassive
   m_EditorClassIdentifier: 
-  patrolRange: 0
-  patrolStopTime: 0
-  sightRange: 0
+  wanderRange: 10
+  wanderStopTime: 0.5
+  patrolRange: 30
+  patrolStopTime: 1
+  sightRange: 20
+  loseSightRange: 60
