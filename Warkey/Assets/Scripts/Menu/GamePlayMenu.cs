@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayMenu : MonoBehaviour
 {
+    public static bool GameIsPaused = false;
+    public GameObject inGameMenuUI;
     GameObject settingsMenu, audioSettingsMenu, graphicSettingsMenu;
     void Start()
     {
@@ -14,22 +17,38 @@ public class GamePlayMenu : MonoBehaviour
         audioSettingsMenu.SetActive(false);
         graphicSettingsMenu = GameObject.Find("graphicSettingsMenu");
         graphicSettingsMenu.SetActive(false);
+        inGameMenuUI.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+
         }
     }
 
-public void PlayGame()
+    public void Resume()
     {
-        /* Scene number will be modifies according to the order of scenes */
+        inGameMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+    }
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        SceneManager.LoadScene(1);
+    private void Pause()
+    {
+        inGameMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
     }
 
     public void QuitGame()

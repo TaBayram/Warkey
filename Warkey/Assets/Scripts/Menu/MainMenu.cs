@@ -24,15 +24,16 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // call the Resume function for the Tavern scene here
             SceneManager.LoadScene(1);
         }
     }
 
     public void PlayGame()
     {
-        /* Scene number will be modifies according to the order of scenes */
+        /* the first start of the game */
 
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.LoadScene(1);
