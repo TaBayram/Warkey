@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GraphicsSettingsMenu : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown;
     Resolution[] resolutions;
+    GameObject toggleObj;
+    public Toggle fullscreenToggle;
     void Start()
     {
+        //Check the device's available resolutions and add them to the dropdown
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -29,6 +33,18 @@ public class GraphicsSettingsMenu : MonoBehaviour
         resolutionDropdown.value = currentResolution;
         resolutionDropdown.RefreshShownValue();
 
+        //Check if current screen is full and modify the default value for toggle
+        toggleObj = GameObject.Find("FullscreenToggle");
+        fullscreenToggle = toggleObj.GetComponent<Toggle>();
+
+        if (Screen.fullScreen)
+        {
+            fullscreenToggle.isOn = true;
+        }
+        else
+        {
+            fullscreenToggle.isOn = false;
+        }
     }
 
     public void SetResolution(int resolutionIndex)
