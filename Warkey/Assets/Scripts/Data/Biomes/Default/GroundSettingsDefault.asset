@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e81a3518224fe4ba6c57fb4c63b66e, type: 3}
+  m_Name: GroundSettingsDefault
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  poissonDiscSettings:
+    seed: 0
+    sampleRegionSize: {x: 245, y: 245}
+    sampleCountBeforeRejection: 25
+  enviromentObjects:
+  - enabled: 1
+    visibleMaxLod: 0
+    gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
+    blockRadius: 20
+    elevation: -0.25
+    minThreshold: 0.3
+    maxThreshold: 0.8
+    lessenTowardsEdges: 1
+    lessenScale: 0
+    jitterScale: 0
+    correctRotation: 0
+  - enabled: 0
+    visibleMaxLod: 0
+    gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
+    blockRadius: 5
+    elevation: -40.75
+    minThreshold: 0.4
+    maxThreshold: 0.7
+    lessenTowardsEdges: 1
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 1

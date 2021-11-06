@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Destructible : IWidget
 {
-    public float Health { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-    public void Death() {
+    public void Die() {
         throw new System.NotImplementedException();
     }
 

@@ -2,14 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//[RequireComponent(typeof(WeaponController))]
 public class Unit : MonoBehaviour,IWidget
 {
-    
+    public UnitData unitData;
+    private FiniteField health;
+    private FiniteField stamina;
 
-    public float Health { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public WeaponController weaponController;
+    public Movement movement;
 
-    public void Death() {
-        throw new System.NotImplementedException();
+    private void Start() {
+        weaponController = GetComponent<WeaponController>();
+        movement = GetComponent<Movement>();
+        if (unitData) {
+            health = new FiniteField(unitData.health, unitData.healthRegen);
+            stamina = new FiniteField(unitData.stamina, unitData.staminaRegen);
+        }
+    }
+
+    public void Die() {
+        this.gameObject.SetActive(false);
+        Debug.Log(gameObject.name + "Ded");
+        Destroy(gameObject);
     }
 
     public void Destroy() {
@@ -17,6 +32,44 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public void TakeDamage(float damage) {
-        Debug.Log("Damaged!");
+        Debug.Log( gameObject.name + "took damage" +damage);
+        health.Current -= damage;
+        if(health.Current <= 0) {
+            Die();
+        }
+    }
+
+    void Update() {
+        // Weapon input
+        if (weaponController != null && Input.GetMouseButton(0)) {
+            weaponController.Attack();
+        }
+    }
+}
+
+
+public struct FiniteField
+{
+    private float max;
+    private float current;
+    private float regen;
+
+    public float Current { get => current; set => current = Mathf.Min(value,max); }
+    public float Regen { get => regen; set => regen = value; }
+    public float Max { get => max; set { max = value; current = Mathf.Min(current, max); }  }
+
+    /**
+     * Use this if you want to change current based on new value
+     */
+    public void SetMax(float value) {
+        float increase = (value)/ max - 1;
+        max = value;
+        current += current * increase;
+    }
+
+    public FiniteField(float max, float regen = 0) {
+        this.max = max;
+        this.current = max;
+        this.regen = regen;
     }
 }

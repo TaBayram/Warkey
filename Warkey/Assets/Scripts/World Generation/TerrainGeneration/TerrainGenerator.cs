@@ -35,6 +35,8 @@ public class TerrainGenerator : MonoBehaviour
     public Material mapMaterial;
     public NavMeshSurface navMeshSurface;
 
+    public float[,] fallOffMap;
+
     private void Start() {
         textureData.ApplyToMaterial(mapMaterial);
         textureData.UpdateMeshHeights(mapMaterial, heightMapSettings.MinHeight, heightMapSettings.MaxHeight);
@@ -42,6 +44,10 @@ public class TerrainGenerator : MonoBehaviour
         float maxViewDistance = LODInfos[LODInfos.Length - 1].visibleDistanceThreshold;
         meshWorldSize = meshSettings.MeshWorldSize;
         chunkSizeVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / meshWorldSize);
+
+        if(chunkSize.x != 0 && chunkSize.y != 0 && heightMapSettings.useFallOff) {
+            fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount*chunkSize.x));
+        }
 
         UpdateVisibleChunks();
     }
@@ -100,7 +106,7 @@ public class TerrainGenerator : MonoBehaviour
                             TerrainChunk terrainChunk = new TerrainChunk(viewedChunkCoord, heightMapSettings, meshSettings,groundSettings ,LODInfos, colliderLODIndex, transform, viewer, mapMaterial);
                             terrainChunkDictionary.Add(viewedChunkCoord, terrainChunk);
                             terrainChunk.onVisibleChanged += OnTerrainChunkVisibilityChanged;
-                            terrainChunk.Load();
+                            terrainChunk.Load(fallOffMap);
                         }
                     }
                 }

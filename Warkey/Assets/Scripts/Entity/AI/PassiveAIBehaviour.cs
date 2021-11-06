@@ -9,11 +9,13 @@ public class PassiveAIBehaviour:AIBehaviour
     PassiveAISettings passiveAISettings;
     BehaviourData patrolData;
     BehaviourData wanderData;
+    BehaviourData fleeData;
 
     public PassiveAIBehaviour(NavMeshAgent navMeshAgent, Transform transform, PassiveAISettings passiveAISettings) :base(navMeshAgent, transform) {
         this.passiveAISettings = passiveAISettings;
         patrolData = new BehaviourData();
         wanderData = new BehaviourData();
+        fleeData = new BehaviourData();
     }
 
 
@@ -74,8 +76,31 @@ public class PassiveAIBehaviour:AIBehaviour
         }
     }
 
-    private void Flee() {
+    public void Flee(Transform chaser) {
+        if (!fleeData.IsNextPointSet) {
+            SetFleePoint(chaser);
+        }
+        if (fleeData.IsNextPointSet) {
+            navMeshAgent.SetDestination(fleeData.NextPoint);
+        }
+        if ((transform.position - fleeData.NextPoint).magnitude < 1f) {
+            fleeData.IsNextPointSet = false;
+        }
+    }
 
+    private void SetFleePoint(Transform chaser) {
+        
+        float distance = Random.Range(0, passiveAISettings.fleeRange);
+        Vector3 direction = (transform.position - chaser.position)*distance;
+        Vector3 jitter = new Vector3(direction.x*Random.Range(-0.75f,0.75f),0, direction.z * Random.Range(-0.75f, 0.75f));
+
+        fleeData.NextPoint = new Vector3(direction.x * .50f + jitter.x * .50f, 0, direction.z * .50f + jitter.z * .50f) + transform.position;
+        NavMesh.SamplePosition(fleeData.NextPoint, out NavMeshHit navMeshHit, 10f, NavMesh.AllAreas);
+
+        if (navMeshHit.hit) {
+            fleeData.NextPoint = navMeshHit.position;
+            fleeData.IsNextPointSet = true;
+        }
     }
 
     private struct BehaviourData

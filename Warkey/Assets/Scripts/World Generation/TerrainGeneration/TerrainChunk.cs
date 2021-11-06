@@ -90,8 +90,8 @@ public class TerrainChunk
         }
         maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
     }
-    public void Load() {
-        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, sampleCenter), OnHeightMapReceived);
+    public void Load(float[,] fallOff) {
+        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings,sampleCenter,coord,fallOff), OnHeightMapReceived);
     }
 
     private void OnHeightMapReceived(object heightMap) {

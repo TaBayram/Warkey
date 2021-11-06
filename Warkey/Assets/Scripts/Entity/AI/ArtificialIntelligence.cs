@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class ArtificialIntelligence : MonoBehaviour
 {
-    private State state  = State.Patrol;
+    private State state  = State.Wander;
     private State originalPassiveState;
 
     public PassiveAISettings passiveAISettings;
@@ -29,6 +30,13 @@ public class ArtificialIntelligence : MonoBehaviour
     }
 
     private void Update() {
+        if (this.transform == null) return;
+        if (!IsOnNavMesh()) {
+            //Integrate with Character Controller instead of this
+            transform.position = transform.position + Vector3.down * Time.deltaTime;
+            return;
+        }
+
         bool playerSighted = Physics.CheckSphere(transform.position, passiveAISettings.sightRange, playerLayer);
         bool playerLostSight = Physics.CheckSphere(transform.position, passiveAISettings.loseSightRange, playerLayer);
         bool playerIsAttackable = Physics.CheckSphere(transform.position, aggresiveAISettings.attackRange, playerLayer);
@@ -74,9 +82,18 @@ public class ArtificialIntelligence : MonoBehaviour
                     Return();
                 break;
             case State.Flee:
+                if (playerSighted)
+                    passiveAIBehaviour.Flee(player);
+                else if (playerLostSight)
+                    Return();
                 break;
         }
 
+    }
+
+    public bool IsOnNavMesh() {
+        NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 2f, NavMesh.AllAreas);
+        return navMeshHit.hit;
     }
 
     
