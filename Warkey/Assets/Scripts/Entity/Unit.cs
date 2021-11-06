@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 //[RequireComponent(typeof(WeaponController))]
 public class Unit : MonoBehaviour,IWidget
 {
     public UnitData unitData;
-    private FiniteField health;
-    private FiniteField stamina;
+    public FiniteField health;
+    public FiniteField stamina;
 
     public WeaponController weaponController;
     public Movement movement;
@@ -19,7 +20,16 @@ public class Unit : MonoBehaviour,IWidget
             health = new FiniteField(unitData.health, unitData.healthRegen);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen);
         }
+
+        
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName) {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
 
     public void Die() {
         this.gameObject.SetActive(false);
@@ -34,7 +44,11 @@ public class Unit : MonoBehaviour,IWidget
     public void TakeDamage(float damage) {
         Debug.Log( gameObject.name + "took damage" +damage);
         health.Current -= damage;
-        if(health.Current <= 0) {
+        if (movement != null && movement.GetType() == typeof(PlayerMovement)) {
+            OnPropertyChanged(nameof(health));
+        }
+
+        if (health.Current <= 0) {
             Die();
         }
     }
