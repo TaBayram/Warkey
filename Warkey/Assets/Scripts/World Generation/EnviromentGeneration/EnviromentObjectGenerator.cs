@@ -8,13 +8,13 @@ public static class EnviromentObjectGenerator
     public const float sqrMaxDistanceThreshold = maxDistanceThreshold*maxDistanceThreshold;
 
 
-    public static List<ValidPoint> GenerateEnviroment(EnviromentObject enviromentObject, float[,] heightMap, PoissonDiscSettings poissonDiscSettings) {
+    public static List<ValidPoint> GenerateValidPoints(EnviromentObjectSettings enviromentObject, float[,] heightMap, PoissonDiscSettings poissonDiscSettings) {
         List<Vector2> poissonDiscGrid = PoissonDiscSampling.GeneratePoints(poissonDiscSettings,enviromentObject.blockRadius);
         List<ValidPoint> validGrid = new List<ValidPoint>();
         int mapWidth = heightMap.GetLength(0);
         int mapHeight = heightMap.GetLength(1);
 
-        Random.InitState(poissonDiscSettings.seed);
+        System.Random random = new System.Random(poissonDiscSettings.seed);
 
         float upperBound = enviromentObject.maxThreshold;
         float lowerBound = enviromentObject.minThreshold;
@@ -28,11 +28,11 @@ public static class EnviromentObjectGenerator
                 
                 if (height >= enviromentObject.minThreshold && height <= enviromentObject.maxThreshold) {
                     float edgePercent = (Mathf.Abs(height - midBound)) / (midBound- lowerBound);
-                    if (enviromentObject.lessenTowardsEdges && Random.Range(0f,1f) < enviromentObject.lessenScale && Random.Range(0f,0.90f) < edgePercent)  {
+                    if (enviromentObject.lessenTowardsEdges && RandomHelper.Range(0f,1f,ref random) < enviromentObject.lessenScale && RandomHelper.Range(0f,0.90f,ref random) < edgePercent)  {
                         continue;
                     }
                     else {
-                        Vector2 jitter =  Jitter(enviromentObject.blockRadius, enviromentObject.jitterScale);
+                        Vector2 jitter =  Jitter(enviromentObject.blockRadius, enviromentObject.jitterScale,ref random);
                         validGrid.Add(new ValidPoint(validPoint, jitter));
                         poissonDiscGrid.RemoveAt(i);
                     }
@@ -40,54 +40,29 @@ public static class EnviromentObjectGenerator
                 }
             }
         }
-
-                
-
         return validGrid;
     }
 
-    private static Vector2 Jitter(float radius,float scale) {
-        float angle = (float)(Random.value * Mathf.PI * 2);
+    public static List<EnviromentObjectData> GenerateEnviromentDatas(HeightMap heightMap,GroundSettings groundSettings,Transform parent) {
+        List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
+        for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
+            if (groundSettings.enviromentObjects[i].enabled) {
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], parent,heightMap.values);
+                enviromentObjectDatas.Add(enviromentObjectData);
+            }
+        }
+        return enviromentObjectDatas;
+    }
+
+
+    private static Vector2 Jitter(float radius,float scale,ref System.Random random) {
+        float angle = (float)(RandomHelper.Range(ref random) * Mathf.PI * 2);
         Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
-        return direction * Random.Range(0, radius) * scale;
+        return direction * RandomHelper.Range(0, radius,ref random) * scale;
     }
 
 
-}
-public class EnviromentObjectData
-{
-    List<ValidPoint> validPoints;
-    EnviromentObject enviromentObject;
-    List<GameObject> gameObjects = new List<GameObject>();
-
-    public EnviromentObjectData(List<ValidPoint> validGrid, EnviromentObject enviromentObject, Transform parent) {
-        this.validPoints = validGrid;
-        this.enviromentObject = enviromentObject;
-
-    }
-
-
-    public void CreateObjects(float[,] heightMap,Transform parent) {
-        for(int i = 0; i < validPoints.Count; i++) {
-            Vector2 vector2 = validPoints[i].point;
-            Vector2 jitter = validPoints[i].jitter;
-
-            GameObject gameObject = MonoBehaviour.Instantiate(enviromentObject.gameObject,parent);
-            gameObject.transform.localPosition = new Vector3((vector2.x + jitter.x) - heightMap.GetLength(0)/2, heightMap[(int)vector2.x, (int)vector2.y], -(vector2.y + jitter.y) + heightMap.GetLength(1)/2);
-            gameObjects.Add(gameObject);
-        }
-    }
-
-    public void DestroyObjects() {
-        foreach (GameObject gameObject in gameObjects) {
-#if UNITY_EDITOR
-            MonoBehaviour.DestroyImmediate(gameObject);
-#else
-            MonoBehaviour.Destroy(gameObject);
-#endif
-        }
-        gameObjects.Clear();
-    }
 }
 
 public struct ValidPoint

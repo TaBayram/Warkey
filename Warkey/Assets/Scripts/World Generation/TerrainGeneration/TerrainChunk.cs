@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class TerrainChunk
 {
@@ -15,6 +17,9 @@ public class TerrainChunk
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
     MeshCollider meshCollider;
+    NavMeshSurface navMeshSurface;
+    
+    
 
     LODInfo[] detailLevels;
     LODMesh[] lODMeshes;
@@ -25,12 +30,16 @@ public class TerrainChunk
     int previousLODIndex = -1;
     bool hasSetCollider;
     float maxViewDistance;
+    bool hasSetObjects;
+    List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
+
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
     GroundSettings groundSettings;
 
     Transform viewer;
+    public bool meshIsSet = false;
 
     Vector2 ViewerPosition {
         get {
@@ -52,13 +61,22 @@ public class TerrainChunk
         bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
 
-        meshObject = new GameObject("Terrain Chunk");
+       // GameObject gameObject = new GameObject("Chunk");
+        
+        meshObject = new GameObject("Terrain");
+        //meshObject.transform.parent = gameObject.transform;
+        
+
+       // navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
         meshCollider = meshObject.AddComponent<MeshCollider>();
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;
+        meshObject.layer = LayerMask.NameToLayer("Ground");
+
 
         meshObject.transform.position = new Vector3(position.x, 0, position.y);
+        //gameObject.transform.parent = parent;
         meshObject.transform.parent = parent;
         SetVisible(false);
 
@@ -72,32 +90,36 @@ public class TerrainChunk
         }
         maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
     }
+    public void Load(float[,] fallOff) {
+        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings,sampleCenter,coord,fallOff), OnHeightMapReceived);
+    }
 
     private void OnHeightMapReceived(object heightMap) {
         isMapDataRecieved = true;
         this.heightMap = (HeightMap)heightMap;
-
-        groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
-        for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
-            if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[i], this.heightMap.values01, groundSettings.poissonDiscSettings);
-                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], meshObject.transform);
-                enviromentObjectData.CreateObjects(this.heightMap.values, meshObject.transform);
-            }
-        }
-
-
+        RequestEnviromentObjectDatas();
         UpdateTerrainChunk();
     }
 
-    public void Load() {
-        ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, sampleCenter), OnHeightMapReceived);
-
-
+    private void RequestEnviromentObjectDatas() {
+        groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
+        Transform transform = meshObject.transform;
+        ThreadDataRequest.RequestData(() => EnviromentObjectGenerator.GenerateEnviromentDatas(heightMap, groundSettings, transform), OnEnviromentObjectDataListRecieved);
     }
+
+    private void OnEnviromentObjectDataListRecieved(object enviromentObjects) {
+        this.hasSetObjects = true;
+        this.enviromentObjectDatas = (List<EnviromentObjectData>)enviromentObjects;
+        foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
+            objectData.CreateObjects(false);
+        }
+    }
+
+   
 
     public void UpdateTerrainChunk() {
         if (!isMapDataRecieved) return;
+        meshIsSet = false;
         float viewerDistanceFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(ViewerPosition));
 
         bool wasVisible = IsVisible();
@@ -118,14 +140,32 @@ public class TerrainChunk
                 if (lodMesh.hasMesh) {
                     previousLODIndex = lodIndex;
                     meshFilter.mesh = lodMesh.mesh;
+                    meshIsSet = true;
+                    if(lodIndex <= 1) {
+                        if (hasSetObjects) {
+                            foreach(EnviromentObjectData objectData in enviromentObjectDatas) {
+                                objectData.Visible(true);
+                            }
+
+                            /*navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+                            navMeshSurface.layerMask = LayerMask.NameToLayer("Ground");
+                            navMeshSurface.collectObjects = CollectObjects.Children;
+                            navMeshSurface.BuildNavMesh();*/
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+                        foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
+                            objectData.Visible(false);
+                        }
+                    }
                 }
                 else if (!lodMesh.hasRequestedMesh) {
                     lodMesh.RequestMesh(heightMap,meshSettings);
                 }
             }
-
-
-
         }
 
         if (wasVisible != visible) {

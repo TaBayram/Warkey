@@ -7,19 +7,20 @@ using System.Linq;
 public class GroundSettings : UpdateableData
 {
     public PoissonDiscSettings poissonDiscSettings;
-    public EnviromentObject[] enviromentObjects;
+    public EnviromentObjectSettings[] enviromentObjects;
 
 }
 
 
 [System.Serializable]
-public class EnviromentObject
+public class EnviromentObjectSettings
 {
     public bool enabled;
+    [Range(0, MeshSettings.lodCount - 1)]
+    public int visibleMaxLod;
     public GameObject gameObject;
     public float blockRadius;
-    [Range(0,1)]
-    public float density = 0;
+    public float elevation = 0;
     [Range(0,2)]
     public float minThreshold;
     [Range(0, 2)]
@@ -29,5 +30,6 @@ public class EnviromentObject
     public float lessenScale;
     [Range(0, 1)]
     public float jitterScale;
+    public bool correctRotation;
 
 }

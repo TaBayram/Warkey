@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
-public class Chunk : MonoBehaviour
+public class Chunk
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject gameObject;
+    public NavMeshSurface navMeshSurface;
+    public TerrainChunk terrainChunk;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    int currentLOD;
+
 }

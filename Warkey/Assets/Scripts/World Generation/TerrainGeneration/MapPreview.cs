@@ -22,9 +22,7 @@ public class MapPreview : MonoBehaviour
     public MeshRenderer meshRenderer;
 
     private void Start() {
-        foreach (Transform child in meshFilter.transform) {
-            GameObject.DestroyImmediate(child.gameObject);
-        }
+        gameObject.SetActive(false);
     }
 
     public void DrawTexture(Texture2D texture){
@@ -46,7 +44,7 @@ public class MapPreview : MonoBehaviour
     public void DrawMapInEditor() {
         textureData.ApplyToMaterial(terrainMaterial);
         textureData.UpdateMeshHeights(terrainMaterial, heightMapSettings.MinHeight, heightMapSettings.MaxHeight);
-        HeightMap heightMap = HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, Vector2.zero);
+        HeightMap heightMap = HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, Vector2.zero,Vector2.zero,null);
         
         if (drawMode == DrawMode.NoiseMap)
             DrawTexture(TextureGenerator.CreateTexture(heightMap));
@@ -56,16 +54,16 @@ public class MapPreview : MonoBehaviour
             DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
-        foreach(EnviromentObjectData enviromentObjectData in enviromentObjectDatas) {
-            enviromentObjectData.DestroyObjects();
+        for(int i = meshFilter.transform.childCount-1; i >= 0; --i) {
+            GameObject.DestroyImmediate(meshFilter.transform.GetChild(i).gameObject);
         }
         enviromentObjectDatas.Clear();
         
         for(int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
             if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateEnviroment(groundSettings.enviromentObjects[0], heightMap.values01, groundSettings.poissonDiscSettings);
-                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[0], gameObject.transform);
-                enviromentObjectData.CreateObjects(heightMap.values, meshFilter.gameObject.transform);
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
+                EnviromentObjectData  enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], meshFilter.transform, heightMap.values);
+                enviromentObjectData.CreateObjects(true);
                 enviromentObjectDatas.Add(enviromentObjectData);
             }
         }
