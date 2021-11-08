@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7969199136175346193}
   - component: {fileID: 7969199136175346195}
-  - component: {fileID: 7969199136175346194}
+  - component: {fileID: 1114002124589073126}
   m_Layer: 5
   m_Name: StaminaBar
   m_TagString: Untagged
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7969199136175346194
+--- !u!114 &1114002124589073126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7969199136175346192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c440c4be7f120843856acd7ba00604f, type: 3}
+  m_Script: {fileID: 11500000, guid: d190cc2a422962d47be73fad1b10e799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 7969199136175346195}
@@ -617,7 +617,7 @@ MonoBehaviour:
   healthBar: {fileID: 7969199135003955438}
   maxStamina: 100
   currentStamina: 0
-  staminaBar: {fileID: 7969199136175346194}
+  staminaBar: {fileID: 1114002124589073126}
 --- !u!1 &7969199136890289781
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class HUDPlayerContainer : MonoBehaviour
 {
 
     public int maxHealth = 100;
     public int currentHealth;
-    public HealthBar healthBar;
+    public HUDBar healthBar;
 
     public int maxStamina = 100;
     public int currentStamina;
-    public StaminaBar staminaBar;
+    public HUDBar staminaBar;
 
     private void Start()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetMaxValue(maxHealth);
 
         currentStamina = maxStamina;
-        staminaBar.SetMaxStamina(maxStamina);
+        staminaBar.SetMaxValue(maxStamina);
 
     }
     private void Update()
@@ -28,24 +28,24 @@ public class Player : MonoBehaviour
         //Example
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ReduceHealth(20);
+            SetHealth(10);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ReduceStamina(10);
+            SetStamina(10);
         }
     }
 
-    void ReduceHealth(int damage)
+    void SetHealth(float damage)
     {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        currentHealth -= (int)damage;
+        healthBar.SetValue(currentHealth);
     }
 
-    void ReduceStamina(int damage)
+    void SetStamina(float damage)
     {
-        currentStamina -= damage;
-        staminaBar.SetStamina(currentStamina);
+        currentStamina -= (int)damage;
+        staminaBar.SetValue(currentStamina);
     }
 }
