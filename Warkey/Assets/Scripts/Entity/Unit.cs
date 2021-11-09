@@ -41,9 +41,6 @@ public class Unit : MonoBehaviour,IWidget
     public void TakeDamage(float damage) {
         Debug.Log( gameObject.name + "took damage" +damage);
         health.Current -= damage;
-        if (movement != null && movement.GetType() == typeof(PlayerMovement)) {
-            OnPropertyChanged(nameof(health));
-        }
 
         if (health.Current <= 0) {
             Die();
