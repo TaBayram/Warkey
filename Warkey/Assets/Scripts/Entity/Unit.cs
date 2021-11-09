@@ -9,12 +9,9 @@ public class Unit : MonoBehaviour,IWidget
     private FiniteField health;
     private FiniteField stamina;
 
-    public WeaponController weaponController;
-    public Movement movement;
+
 
     private void Start() {
-        weaponController = GetComponent<WeaponController>();
-        movement = GetComponent<Movement>();
         if (unitData) {
             health = new FiniteField(unitData.health, unitData.healthRegen);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen);
@@ -40,10 +37,7 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     void Update() {
-        // Weapon input
-        if (weaponController != null && Input.GetMouseButton(0) && GameState.state == GameState.State.ingame) {
-            weaponController.Attack();
-        }
+
     }
 }
 
