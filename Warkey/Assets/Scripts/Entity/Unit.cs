@@ -55,7 +55,7 @@ public class Unit : MonoBehaviour,IWidget
 
     void Update() {
         // Weapon input
-        if (weaponController != null && Input.GetMouseButton(0)) {
+        if (weaponController != null && Input.GetMouseButton(0) && GameState.state == GameState.State.ingame) {
             weaponController.Attack();
         }
     }
