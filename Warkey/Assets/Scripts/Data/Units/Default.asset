@@ -14,12 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Default
   health: 100
-  healthRegen: 0
+  healthRegen: 1
   stamina: 50
   staminaRegen: 0
-  canMove: 0
-  weight: 1
-  movementSpeed: 10
-  sprintSpeed: 25
-  jumpHeight: 30
-  canAttack: 0

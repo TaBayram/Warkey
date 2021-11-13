@@ -6,46 +6,36 @@ using UnityEngine.SceneManagement;
 public class HUDPlayerContainer : MonoBehaviour
 {
 
-    public int maxHealth = 100;
-    public int currentHealth;
     public HUDBar healthBar;
-
-    public int maxStamina = 100;
-    public int currentStamina;
     public HUDBar staminaBar;
+    public Unit unit;
 
-    private void Start()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxValue(maxHealth);
-
-        currentStamina = maxStamina;
-        staminaBar.SetMaxValue(maxStamina);
-
+    private void Start() {
+        unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
     }
+
+    private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        if (e.PropertyName == "health") {
+            SetHealth((FiniteField)sender);
+        }
+        else if (e.PropertyName == "stamina") {
+            SetStamina((FiniteField)sender);
+        }
+    }
+
     private void Update()
     {
-        //Example
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SetHealth(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            SetStamina(10);
-        }
     }
 
-    void SetHealth(float damage)
+    void SetHealth(FiniteField field)
     {
-        currentHealth -= (int)damage;
-        healthBar.SetValue(currentHealth);
+        healthBar.SetMaxValue(field.Max);
+        healthBar.SetValue(field.Current);
     }
 
-    void SetStamina(float damage)
+    void SetStamina(FiniteField field)
     {
-        currentStamina -= (int)damage;
-        staminaBar.SetValue(currentStamina);
+        staminaBar.SetMaxValue(field.Max);
+        staminaBar.SetValue(field.Current);
     }
 }

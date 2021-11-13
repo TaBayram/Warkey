@@ -14,9 +14,10 @@ public class WaterChunk : SubChunk
         meshFilter = subObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;
         subObject.layer = LayerMask.NameToLayer("Water");
-        subObject.transform.position = subObject.transform.position + Vector3.up * meshSettings.height;
+        
 
         SetObject();
+        subObject.transform.position = subObject.transform.position + Vector3.up * meshSettings.height;
     }
     public override void RequestLODMesh(LODMesh lODMesh) {
         lODMesh.RequestMesh(heightMap, meshSettings,true);

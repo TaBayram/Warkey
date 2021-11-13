@@ -52,7 +52,7 @@ public class LODMesh
     public void RequestMesh(HeightMap heightMap, MeshSettings meshSettings, bool isWater = false) {
         hasRequestedMesh = true;
         if (isWater)
-            ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod, meshSettings.minValue, meshSettings.maxValue, meshSettings.height), OnMeshDataRecieved);
+            ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values01, meshSettings, lod, meshSettings.minValue, meshSettings.maxValue, meshSettings.height), OnMeshDataRecieved);
         else
             ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod), OnMeshDataRecieved);
     }

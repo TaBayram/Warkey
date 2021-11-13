@@ -9,13 +9,13 @@ public class HUDBar : MonoBehaviour
     public Gradient gradient;
     public Image fill;
 
-    public void SetMaxValue(int health)
+    public void SetMaxValue(float health)
     {
         slider.maxValue = health;
         slider.value = health;
         fill.color = gradient.Evaluate(1f);
     }
-    public void SetValue(int health)
+    public void SetValue(float health)
     {
         slider.value = health;
         fill.color = gradient.Evaluate(slider.normalizedValue);

@@ -18,10 +18,10 @@ MonoBehaviour:
     sampleRegionSize: {x: 245, y: 245}
     sampleCountBeforeRejection: 25
   enviromentObjects:
-  - enabled: 1
+  - enabled: 0
     visibleMaxLod: 3
-    gameObject: {fileID: 919132149155446097, guid: 7e20c11f925cdd24eb0cbec843ab96a5, type: 3}
-    blockRadius: 10
+    gameObject: {fileID: 1674371743523600742, guid: 7533aecf4ecbd2b4985808ed7cd2957b, type: 3}
+    blockRadius: 25
     elevation: -0.25
     minThreshold: 0.3
     maxThreshold: 0.8

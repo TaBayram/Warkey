@@ -28,10 +28,12 @@ public class GamePlayMenu : MonoBehaviour
             if (GameIsPaused)
             {
                 Resume();
+                GameState.CurrentState = GameState.State.ingame;
             }
             else
             {
                 Pause();
+                GameState.CurrentState = GameState.State.settings;
             }
 
         }
