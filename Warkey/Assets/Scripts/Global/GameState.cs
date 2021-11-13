@@ -4,10 +4,14 @@ using UnityEngine;
 
 public static class GameState
 {
-    public static State state;
+    private static State currentState = State.ingame;
 
     public enum State{
         ingame,
         settings,
     }
+
+    public static System.Action<State> onStateChange;
+
+    public static State CurrentState { get => currentState; set { currentState = value; onStateChange(value); } }
 }

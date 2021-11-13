@@ -11,6 +11,8 @@ public class EnviromentObjectData
     private List<ObjectPlace> objectPlaces = new List<ObjectPlace>();
     private List<GameObject> gameObjects = new List<GameObject>();
 
+    public bool isObjectsLoaded = false;
+
     public EnviromentObjectData(List<ValidPoint> validGrid, EnviromentObjectSettings enviromentObject, Transform parent, float[,] heightMap) {
         this.settings = enviromentObject;
         this.parent = parent;
@@ -65,7 +67,7 @@ public class EnviromentObjectData
             gameObject.transform.Rotate(objectPlaces[i].rotation.x, 0, objectPlaces[i].rotation.z);
             gameObjects.Add(gameObject);
         }
-
+        isObjectsLoaded = true;
         enviromentHolder.SetActive(visible);
     }
 

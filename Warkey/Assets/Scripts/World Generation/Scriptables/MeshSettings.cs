@@ -18,6 +18,14 @@ public class MeshSettings : UpdateableData
     [Range(0, flatShadedChunkSizesCount - 1)]
     public int flatShadedChunkSizeIndex;
 
+    [Header("Water")]
+    [Range(0,1)]
+    public float minValue;
+    [Range(0, 1)]
+    public float maxValue;
+    public float height;
+
+
     //Number of vertices per line of mesh rendered at LOD = 0.
     //Includes 2 extra vertices that are exluded for final mesh but used for calculating normals
     public int VerticesPerLineCount {

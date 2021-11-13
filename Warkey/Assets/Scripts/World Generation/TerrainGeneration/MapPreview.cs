@@ -21,6 +21,9 @@ public class MapPreview : MonoBehaviour
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
 
+    public MeshFilter meshWaterFilter;
+    public MeshRenderer meshWaterRenderer;
+
     private void Start() {
         gameObject.SetActive(false);
     }
@@ -39,7 +42,13 @@ public class MapPreview : MonoBehaviour
         textureRenderer.gameObject.SetActive(false);
         meshFilter.gameObject.SetActive(true);
     }
+    public void DrawWaterMesh(MeshData meshData) {
+        meshWaterFilter.sharedMesh = meshData.CreateMesh();
+        meshWaterFilter.gameObject.transform.position = Vector3.up * meshSettings.height;
 
+        textureRenderer.gameObject.SetActive(false);
+        meshWaterFilter.gameObject.SetActive(true);
+    }
 
     public void DrawMapInEditor() {
         textureData.ApplyToMaterial(terrainMaterial);
@@ -48,8 +57,11 @@ public class MapPreview : MonoBehaviour
         
         if (drawMode == DrawMode.NoiseMap)
             DrawTexture(TextureGenerator.CreateTexture(heightMap));
-        else if (drawMode == DrawMode.DrawMesh)
+        else if (drawMode == DrawMode.DrawMesh) {
             DrawMesh(MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, editorLOD));
+            DrawWaterMesh(MeshGenerator.GenerateTerrainMesh(heightMap.values01, meshSettings, editorLOD, meshSettings.minValue, meshSettings.maxValue));
+            
+        }
         else if (drawMode == DrawMode.FallOff)
             DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
