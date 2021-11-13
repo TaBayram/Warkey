@@ -88,6 +88,94 @@ public static class MeshGenerator
 
         return meshData;
     }
+
+
+
+    public static MeshData GenerateTerrainMesh(float[,] heightMap, MeshSettings meshSettings, int levelOfDetail,float minHeight, float maxHeight,float defaultValue = 0) {
+        int skipIncrement = (levelOfDetail == 0) ? 1 : levelOfDetail * 2;
+        int verticesPerLineCount = meshSettings.VerticesPerLineCount;
+
+        Vector2 topLeft = new Vector2(-1, 1) * meshSettings.MeshWorldSize / 2f;
+        MeshData meshData = new MeshData(verticesPerLineCount, skipIncrement, meshSettings.useFlatShading);
+
+
+        //int verticesPerLine = (meshSize - 1) / skipIncrement + 1;
+
+
+        int[,] vertexIndicesMap = new int[verticesPerLineCount, verticesPerLineCount];
+        int meshVertexIndex = 0;
+        int outofMeshVertexIndex = -1;
+
+        for (int y = 0; y < verticesPerLineCount; y++) {
+            for (int x = 0; x < verticesPerLineCount; x++) {
+                bool isOutofMeshVertex = y == 0 || y == verticesPerLineCount - 1 || x == 0 || x == verticesPerLineCount - 1;
+                bool isSkippedVertex = x > 2 && x < verticesPerLineCount - 3 && y > 2 && y < verticesPerLineCount - 3 && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
+
+                if (isOutofMeshVertex) {
+                    vertexIndicesMap[x, y] = outofMeshVertexIndex;
+                    outofMeshVertexIndex--;
+                }
+                else if (!isSkippedVertex) {
+                    vertexIndicesMap[x, y] = meshVertexIndex;
+                    meshVertexIndex++;
+                }
+            }
+        }
+
+
+        for (int y = 0; y < verticesPerLineCount; y++) {
+            for (int x = 0; x < verticesPerLineCount; x++) {
+                bool isSkippedVertex = x > 2 && x < verticesPerLineCount - 3 && y > 2 && y < verticesPerLineCount - 3 && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
+
+                if (!isSkippedVertex) {
+                    bool isOutofMeshVertex = y == 0 || y == verticesPerLineCount - 1 || x == 0 || x == verticesPerLineCount - 1;
+                    bool isMeshEdgeVertex = (y == 1 || y == verticesPerLineCount - 2 || x == 1 || x == verticesPerLineCount - 2) && !isOutofMeshVertex;
+                    bool isMainVertex = (x - 2) % skipIncrement == 0 && (y - 2) % skipIncrement == 0 && !isOutofMeshVertex && !isMeshEdgeVertex;
+                    bool isEdgeConnectionVertex = (y == 2 || y == verticesPerLineCount - 3 || x == 2 || x == verticesPerLineCount - 3) && !isMainVertex && !isOutofMeshVertex && !isMeshEdgeVertex;
+
+
+                    int vertexIndex = vertexIndicesMap[x, y];
+                    Vector2 vertexUV = new Vector2((x - 1), (y - 1)) / (verticesPerLineCount - 3);
+                    Vector2 vertexPosition2D = topLeft + new Vector2(vertexUV.x, -vertexUV.y) * meshSettings.MeshWorldSize;
+                    float height = heightMap[x, y];
+
+                    
+
+                    if (isEdgeConnectionVertex) {
+                        bool isVertical = x == 2 || x == verticesPerLineCount - 3;
+                        int distanceToMainVertexA = ((isVertical) ? y - 2 : x - 2) % skipIncrement;
+                        int distanceToMainVertexB = skipIncrement - distanceToMainVertexA;
+                        float distancePercentFromAtoB = distanceToMainVertexA / (float)skipIncrement;
+
+                        float heightMainVertexA = heightMap[(isVertical) ? x : x - distanceToMainVertexA, (isVertical) ? y - distanceToMainVertexA : y];
+                        float heightMainVertexB = heightMap[(isVertical) ? x : x + distanceToMainVertexB, (isVertical) ? y + distanceToMainVertexB : y];
+
+                        height = heightMainVertexA * (1 - distancePercentFromAtoB) + heightMainVertexB * distancePercentFromAtoB;
+                    }
+
+
+                    meshData.AddVertex(new Vector3(vertexPosition2D.x, defaultValue, vertexPosition2D.y), vertexUV, vertexIndex);
+                    if (height < minHeight || height > maxHeight) continue;
+                    bool createTriangle = x < verticesPerLineCount - 1 && y < verticesPerLineCount - 1 && (!isEdgeConnectionVertex || (x != 2 && y != 2));
+
+                    if (createTriangle) {
+                        int currentIncrement = (isMainVertex && x != verticesPerLineCount - 3 && y != verticesPerLineCount - 3) ? skipIncrement : 1;
+
+                        int a = vertexIndicesMap[x, y];
+                        int b = vertexIndicesMap[x + currentIncrement, y];
+                        int c = vertexIndicesMap[x, y + currentIncrement];
+                        int d = vertexIndicesMap[x + currentIncrement, y + currentIncrement];
+
+                        meshData.AddTriangle(a, d, c);
+                        meshData.AddTriangle(d, a, b);
+                    }
+                }
+            }
+        }
+        meshData.ProcessMesh();
+
+        return meshData;
+    }
 }
 
 public class MeshData
