@@ -124,12 +124,12 @@ public static class PathGenerator
     }
     */
     
-    public static PathData GeneratePath(PathSettings pathSettings,PathData pathData,float[,] heightMap01, Vector2 direction, bool isBranch = false) {
+    public static PathData GeneratePath(PathSettings pathSettings,PathData pathData,float[,] heightMap01, Vector2 direction, int branchIndex = -1) {
         Random random = new Random(pathSettings.seed);
         XY length = new XY(heightMap01.GetLength(0), heightMap01.GetLength(1));
 
-        int maxMainIteration =  (!isBranch)? pathSettings.maxIteration : pathSettings.branchIteration;
-        int maxSubIteration =   (!isBranch)? pathSettings.maxSubIteration : pathSettings.maxSubIteration;
+        int maxMainIteration = (branchIndex == -1) ? pathSettings.maxIteration : pathSettings.branchSettings[branchIndex].branchIteration;
+        int maxSubIteration =   (branchIndex == -1)? pathSettings.maxSubIteration : pathSettings.maxSubIteration;
         int iteration = 0;
 
         if(pathData.start == null) {
@@ -149,7 +149,7 @@ public static class PathGenerator
                 subIteration++;
 
                 float distance = RandomHelper.Range(pathSettings.distance.min, pathSettings.distance.max, ref random);
-                float negativeStrength = ((!isBranch) ? pathSettings.negativeStrength : pathSettings.branchNegativeStrength) + subIteration/ maxSubIteration;
+                float negativeStrength = ((branchIndex == -1) ? pathSettings.negativeStrength : pathSettings.branchSettings[branchIndex].branchNegativeStrength) + subIteration/ maxSubIteration;
                 float xScale, yScale;
 
                 if (random.NextDouble() > negativeStrength)
@@ -185,7 +185,7 @@ public static class PathGenerator
             }
 
             if (true) {
-                float radius = ((!isBranch) ? pathSettings.pathWidth : pathSettings.branchWidth);
+                float radius = ((branchIndex == -1) ? pathSettings.pathWidth : pathSettings.branchSettings[branchIndex].branchWidth);
                 previousCandidate.x = candidate.x;
                 previousCandidate.y = candidate.y;
                 pathData.pathMap[(int)candidate.x, (int)candidate.y] = 1;
@@ -207,12 +207,12 @@ public static class PathGenerator
                     pathData.end = candidate;
                     break;
                 }
-                else if (!isBranch && random.NextDouble() <= pathSettings.branchChance) {
+                else if (pathSettings.branchSettings.Length > branchIndex+1 && random.NextDouble() <= pathSettings.branchSettings[branchIndex+1].branchChance) {
                     Vector2 branchDirection = new Vector2(direction.x, direction.y) * ((random.Next(0, 2) == 0) ? new Vector2(1, -1) : new Vector2(-1, 1));
                     PathData branch = new PathData(length.x, length.y);
                     branch.isBranch = true;
                     branch.SetStart(candidate);
-                    branch = GeneratePath(pathSettings, branch, heightMap01, branchDirection, true);
+                    branch = GeneratePath(pathSettings, branch, heightMap01, branchDirection, branchIndex+1);
                     for (int y = 0; y < length.y; y++) {
                         for (int x = 0; x < length.x; x++) {
                             if (branch.pathMap[x, y] == 1) {
@@ -332,7 +332,7 @@ public static class PathGenerator
         Candidate candidate = new Candidate(starCorner, -1000, -1000);
         while (distance < Mathf.Max(length.x,length.y)) {
             distance += 0.5f;
-            for (int angle = 0; angle < 360; angle += 5) {
+            for (float angle = 0; angle < 360; angle += 5) {
                 Vector2 center = MathHelper.Project(starCorner, distance, angle);
                 if (!IsInBounds(center)) continue;
                 bool isGood = true;
@@ -359,7 +359,7 @@ public static class PathGenerator
         }
 
         for (float i = 0; i <= pathSettings.startRadius; i += 0.50f) {
-            for (int angle = 0; angle < 360; angle += 5) {
+            for (float angle = 0; angle < 360; angle += 5 / (1 + pathSettings.startRadius / 5)) {
                 Vector2 vect = MathHelper.Project(candidate.point, i, angle);
                 pathData.pathMap[(int)Mathf.Floor(Mathf.Clamp(vect.x, 0, length.x - 1)), (int)Mathf.Floor(Mathf.Clamp(vect.y, 0, length.y - 1))] = 1;
             }
@@ -392,7 +392,7 @@ public static class PathGenerator
 
     public static PathData AddPath(PathSettings pathSettings,PathData pathData ,HeightMap heightMap) {
         PathData newPathData = new PathData(heightMap.values01.GetLength(0), heightMap.values01.GetLength(1));
-        newPathData = GeneratePath(pathSettings, pathData, heightMap.values01, pathData.direction,pathData.isBranch);
+        newPathData = GeneratePath(pathSettings, pathData, heightMap.values01, pathData.direction,0);
         for(int x = 0; x < pathData.pathMap.GetLength(0); x++) {
             for(int y = 0; x < pathData.pathMap.GetLength(1); y++) {
                 if(pathData.pathMap[x, y] == -1)
@@ -404,7 +404,6 @@ public static class PathGenerator
     }
 }
 
-[System.Serializable]
 
 struct Candidate
 {
@@ -435,7 +434,12 @@ public class PathData
 
     public PathData(int sizeX, int sizeY) {
         pathMap = new float[sizeX, sizeY];
-        pathMap = new float[sizeX, sizeY];
+        heightMap = new float[sizeX, sizeY];
+    }
+
+    public PathData(float[,] pathMap) {
+        this.pathMap = pathMap;
+        heightMap = new float[pathMap.GetLength(0), pathMap.GetLength(1)];
     }
 
     public void SetStart(Vector2 start) {

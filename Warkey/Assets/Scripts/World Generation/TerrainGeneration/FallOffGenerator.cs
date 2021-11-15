@@ -4,13 +4,13 @@ using UnityEngine;
 
 public static class FallOffGenerator
 {
-    public static float[,] GenerateFalloffMap(int size) {
-        float[,] map = new float[size, size];
+    public static float[,] GenerateFalloffMap(int sizeX,int sizeY) {
+        float[,] map = new float[sizeX, sizeY];
 
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                float x = i / (float)size * 2 - 1;
-                float y = j / (float)size * 2 - 1;
+        for(int i = 0; i < sizeX; i++) {
+            for(int j = 0; j < sizeY; j++) {
+                float x = i / (float)sizeX * 2 - 1;
+                float y = j / (float)sizeY * 2 - 1;
 
                 float value = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y));
                 map[i, j] = Evaluate(value);
@@ -22,17 +22,18 @@ public static class FallOffGenerator
     public static float[,] ApplyFalloffMap(float[,] values,float[,] falloff) {
         float maxValue = float.MinValue;
         float minValue = float.MaxValue;
-        float size = values.GetLength(0);
+        float sizeX = values.GetLength(0);
+        float sizeY = values.GetLength(1);
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 minValue = Mathf.Min(minValue, values[i, j]);
                 maxValue = Mathf.Max(maxValue, values[i, j]);
             }
         }
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 values[i, j] = Mathf.Clamp(values[i, j] - falloff[i, j], minValue, maxValue);
             }
         }
@@ -42,22 +43,25 @@ public static class FallOffGenerator
     public static float[,] ApplyFalloffMapOffset(float[,] values, float[,] falloff, Vector2 offset) {
         float maxValue = float.MinValue;
         float minValue = float.MaxValue;
-        float size = values.GetLength(0);
-        int maxX = (int)Mathf.Round(falloff.GetLength(0) / size) - 1;
-        int coordOffset = maxX / 2;
+        float sizeX = values.GetLength(0);
+        float sizeY = values.GetLength(1);
+        int maxX = (int)Mathf.Round(falloff.GetLength(0) / sizeX) - 1;
+        int maxY = (int)Mathf.Round(falloff.GetLength(0) / sizeY) - 1;
+        int coordOffsetX = maxX / 2;
+        int coordOffsetY = maxY / 2;
         int fallOffSize = falloff.GetLength(0);
 
-        int offsetX =(int)(Mathf.Round(offset.x + coordOffset)) *(int)(size);
-        int offsetY =(int)((maxX) - Mathf.Round(offset.y + coordOffset))*(int)(size);
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        int offsetX =(int)(Mathf.Round(offset.x + coordOffsetX)) *(int)(sizeX);
+        int offsetY =(int)((maxY) - Mathf.Round(offset.y + coordOffsetY))*(int)(sizeY);
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
                 minValue = Mathf.Min(minValue, values[i, j]);
                 maxValue = Mathf.Max(maxValue, values[i, j]);
             }
         }
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeX; j++) {
                 values[i, j] = Mathf.Clamp(values[i, j] - falloff[i + offsetX, j + offsetY], 0, maxValue);
             }
         }

@@ -36,17 +36,21 @@ public class LODMesh
     public bool hasRequestedMesh;
     public bool hasMesh;
     int lod;
+    public int lodIndex;
 
-    public event System.Action updateCallback;
+    public int Lod { get => lod; }
 
-    public LODMesh(int lod) {
+    public event System.Action<int> updateCallback;
+
+    public LODMesh(int lod, int lodIndex) {
         this.lod = lod;
+        this.lodIndex = lodIndex;
     }
 
     public void OnMeshDataRecieved(object meshData) {
         hasMesh = true;
         this.mesh = ((MeshData)meshData).CreateMesh();
-        updateCallback();
+        updateCallback(lodIndex);
     }
 
     public enum MeshType
@@ -66,7 +70,7 @@ public class LODMesh
                 ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values01, meshSettings, lod, meshSettings.minValue, meshSettings.maxValue, true, meshSettings.height), OnMeshDataRecieved);
                 break;
             case MeshType.path:
-                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod, -1, float.MaxValue, false), OnMeshDataRecieved);
+                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod, 0, float.MaxValue, false), OnMeshDataRecieved);
                 break;
         }
     }

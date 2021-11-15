@@ -12,9 +12,10 @@ public class PathChunk : SubChunk
 
     public PathData PathData { set => pathData = value; get => pathData; }
 
-    public PathChunk(Chunk parent, Transform viewer, Material material) : base(parent, viewer) {
+    public PathChunk(Chunk parent, Transform viewer, Material material, float[,] pathmap) : base(parent,false) {
         this.pathSettings = parent.PathSettings;
         this.adjacentChunks = parent.AdjacentChunks;
+        pathData = new PathData(pathmap);
 
         subObject = new GameObject("Path");
         meshCollider = subObject.AddComponent<MeshCollider>();
@@ -27,21 +28,22 @@ public class PathChunk : SubChunk
 
         SetObject();
     }
-    public override void RequestLODMesh(LODMesh lODMesh) {
+    public override void RequestMesh(LODMesh lODMesh) {
+        pathData.heightMap = PathGenerator.SetPathHeight(pathData.pathMap, this.heightMap.values, pathSettings);
         lODMesh.RequestMesh(new HeightMap(this.pathData.heightMap,0,0), meshSettings, LODMesh.MeshType.path);
     }
 
     public override void SetHeightMap(HeightMap heightMap) {
         this.heightMap = heightMap;
         this.isHeightMapReceived = true;
-        RequestPathData();
+        //RequestPathData();
     }
 
     private void RequestPathData() {
         if(isStartingChunk)
             ThreadDataRequest.RequestData(() => PathGenerator.GeneratePath(pathSettings, heightMap, new Vector2(5, 240), new Vector2(1, -1)), OnPathDataReceived);
         else {
-            pathData = new PathData(heightMap.values.GetLength(0), heightMap.values.GetLength(1));
+            //pathData = new PathData(heightMap.values.GetLength(0), heightMap.values.GetLength(1));
         }
     }
 
@@ -75,7 +77,7 @@ public class PathChunk : SubChunk
     }
 
     private void OnPathDataReceived(object pathData) {
-        this.pathData = (PathData)pathData;
+       // this.pathData = (PathData)pathData;
         lODMeshes[previousLODIndex].RequestMesh(new HeightMap(this.pathData.heightMap, 0, 0), meshSettings, LODMesh.MeshType.path);
         hasSetPath = true;
     }

@@ -52,7 +52,7 @@ public class TerrainGenerator : MonoBehaviour
         chunkSizeVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / meshWorldSize);
 
         if(chunkSize.x != 0 && chunkSize.y != 0 && heightMapSettings.useFallOff) {
-            fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount*chunkSize.x));
+            fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount*chunkSize.x), (int)(meshSettings.VerticesPerLineCount * chunkSize.y));
         }
 
         LoadAll();
@@ -60,11 +60,11 @@ public class TerrainGenerator : MonoBehaviour
     }
 
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial);
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial,null);
         chunkDictionary.Add(viewedChunkCoord, chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         //chunk.onStateChanged +=    
-        chunk.Load(fallOffMap);
+        chunk.Load(fallOffMap,false);
         
         onChunkCreated += chunk.UpdateAdjacentChunks;
         onChunkCreated(chunk);
@@ -161,7 +161,7 @@ public class TerrainGenerator : MonoBehaviour
 
     private void UpdateChunkCollisions() {
         foreach (Chunk chunk in visibleChunks) {
-            chunk.terrainChunk.UpdateCollisionMesh();
+            chunk.UpdateChunkCollisions();
         }
     }
      

@@ -73,7 +73,7 @@ public class MapPreview : MonoBehaviour
             
         }
         else if (drawMode == DrawMode.FallOff)
-            DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
+            DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
         for(int i = meshFilter.transform.childCount-1; i >= 0; --i) {

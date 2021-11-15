@@ -17,18 +17,23 @@ MonoBehaviour:
   maxIteration: 1000
   maxSubIteration: 1000
   distance:
-    min: 2
+    min: 3
     max: 6
   maxSteepChange: 0.015
   height:
-    min: 0.25
-    max: 0.75
+    min: 0.3
+    max: 0.5
   negativeStrength: 0.15
-  branchChance: 0.01
-  branchIteration: 100
-  branchWidth: 3
-  branchNegativeStrength: 0.3
-  startRadius: 50
+  branchSettings:
+  - branchChance: 0.01
+    branchIteration: 500
+    branchWidth: 3
+    branchNegativeStrength: 0.3
+  - branchChance: 0.005
+    branchIteration: 100
+    branchWidth: 2
+    branchNegativeStrength: 0.5
+  startRadius: 20
   pathWidth: 6
   pathHeightOffset: 0.15
-  smoothWeight: 5
+  smoothWeight: 3

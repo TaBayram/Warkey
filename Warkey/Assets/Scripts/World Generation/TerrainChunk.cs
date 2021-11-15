@@ -6,7 +6,7 @@ using Unity.AI.Navigation;
 
 public class TerrainChunk: SubChunk
 {
-    public TerrainChunk(Chunk parent, Transform viewer, Material material) : base(parent, viewer){
+    public TerrainChunk(Chunk parent, Transform viewer, Material material) : base(parent){
         
         subObject = new GameObject("Terrain");
         meshCollider = subObject.AddComponent<MeshCollider>();
@@ -18,7 +18,7 @@ public class TerrainChunk: SubChunk
         SetObject();
     }
 
-    public override void RequestLODMesh(LODMesh lODMesh) {
+    public override void RequestMesh(LODMesh lODMesh) {
         lODMesh.RequestMesh(heightMap, meshSettings);
     }
 }

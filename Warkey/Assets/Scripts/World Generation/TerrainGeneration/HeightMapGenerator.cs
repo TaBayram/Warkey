@@ -14,7 +14,7 @@ public static class HeightMapGenerator
 
         if (settings.useFallOff) {
             if(fallOff == null) {
-                values = FallOffGenerator.ApplyFalloffMap(values, FallOffGenerator.GenerateFalloffMap(width));
+                values = FallOffGenerator.ApplyFalloffMap(values, FallOffGenerator.GenerateFalloffMap(width,height));
             }
             else {
                 values = FallOffGenerator.ApplyFalloffMapOffset(values, fallOff, coord);
@@ -60,4 +60,7 @@ public struct HeightMap
         this.max01Value = max01Value;
         this.values01 = values01;
     }
+
+    public int sizeX { get => values.GetLength(0); }
+    public int sizeY { get => values.GetLength(1); }
 }

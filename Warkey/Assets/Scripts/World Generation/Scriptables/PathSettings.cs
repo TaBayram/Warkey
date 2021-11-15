@@ -17,6 +17,17 @@ public class PathSettings : UpdateableData
     [Range(0, 1)]
     public float negativeStrength;
 
+    public BranchData[] branchSettings;
+
+    public float startRadius;
+    public float pathWidth;
+    public float pathHeightOffset;
+    public float smoothWeight;
+}
+
+[System.Serializable]
+public struct BranchData
+{
     [Header("Branch")]
     [Range(0, 1)]
     public float branchChance;
@@ -26,9 +37,4 @@ public class PathSettings : UpdateableData
     [Range(0, 1)]
     public float branchNegativeStrength;
 
-
-    public float startRadius;
-    public float pathWidth;
-    public float pathHeightOffset;
-    public float smoothWeight;
 }

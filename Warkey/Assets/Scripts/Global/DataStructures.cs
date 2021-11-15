@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct MinMax
 {
     public float min;
@@ -11,7 +12,7 @@ public struct MinMax
         this.max = max;
     }
 }
-
+[System.Serializable]
 public struct XY
 {
     public int x;

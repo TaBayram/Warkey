@@ -33,12 +33,15 @@ public class Chunk
     //public NavMeshSurface navMeshSurface;
 
     public event System.Action<Chunk, bool> onVisibleChanged;
-    public event System.Action<Chunk, bool> onStateChanged;
-    public event System.Action<int> onUpdateChunk;
+    public event System.Action<Chunk> onChunkLoaded;
+    public event System.Action<int, bool> onLoadSubChunks;
+    public event System.Action<int> onViewerUpdate;
+    public event System.Action<float> onViewerColliderUpdate;
     event System.Action<bool> onSetVisibleChunk;
     event System.Action<HeightMap> onHeightMapSet;
 
-    /*Enviroment*/
+
+    bool loadAll = false;
     bool isHeightMapReceived = false;
     bool hasSetEnviromentObjects = false;
     List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
@@ -52,7 +55,7 @@ public class Chunk
     protected Vector2 ViewerPosition { get { return new Vector2(viewer.position.x, viewer.position.z); } }
     public AdjacentChunks AdjacentChunks { get => adjacentChunks; }
 
-    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial) {
+    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap) {
         this.coordinate = coord;
         this.chunkMatrix = chunkMatrix;
         this.LODSettings = lODSettings;
@@ -78,7 +81,7 @@ public class Chunk
         waterChunk = new WaterChunk(this, viewer, waterMaterial);
         RegisterActions(waterChunk);
 
-        pathChunk = new PathChunk(this, viewer, pathMaterial);
+        pathChunk = new PathChunk(this, viewer, pathMaterial, pathmap);
         RegisterActions(pathChunk);
 
 
@@ -86,19 +89,26 @@ public class Chunk
     }
 
     private void RegisterActions(SubChunk subChunk) {
-        onUpdateChunk += subChunk.ForceLODMesh;
+        onLoadSubChunks += subChunk.LoadSubChunk;
         onSetVisibleChunk += subChunk.SetVisible;
         onHeightMapSet += subChunk.SetHeightMap;
+        onViewerColliderUpdate += subChunk.UpdateCollisionMesh;
+        onViewerUpdate += subChunk.UpdateSubChunk;
     }
 
-    public void Load(float[,] fallOff) {
+    public void Load(float[,] fallOff,bool loadAll) {
         ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, worldPosition, coordinate, fallOff), OnHeightMapReceived);
+        this.loadAll = loadAll;
     }
 
     protected void OnHeightMapReceived(object heightMap) {
         isHeightMapReceived = true;
         this.heightMap = (HeightMap)heightMap;
         onHeightMapSet(this.heightMap);
+        if (loadAll) {
+            onLoadSubChunks(0, true);
+            onChunkLoaded(this);
+        }
         UpdateChunk();
     }
 
@@ -113,6 +123,8 @@ public class Chunk
         this.enviromentObjectDatas = (List<EnviromentObjectData>)enviromentObjects;
         foreach (EnviromentObjectData objectData in enviromentObjectDatas)
             objectData.CreateObjects();
+
+        
         UpdateChunk();
     }
 
@@ -131,9 +143,10 @@ public class Chunk
             }
             if (lodIndex != previousLOD) {
                 previousLOD = lodIndex;
-                onUpdateChunk(lodIndex);                
+                onViewerUpdate(lodIndex);                
             }
-            if (lodIndex <= LODSettings.enviromentLOD) {
+
+            if (lodIndex <= LODSettings.LODInfos[LODSettings.enviromentLOD].lod) {
                 if (!hasSetEnviromentObjects) {
                     RequestEnviromentObjectDatas();
                 }
@@ -184,7 +197,8 @@ public class Chunk
 
 
     public void UpdateChunkCollisions() {
-
+        float sqrDistanceFromViewerToEdge = bounds.SqrDistance(ViewerPosition);
+        onViewerColliderUpdate(sqrDistanceFromViewerToEdge);
     }
 
 

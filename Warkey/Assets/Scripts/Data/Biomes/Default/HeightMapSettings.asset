@@ -27,50 +27,50 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.4114685
+      time: 0
       value: 0
+      inSlope: 2
+      outSlope: 0.8660845
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.26472193
+      value: 0.18217774
+      inSlope: 15.180583
+      outSlope: 0.43175954
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.061830748
+      outWeight: 0.32492107
+    - serializedVersion: 3
+      time: 0.3794367
+      value: 0.60659385
+      inSlope: 1.7375804
+      outSlope: 0.18156059
+      tangentMode: 65
+      weightedMode: 3
+      inWeight: 0.33075643
+      outWeight: 0.35119706
+    - serializedVersion: 3
+      time: 0.5716417
+      value: 0.6414907
+      inSlope: -0.16895378
+      outSlope: 0.39476168
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.30863205
+      outWeight: 0.38838136
+    - serializedVersion: 3
+      time: 1
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.1
-      value: 0
-      inSlope: -0
-      outSlope: 0.2694968
-      tangentMode: 5
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.25
-      value: 0.3
-      inSlope: 2
-      outSlope: 0.42759573
-      tangentMode: 5
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.87940145
-      value: 0.8726196
-      inSlope: 0.1100164
-      outSlope: 0.9993203
-      tangentMode: 65
-      weightedMode: 0
-      inWeight: 0.594882
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1.5013363
-      value: 1.4941318
-      inSlope: 1.9325694
-      outSlope: 1.9325694
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

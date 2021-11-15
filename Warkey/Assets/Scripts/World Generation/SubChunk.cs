@@ -10,7 +10,6 @@ public abstract class SubChunk
     protected GameObject subObject;
     protected Chunk chunk;
     protected Vector2 worldPosition;
-    protected Bounds bounds;
 
     protected MeshRenderer meshRenderer;
     protected MeshFilter meshFilter;
@@ -19,95 +18,104 @@ public abstract class SubChunk
     protected LODSettings LODSettings;
     protected LODMesh[] lODMeshes;
     protected int previousLODIndex = -1;
+    protected int requestedLODIndex = -1;
 
     protected HeightMap heightMap;
     protected bool isHeightMapReceived;
     protected bool hasSetCollider;
+    protected bool mustSetCollider;
     protected float maxViewDistance;
 
     protected HeightMapSettings heightMapSettings;
     protected MeshSettings meshSettings;
 
-    protected Transform viewer;
     public bool meshIsSet = false;
+    public bool setCollider;
 
-    protected Vector2 ViewerPosition {
-        get {
-            return new Vector2(viewer.position.x, viewer.position.z);
-        }
-    }
-
-    public SubChunk(Chunk parent, Transform viewer) {
+    public SubChunk(Chunk parent, bool setCollider = true) {
         this.coordinate = parent.coordinate;
         this.LODSettings = parent.LODSettings;
         this.heightMapSettings = parent.HeightMapSettings;
         this.meshSettings = parent.MeshSettings;
-        this.viewer = viewer;
-        this.bounds = parent.bounds;
         this.chunk = parent;
+        this.setCollider = setCollider;
         SetLODMeshes();
     }
     protected void SetLODMeshes() {
         lODMeshes = new LODMesh[LODSettings.LODCount];
         for (int i = 0; i < LODSettings.LODCount; i++) {
-            lODMeshes[i] = new LODMesh(LODSettings.LODInfos[i].lod);
-            lODMeshes[i].updateCallback += UpdateSubChunk;
+            lODMeshes[i] = new LODMesh(LODSettings.LODInfos[i].lod,i);
+            lODMeshes[i].updateCallback += OnLODMeshReceived;
             if (i == LODSettings.colliderLOD) {
-                lODMeshes[i].updateCallback += UpdateCollisionMesh;
+                lODMeshes[i].updateCallback += onColliderMeshReceived;
             }
         }
         maxViewDistance = LODSettings.LODInfos[LODSettings.LODCount - 1].visibleDistanceThreshold;
     }
-
     protected void SetObject() {
         Vector2 position = coordinate * meshSettings.MeshWorldSize;
         subObject.transform.position = new Vector3(position.x, 0, position.y);
         subObject.transform.parent = chunk.chunkObject.transform;
         SetVisible(false);
-    }
-
-    
+    }    
     public virtual void SetHeightMap(HeightMap heightMap) {
         this.heightMap = heightMap;
         isHeightMapReceived = true;
     }
-
-    public abstract void RequestLODMesh(LODMesh lODMesh);
-
-  
-
-    
-
-    public void UpdateSubChunk() {
-        if (!isHeightMapReceived) return;
-        meshIsSet = false;
-        float viewerDistanceFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(ViewerPosition));
-        bool visible = viewerDistanceFromNearestEdge <= maxViewDistance;
-
-        if (visible) {
-            int lodIndex = 0;
-            for (int i = 0; i < LODSettings.LODCount - 1; i++) {
-                if (viewerDistanceFromNearestEdge > LODSettings.LODInfos[i].visibleDistanceThreshold)
-                    lodIndex = i + 1;
-                else break;
-            }
-            if (lodIndex != previousLODIndex) {
-                LODMesh lodMesh = lODMeshes[lodIndex];
-                if (lodMesh.hasMesh) {
-                    previousLODIndex = lodIndex;
-                    meshFilter.mesh = lodMesh.mesh;
-                    meshIsSet = true;
-                }
-                else if (!lodMesh.hasRequestedMesh) {
-                    RequestLODMesh(lodMesh);
-                }
-
+    public abstract void RequestMesh(LODMesh lODMesh);
+    public void RequestLODMesh(LODMesh lODMesh) {
+        requestedLODIndex = lODMesh.Lod;
+        RequestMesh(lODMesh);
+    }
+    public void OnLODMeshReceived(int lodIndex) {
+        if (lodIndex == requestedLODIndex) {
+            LODMesh lodMesh = lODMeshes[lodIndex];
+            if (lodMesh.hasMesh) {
+                previousLODIndex = lodIndex;
+                meshFilter.mesh = lodMesh.mesh;
+                meshIsSet = true;
             }
         }
     }
-
-
-    public void ForceLODMesh(int lodIndex) {
+    public void onColliderMeshReceived(int lodIndex) {
+        if (!hasSetCollider && setCollider) {
+            meshCollider.sharedMesh = lODMeshes[lodIndex].mesh;
+        }
+    }
+    public void UpdateSubChunk(int lodIndex) {
+        if (!isHeightMapReceived) return;
+        meshIsSet = false;
+        if (lodIndex != previousLODIndex) {
+            LODMesh lodMesh = lODMeshes[lodIndex];
+            if (lodMesh.hasMesh) {
+                previousLODIndex = lodIndex;
+                meshFilter.mesh = lodMesh.mesh;
+                meshIsSet = true;
+            }
+            else if (!lodMesh.hasRequestedMesh) {
+                RequestLODMesh(lodMesh);
+            }
+        }
+    }
+    public void UpdateCollisionMesh(float sqrNearestDistance) {
+        if (hasSetCollider || !setCollider) return;
+        if (sqrNearestDistance < LODSettings.LODInfos[LODSettings.colliderLOD].sqrVisibleThreshold) {
+            if (!lODMeshes[LODSettings.colliderLOD].hasRequestedMesh) {
+                RequestLODMesh(lODMeshes[LODSettings.colliderLOD]);
+            }
+        }
+        if (sqrNearestDistance < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold) {
+            if (lODMeshes[LODSettings.colliderLOD].hasMesh) {
+                meshCollider.sharedMesh = lODMeshes[LODSettings.colliderLOD].mesh;
+                hasSetCollider = true;
+            }
+            else
+                mustSetCollider = true;
+        }
+        else
+            mustSetCollider = false;
+    }
+    public void LoadSubChunk(int lodIndex,bool loadCollider) {
         if (!isHeightMapReceived) return;
         meshIsSet = false;
         LODMesh lodMesh = lODMeshes[lodIndex];
@@ -119,24 +127,9 @@ public abstract class SubChunk
         if (!lodMesh.hasRequestedMesh) {
             RequestLODMesh(lodMesh);
         }
-    }
-
-    public void UpdateCollisionMesh() {
-        if (hasSetCollider) return;
-        float sqrDistanceFromViewerToEdge = bounds.SqrDistance(ViewerPosition);
-        if (sqrDistanceFromViewerToEdge < LODSettings.LODInfos[LODSettings.colliderLOD].sqrVisibleThreshold) {
-            if (!lODMeshes[LODSettings.colliderLOD].hasRequestedMesh) {
-                RequestLODMesh(lODMeshes[LODSettings.colliderLOD]);
-            }
+        if (setCollider && loadCollider && !hasSetCollider && !lODMeshes[LODSettings.colliderLOD].hasRequestedMesh) {
+            RequestLODMesh(lODMeshes[LODSettings.colliderLOD]);
         }
-
-        if (sqrDistanceFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold) {
-            if (lODMeshes[LODSettings.colliderLOD].hasMesh) {
-                meshCollider.sharedMesh = lODMeshes[LODSettings.colliderLOD].mesh;
-                hasSetCollider = true;
-            }
-        }
-
     }
 
     public void SetVisible(bool visible) {
