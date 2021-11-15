@@ -19,7 +19,7 @@ MonoBehaviour:
     sampleCountBeforeRejection: 25
   enviromentObjects:
   - enabled: 1
-    visibleMaxLod: 0
+    visibleMaxLod: 2
     gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
     blockRadius: 20
     elevation: -0.25

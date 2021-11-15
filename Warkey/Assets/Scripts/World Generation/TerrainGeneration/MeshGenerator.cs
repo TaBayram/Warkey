@@ -91,7 +91,7 @@ public static class MeshGenerator
 
 
 
-    public static MeshData GenerateTerrainMesh(float[,] heightMap, MeshSettings meshSettings, int levelOfDetail,float minHeight, float maxHeight,float defaultValue = 0) {
+    public static MeshData GenerateTerrainMesh(float[,] heightMap, MeshSettings meshSettings, int levelOfDetail,float minHeight, float maxHeight,bool useDefault = false,float defaultValue = 0) {
         int skipIncrement = (levelOfDetail == 0) ? 1 : levelOfDetail * 2;
         int verticesPerLineCount = meshSettings.VerticesPerLineCount;
 
@@ -137,9 +137,7 @@ public static class MeshGenerator
                     int vertexIndex = vertexIndicesMap[x, y];
                     Vector2 vertexUV = new Vector2((x - 1), (y - 1)) / (verticesPerLineCount - 3);
                     Vector2 vertexPosition2D = topLeft + new Vector2(vertexUV.x, -vertexUV.y) * meshSettings.MeshWorldSize;
-                    float height = heightMap[x, y];
-
-                    
+                    float height = heightMap[x, y];                    
 
                     if (isEdgeConnectionVertex) {
                         bool isVertical = x == 2 || x == verticesPerLineCount - 3;
@@ -154,7 +152,7 @@ public static class MeshGenerator
                     }
 
 
-                    meshData.AddVertex(new Vector3(vertexPosition2D.x, defaultValue, vertexPosition2D.y), vertexUV, vertexIndex);
+                    meshData.AddVertex(new Vector3(vertexPosition2D.x, (useDefault)?defaultValue:height, vertexPosition2D.y), vertexUV, vertexIndex);
                     if (height < minHeight || height > maxHeight) continue;
                     bool createTriangle = x < verticesPerLineCount - 1 && y < verticesPerLineCount - 1 && (!isEdgeConnectionVertex || (x != 2 && y != 2));
 

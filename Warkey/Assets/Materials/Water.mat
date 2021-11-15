@@ -115,7 +115,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     - _depth: 0.5
-    - _displacement: 3.54
+    - _displacement: 1
     - _normalstrength: 1
     - _smoothness: 0.6
     - _strength: 0.15
