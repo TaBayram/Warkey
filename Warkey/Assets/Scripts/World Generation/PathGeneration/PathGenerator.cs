@@ -449,4 +449,7 @@ public class PathData
         else
             points.Add(start);
     }
+
+    public int sizeX { get => pathMap.GetLength(0); }
+    public int sizeY { get => pathMap.GetLength(1);}
 }

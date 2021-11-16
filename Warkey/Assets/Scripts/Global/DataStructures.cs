@@ -23,6 +23,11 @@ public struct XY
         this.y = y;
     }
 
+    public XY(int xy) {
+        this.x = xy;
+        this.y = xy;
+    }
+
     public Vector2 ToVector() {
         return new Vector2(x, y);
     }

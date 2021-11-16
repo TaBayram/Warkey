@@ -32,6 +32,9 @@ public abstract class SubChunk
     public bool meshIsSet = false;
     public bool setCollider;
 
+    public event System.Action<SubChunk> onLoadFinish;
+    public bool isLoaded = false;
+
     public SubChunk(Chunk parent, bool setCollider = true) {
         this.coordinate = parent.coordinate;
         this.LODSettings = parent.LODSettings;
@@ -39,6 +42,7 @@ public abstract class SubChunk
         this.meshSettings = parent.MeshSettings;
         this.chunk = parent;
         this.setCollider = setCollider;
+        this.onLoadFinish += parent.SubchunkLoadCompletion;
         SetLODMeshes();
     }
     protected void SetLODMeshes() {
@@ -56,7 +60,7 @@ public abstract class SubChunk
         Vector2 position = coordinate * meshSettings.MeshWorldSize;
         subObject.transform.position = new Vector3(position.x, 0, position.y);
         subObject.transform.parent = chunk.chunkObject.transform;
-        SetVisible(false);
+        //SetVisible(false);
     }    
     public virtual void SetHeightMap(HeightMap heightMap) {
         this.heightMap = heightMap;
@@ -74,6 +78,11 @@ public abstract class SubChunk
                 previousLODIndex = lodIndex;
                 meshFilter.mesh = lodMesh.mesh;
                 meshIsSet = true;
+                if (!isLoaded) {
+                    isLoaded = true;
+                    onLoadFinish(this);
+                }
+                
             }
         }
     }
@@ -91,6 +100,10 @@ public abstract class SubChunk
                 previousLODIndex = lodIndex;
                 meshFilter.mesh = lodMesh.mesh;
                 meshIsSet = true;
+                if (!isLoaded) {
+                    isLoaded = true;
+                    onLoadFinish(this);
+                }
             }
             else if (!lodMesh.hasRequestedMesh) {
                 RequestLODMesh(lodMesh);

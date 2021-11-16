@@ -44,6 +44,9 @@ public class FiniteWorldGenerator : MonoBehaviour
     Vector2 viewerPosition;
     Vector2 viewerPositionOld;
 
+
+    public event System.Action onWorldReady;
+
     private void Start() {
         textureData.ApplyToMaterial(mapMaterial);
         textureData.UpdateMeshHeights(mapMaterial, heightMapSettings.MinHeight, heightMapSettings.MaxHeight);
@@ -112,8 +115,6 @@ public class FiniteWorldGenerator : MonoBehaviour
     private void onChunkLoaded(Chunk chunk) {
         count++;
         if (count == (chunkSize.x * chunkSize.y)) {
-            GameObject gameObject = new GameObject("Pos");
-            gameObject.transform.position = new Vector3(pathData.start.x - heightMap.sizeX / 2  + ((chunkSize.x % 2 == 0)?meshSettings.VerticesPerLineCount/2:0) , heightMap.values[(int)pathData.start.x , (int)pathData.start.y] + 10, -pathData.start.y + heightMap.sizeY / 2 + ((chunkSize.y % 2 == 0) ? meshSettings.VerticesPerLineCount / 2 : 0));
             OnAllLoaded();
         }
             
@@ -124,12 +125,13 @@ public class FiniteWorldGenerator : MonoBehaviour
         int xModifier = (chunkSize.x % 2 == 0) ? 1 : 0;
         int yModifier = (chunkSize.y % 2 == 0) ? 1 : 0;
 
-        for (int yOffset = -maxY + yModifier+1; yOffset < maxX; yOffset++) {
-            for (int xOffset = -maxX + xModifier+1; xOffset < maxY; xOffset++) {
+        for (int yOffset = -maxY + yModifier+1; yOffset < maxY; yOffset++) {
+            for (int xOffset = -maxX + xModifier+1; xOffset < maxX; xOffset++) {
                 Vector2 viewedChunkCoord = new Vector2(xOffset, yOffset);
                 if (!chunkDictionary.ContainsKey(viewedChunkCoord)) {
+                    //Debug.Log(viewedChunkCoord +" " + CanCreateTerrainChunk(viewedChunkCoord));
                     if (CanCreateTerrainChunk(viewedChunkCoord)) {
-                        CreateChunk(viewedChunkCoord).SetVisible(false);
+                        CreateChunk(viewedChunkCoord).SetVisible(true);
                     }
                 }
                 
@@ -138,8 +140,8 @@ public class FiniteWorldGenerator : MonoBehaviour
     }
 
     private void OnAllLoaded() {
-        navMeshSurface.BuildNavMesh();       
-
+        navMeshSurface.BuildNavMesh();
+        onWorldReady();
         /*
         float[,] heightMap = new float[(int)Mathf.Ceil(sizeX), (int)Mathf.Ceil(sizeY)];
 

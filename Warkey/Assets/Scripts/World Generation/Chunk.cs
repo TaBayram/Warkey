@@ -32,8 +32,11 @@ public class Chunk
     Transform viewer;
     //public NavMeshSurface navMeshSurface;
 
+    //World Generator
     public event System.Action<Chunk, bool> onVisibleChanged;
     public event System.Action<Chunk> onChunkLoaded;
+
+    //Sub Chunk
     public event System.Action<int, bool> onLoadSubChunks;
     public event System.Action<int> onViewerUpdate;
     public event System.Action<float> onViewerColliderUpdate;
@@ -67,7 +70,7 @@ public class Chunk
 
         this.chunkObject = new GameObject("Chunk");
         chunkObject.transform.parent = parent;
-        SetVisible(false);
+        
 
         worldPosition = coord * meshSettings.MeshWorldSize / meshSettings.scale;
         Vector2 position = coord * meshSettings.MeshWorldSize;
@@ -107,7 +110,6 @@ public class Chunk
         onHeightMapSet(this.heightMap);
         if (loadAll) {
             onLoadSubChunks(0, true);
-            onChunkLoaded(this);
         }
         UpdateChunk();
     }
@@ -122,7 +124,7 @@ public class Chunk
         this.hasSetEnviromentObjects = true;
         this.enviromentObjectDatas = (List<EnviromentObjectData>)enviromentObjects;
         foreach (EnviromentObjectData objectData in enviromentObjectDatas)
-            objectData.CreateObjects();
+            objectData.CreateObjects(true);
 
         
         UpdateChunk();
@@ -219,6 +221,14 @@ public class Chunk
 
 
         return coordinate.x == -maxX + xModifier && coordinate.y == maxY + yModifier;
+    }
+
+    int count = 0;
+    public void SubchunkLoadCompletion(SubChunk subChunk) {
+        count++;
+        if(count == 3) {
+            onChunkLoaded(this);
+        }
     }
 
 }
