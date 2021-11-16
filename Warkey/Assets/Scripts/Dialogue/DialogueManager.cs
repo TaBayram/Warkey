@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -90,6 +91,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     SoundManager.PlaySound("3");
                     npcDialogueBox.text = npc.dialogue[3];
+                    SceneManager.LoadScene(1);
                 }
             }
         }
