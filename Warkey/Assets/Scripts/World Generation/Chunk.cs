@@ -8,10 +8,15 @@ public class Chunk
     public GameObject chunkObject;
     public Vector2 coordinate;
     public Vector2 worldPosition;
+    public Vector2 chunkMatrix;
+
+    private AdjacentChunks adjacentChunks = new AdjacentChunks();
+
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
     GroundSettings groundSettings;
+    PathSettings pathSettings;
 
     int currentLOD;
     int previousLOD = -1;
@@ -22,17 +27,24 @@ public class Chunk
     
     public TerrainChunk terrainChunk;
     public WaterChunk waterChunk;
+    public PathChunk pathChunk;
     
     Transform viewer;
-    Material terrainMaterial;
-    Material waterMaterial;
     //public NavMeshSurface navMeshSurface;
 
+    //World Generator
     public event System.Action<Chunk, bool> onVisibleChanged;
-    public event System.Action<int> onUpdateChunk;
+    public event System.Action<Chunk> onChunkLoaded;
+
+    //Sub Chunk
+    public event System.Action<int, bool> onLoadSubChunks;
+    public event System.Action<int> onViewerUpdate;
+    public event System.Action<float> onViewerColliderUpdate;
     event System.Action<bool> onSetVisibleChunk;
     event System.Action<HeightMap> onHeightMapSet;
 
+
+    bool loadAll = false;
     bool isHeightMapReceived = false;
     bool hasSetEnviromentObjects = false;
     List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
@@ -42,23 +54,23 @@ public class Chunk
     public HeightMapSettings HeightMapSettings { get => heightMapSettings; }
     public MeshSettings MeshSettings { get => meshSettings; }
     public GroundSettings GroundSettings { get => groundSettings; }
+    public PathSettings PathSettings { get => pathSettings; }
     protected Vector2 ViewerPosition { get { return new Vector2(viewer.position.x, viewer.position.z); } }
+    public AdjacentChunks AdjacentChunks { get => adjacentChunks; }
 
-
-    public Chunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings, LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial) {
+    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap) {
         this.coordinate = coord;
+        this.chunkMatrix = chunkMatrix;
         this.LODSettings = lODSettings;
         this.heightMapSettings = heightMapSettings;
         this.meshSettings = meshSettings;
         this.groundSettings = groundSettings;
+        this.pathSettings = pathSettings;
         this.viewer = viewer;
-
-        this.waterMaterial = waterMaterial;
-        this.terrainMaterial = material;
 
         this.chunkObject = new GameObject("Chunk");
         chunkObject.transform.parent = parent;
-        SetVisible(false);
+        
 
         worldPosition = coord * meshSettings.MeshWorldSize / meshSettings.scale;
         Vector2 position = coord * meshSettings.MeshWorldSize;
@@ -72,25 +84,33 @@ public class Chunk
         waterChunk = new WaterChunk(this, viewer, waterMaterial);
         RegisterActions(waterChunk);
 
+        pathChunk = new PathChunk(this, viewer, pathMaterial, pathmap);
+        RegisterActions(pathChunk);
+
 
         maxViewDistance = LODSettings.LODInfos[LODSettings.LODCount - 1].visibleDistanceThreshold;
     }
 
     private void RegisterActions(SubChunk subChunk) {
-        onUpdateChunk += subChunk.ForceLODMesh;
+        onLoadSubChunks += subChunk.LoadSubChunk;
         onSetVisibleChunk += subChunk.SetVisible;
         onHeightMapSet += subChunk.SetHeightMap;
-
+        onViewerColliderUpdate += subChunk.UpdateCollisionMesh;
+        onViewerUpdate += subChunk.UpdateSubChunk;
     }
 
-    public void Load(float[,] fallOff) {
+    public void Load(float[,] fallOff,bool loadAll) {
         ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, worldPosition, coordinate, fallOff), OnHeightMapReceived);
+        this.loadAll = loadAll;
     }
 
     protected void OnHeightMapReceived(object heightMap) {
         isHeightMapReceived = true;
         this.heightMap = (HeightMap)heightMap;
         onHeightMapSet(this.heightMap);
+        if (loadAll) {
+            onLoadSubChunks(0, true);
+        }
         UpdateChunk();
     }
 
@@ -104,7 +124,9 @@ public class Chunk
         this.hasSetEnviromentObjects = true;
         this.enviromentObjectDatas = (List<EnviromentObjectData>)enviromentObjects;
         foreach (EnviromentObjectData objectData in enviromentObjectDatas)
-            objectData.CreateObjects();
+            objectData.CreateObjects(true);
+
+        
         UpdateChunk();
     }
 
@@ -123,22 +145,23 @@ public class Chunk
             }
             if (lodIndex != previousLOD) {
                 previousLOD = lodIndex;
-                onUpdateChunk(lodIndex);                
+                onViewerUpdate(lodIndex);                
             }
-            if (lodIndex <= LODSettings.enviromentLOD) {
+
+            if (lodIndex <= LODSettings.LODInfos[LODSettings.enviromentLOD].lod) {
                 if (!hasSetEnviromentObjects) {
                     RequestEnviromentObjectDatas();
                 }
                 else {
                     foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                        if(objectData.isObjectsLoaded)
+                        if(objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod <= lodIndex)
                             objectData.Visible(true);
                     }
                 }
             }
             else {
                 foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                    if (objectData.isObjectsLoaded)
+                    if (objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod > lodIndex)
                         objectData.Visible(false);
                 }
             }
@@ -154,10 +177,30 @@ public class Chunk
         
     }
 
+    public void UpdateAdjacentChunks(Chunk chunk) {
+        Vector2 vector = chunk.coordinate - coordinate;
+
+        if(Mathf.Abs(vector.x) == 1) {
+            if(coordinate.x < chunk.coordinate.x) 
+                adjacentChunks.chunks[(int)AdjacentChunks.Position.right] = chunk;
+            else
+                adjacentChunks.chunks[(int)AdjacentChunks.Position.left] = chunk;
+        }
+
+        if(Mathf.Abs(vector.y) == 1) {
+            if (coordinate.y < chunk.coordinate.y)
+                adjacentChunks.chunks[(int)AdjacentChunks.Position.up] = chunk;
+            else
+                adjacentChunks.chunks[(int)AdjacentChunks.Position.down] = chunk;
+        }
+
+        pathChunk.CheckPath(chunk);
+    }
 
 
     public void UpdateChunkCollisions() {
-
+        float sqrDistanceFromViewerToEdge = bounds.SqrDistance(ViewerPosition);
+        onViewerColliderUpdate(sqrDistanceFromViewerToEdge);
     }
 
 
@@ -168,4 +211,39 @@ public class Chunk
     public bool IsVisible() {
         return chunkObject.activeSelf;
     }
+
+
+    public bool IsStartingCoord() {
+        int maxX = (int)chunkMatrix.x / 2 + 1;
+        int maxY = (int)chunkMatrix.y / 2 + 1;
+        int xModifier = (chunkMatrix.x % 2 == 0) ? 1 : 0;
+        int yModifier = (chunkMatrix.y % 2 == 0) ? 1 : 0;
+
+
+        return coordinate.x == -maxX + xModifier && coordinate.y == maxY + yModifier;
+    }
+
+    int count = 0;
+    public void SubchunkLoadCompletion(SubChunk subChunk) {
+        count++;
+        if(count == 3) {
+            onChunkLoaded(this);
+        }
+    }
+
+}
+
+
+public class AdjacentChunks
+{
+    public Chunk[] chunks = new Chunk[4];
+    public enum Position
+    {
+        up = 0,
+        right = 1,
+        down = 2,
+        left = 3
+    }
+
+    public AdjacentChunks() { }
 }

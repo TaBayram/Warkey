@@ -13,6 +13,8 @@ public class EnviromentObjectData
 
     public bool isObjectsLoaded = false;
 
+    public EnviromentObjectSettings Settings { get => settings;}
+
     public EnviromentObjectData(List<ValidPoint> validGrid, EnviromentObjectSettings enviromentObject, Transform parent, float[,] heightMap) {
         this.settings = enviromentObject;
         this.parent = parent;

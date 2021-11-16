@@ -9,6 +9,7 @@ public class MapPreview : MonoBehaviour
     public HeightMapSettings heightMapSettings;
     public TextureSettings textureData;
     public GroundSettings groundSettings;
+    public PathSettings pathSettings;
     private List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
     public enum DrawMode { NoiseMap, DrawMesh, FallOff };
     public DrawMode drawMode;
@@ -23,6 +24,9 @@ public class MapPreview : MonoBehaviour
 
     public MeshFilter meshWaterFilter;
     public MeshRenderer meshWaterRenderer;
+
+    public MeshFilter meshPathFilter;
+    public MeshRenderer meshPathRenderer;
 
     private void Start() {
         gameObject.SetActive(false);
@@ -50,6 +54,12 @@ public class MapPreview : MonoBehaviour
         meshWaterFilter.gameObject.SetActive(true);
     }
 
+    public void DrawPathMesh(MeshData meshData) {
+        meshPathFilter.sharedMesh = meshData.CreateMesh();
+
+        meshPathFilter.gameObject.SetActive(true);
+    }
+
     public void DrawMapInEditor() {
         textureData.ApplyToMaterial(terrainMaterial);
         textureData.UpdateMeshHeights(terrainMaterial, heightMapSettings.MinHeight, heightMapSettings.MaxHeight);
@@ -63,7 +73,7 @@ public class MapPreview : MonoBehaviour
             
         }
         else if (drawMode == DrawMode.FallOff)
-            DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount),0,1)));
+            DrawTexture(TextureGenerator.CreateTexture(new HeightMap(FallOffGenerator.GenerateFalloffMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount),0,1)));
         textureData.ApplyToMaterial(terrainMaterial);
 
         for(int i = meshFilter.transform.childCount-1; i >= 0; --i) {
@@ -80,10 +90,16 @@ public class MapPreview : MonoBehaviour
             }
         }
 
-        
+
+        PathData pathData = PathGenerator.GeneratePath(pathSettings, heightMap, start, direction);
+
+        DrawPathMesh(MeshGenerator.GenerateTerrainMesh(pathData.heightMap, meshSettings, editorLOD,0,float.MaxValue));
 
     }
 
+    public int seed;
+    public Vector2 start;
+    public Vector2 direction;
 
     private void OnValuesUpdated() {
         if (!Application.isPlaying) {
@@ -113,6 +129,10 @@ public class MapPreview : MonoBehaviour
         if (groundSettings != null) {
             groundSettings.OnValuesUpdated -= OnValuesUpdated;
             groundSettings.OnValuesUpdated += OnValuesUpdated;
+        }
+        if (pathSettings != null) {
+            pathSettings.OnValuesUpdated -= OnValuesUpdated;
+            pathSettings.OnValuesUpdated += OnValuesUpdated;
         }
     }
 }

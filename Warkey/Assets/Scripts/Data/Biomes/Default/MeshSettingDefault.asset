@@ -18,5 +18,5 @@ MonoBehaviour:
   chunkSizeIndex: 8
   flatShadedChunkSizeIndex: 2
   minValue: 0
-  maxValue: 0.3
-  height: 5
+  maxValue: 0.5
+  height: 6
