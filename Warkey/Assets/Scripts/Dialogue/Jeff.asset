@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
+  m_Name: Jeff
+  m_EditorClassIdentifier: 
+  name: 
+  dialogue:
+  - Hey, welcome to the Warkey brother!  How are you?
+  - I'm perfect!
+  - Here is our blessed place from the gods...
+  - See u later brother
+  playerDialogue:
+  - Not much, how about you?
+  - What is that placce?
+  - Goodbye..
