@@ -39,5 +39,5 @@ MonoBehaviour:
     branchNegativeStrength: 0.8
   startRadius: 20
   pathWidth: 6
-  pathHeightOffset: 0.15
+  pathHeightOffset: 0.05
   smoothWeight: 3

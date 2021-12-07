@@ -1,12 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Entity))]
 public class WeaponController : MonoBehaviour
 {
     public Transform weaponHold;
     public Weapon startingWeapon;
 	private Weapon equippedWeapon;
+
+	public State state;
+
+	public event System.Action<Weapon.State> onStateChange;
+	public enum State
+	{
+		idle = 0,
+		attacking = 1,
+	}
 
 	void Start() {
 		if (startingWeapon != null) {
@@ -20,11 +31,17 @@ public class WeaponController : MonoBehaviour
 		}
 		equippedWeapon = Instantiate(weapon, weaponHold.position, weaponHold.rotation) as Weapon;
 		equippedWeapon.transform.parent = weaponHold;
+        equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
 	}
 
-	public void Attack() {
+    private void EquippedWeapon_onStateChange(Weapon.State obj) {
+		state = (State)(int)obj;
+		onStateChange(obj);
+	}
+
+    public void Attack() {
 		if (equippedWeapon != null) {
-			equippedWeapon.Attack();
+			equippedWeapon.Attack(GetComponent<Entity>().velocity);
 		}
 	}
 

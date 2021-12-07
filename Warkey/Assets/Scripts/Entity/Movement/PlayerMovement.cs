@@ -12,10 +12,11 @@ public class PlayerMovement : Movement
     void Update()
     {
 
+        bool moveAnim = Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Vertical") == 1;
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Move(new Vector2(x, z), Input.GetKey(KeyCode.LeftShift));
+        Move(new Vector2(x, z), Input.GetKey(KeyCode.LeftShift), moveAnim);
         VerticalMovement(Input.GetButtonDown("Jump"));
     }
 }

@@ -12,13 +12,14 @@ public class Gun : Weapon
 
 	float cooldown;
 
-	public override void Attack() {
+	public override void Attack(Vector3 entityVelocity) {
 
 		if (Time.time > cooldown) {
 			cooldown = Time.time + 1 / attackSpeed;
 			Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
 			newProjectile.speed = (missileSpeed);
 			newProjectile.damage = attackDamage;
+			newProjectile.initialVelocity = ((entityVelocity != null) ? entityVelocity : Vector3.zero);
 		}
 	}
 

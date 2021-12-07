@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ArtificialIntelligence : MonoBehaviour
 {
+    public Animator animator;
     private State state  = State.Wander;
     private State originalPassiveState;
 
@@ -33,7 +34,7 @@ public class ArtificialIntelligence : MonoBehaviour
         if (this.transform == null) return;
         if (!IsOnNavMesh()) {
             //Integrate with Character Controller instead of this
-            transform.position = transform.position + Vector3.down * Time.deltaTime;
+            navMeshAgent.Warp(transform.position + Vector3.down * Time.deltaTime);
             return;
         }
 
@@ -87,6 +88,22 @@ public class ArtificialIntelligence : MonoBehaviour
                 else if (playerLostSight)
                     Return();
                 break;
+        }
+
+        if((int)state == 0) {
+            animator.SetInteger("moveState", 0);
+        }
+        else if((int)state != 4) {
+            animator.SetInteger("moveState", 1);
+        }
+        else {
+            animator.SetInteger("moveState", 0);
+        }
+        if((int)state == 4) {
+            animator.SetInteger("attackState", 1);
+        }
+        else {
+            animator.SetInteger("attackState", 0);
         }
 
     }

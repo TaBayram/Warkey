@@ -6,9 +6,8 @@ public class Bullet : Projectile
 {
     internal override void CheckCollisions(float moveDistance) {
         Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, moveDistance, layerMask, QueryTriggerInteraction.Collide)) {
+        if (Physics.Raycast(ray, out RaycastHit hit, moveDistance, layerMask, QueryTriggerInteraction.Collide)) {
             OnHitObject(hit);
         }
     }
@@ -29,7 +28,7 @@ public class Bullet : Projectile
     void Update() {
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
-        transform.Translate(Vector3.forward * moveDistance);
+        transform.Translate(Vector3.forward * moveDistance + initialVelocity);
     }
 
 
