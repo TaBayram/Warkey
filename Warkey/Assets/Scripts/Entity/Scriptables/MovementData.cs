@@ -10,4 +10,5 @@ public class MovementData : ScriptableObject
     public float walkSpeed;
     public float sprintSpeed;
     public float jumpHeight;
+    public float jumpForwardScale = 1f;
 }

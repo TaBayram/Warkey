@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Entity))]
 public class WeaponController : MonoBehaviour
 {
+	private Entity entity;
+
     public Transform weaponHold;
     public Weapon startingWeapon;
 	private Weapon equippedWeapon;
@@ -13,6 +15,7 @@ public class WeaponController : MonoBehaviour
 	public State state;
 
 	public event System.Action<Weapon.State> onStateChange;
+	
 	public enum State
 	{
 		idle = 0,
@@ -20,9 +23,12 @@ public class WeaponController : MonoBehaviour
 	}
 
 	void Start() {
+		entity = GetComponent<Entity>();
+
 		if (startingWeapon != null) {
 			EquipWeapon(startingWeapon);
 		}
+		
 	}
 
 	public void EquipWeapon(Weapon weapon) {
@@ -32,7 +38,13 @@ public class WeaponController : MonoBehaviour
 		equippedWeapon = Instantiate(weapon, weaponHold.position, weaponHold.rotation) as Weapon;
 		equippedWeapon.transform.parent = weaponHold;
         equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
+        equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest; ;
+		entity.animationController.OnWeaponChanged(equippedWeapon.animations);
 	}
+
+    private void EquippedWeapon_onAnimationChangeRequest(string arg1, object arg2) {
+		entity.animationController.SetValue(arg1, arg2);
+    }
 
     private void EquippedWeapon_onStateChange(Weapon.State obj) {
 		state = (State)(int)obj;

@@ -24,9 +24,10 @@ public class Entity : MonoBehaviour
     }
 
     private void WeaponController_onStateChange(Weapon.State obj) {
-        if (animationController != null) {
-            animationController.StateChange(obj);
-        }
+        if (obj == Weapon.State.attacking && movement != null && movement.GetType() == typeof(PlayerMovementThird))
+            ((PlayerMovementThird)movement).RotateToTarget();
+
+        animationController?.StateChange(obj);
     }
 
     private void Movement_onVelocityChange(Vector3 obj) {
@@ -34,8 +35,7 @@ public class Entity : MonoBehaviour
     }
 
     private void Movement_onStateChange(Movement.State obj) {
-        if (animationController != null) {
-            animationController.StateChange(obj);
-        }
+        animationController?.StateChange(obj);
+        
     }
 }

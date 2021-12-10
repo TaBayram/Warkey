@@ -6,7 +6,7 @@ using Unity.AI.Navigation;
 
 public class WaterChunk : SubChunk
 {
-    public WaterChunk(Chunk parent, Transform viewer, Material material) : base(parent,false) {
+    public WaterChunk(Chunk parent, Material material) : base(parent,false) {
 
         subObject = new GameObject("Water");
         meshCollider = subObject.AddComponent<MeshCollider>();

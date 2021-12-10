@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-[RequireComponent(typeof(EntityData))]
+[RequireComponent(typeof(Entity))]
 public class Unit : MonoBehaviour,IWidget
 {
     public const float regenInterval = 0.25f;
