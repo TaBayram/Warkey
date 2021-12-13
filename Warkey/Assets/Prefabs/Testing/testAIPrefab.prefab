@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8089589246127135789}
   - component: {fileID: 7258323911612345835}
   - component: {fileID: 7258323911612345828}
-  - component: {fileID: 4931623175421012371}
   - component: {fileID: 785997255319254937}
+  - component: {fileID: 6572801732121423498}
+  - component: {fileID: 3278420720226861635}
   m_Layer: 8
   m_Name: testAIPrefab
   m_TagString: Untagged
@@ -97,20 +98,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4931623175421012371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7958137458794860659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c8a1196c5dde444a5cf3adcfa50a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: a94d382b37c0f2b40ad5298a2afcc020, type: 2}
-  state: 1
 --- !u!54 &785997255319254937
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,6 +114,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6572801732121423498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958137458794860659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd7f3c5fb055d4419d9d3b43e5a6a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 3278420720226861635}
+  movement: {fileID: 0}
+  weaponController: {fileID: 0}
+  animationController: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &3278420720226861635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958137458794860659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3301b5c7e1308449874921bb4502f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: a94d382b37c0f2b40ad5298a2afcc020, type: 2}
+  state: 1
+  animator: {fileID: 23498423842095942}
 --- !u!1001 &4432518319473736767
 PrefabInstance:
   m_ObjectHideFlags: 0

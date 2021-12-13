@@ -9,8 +9,8 @@ public class Unit : MonoBehaviour,IWidget
     public const float regenInterval = 0.25f;
 
     public UnitData unitData;
-    private FiniteField health;
-    private FiniteField stamina;
+    protected FiniteField health;
+    protected FiniteField stamina;
 
     public IWidget.State state = IWidget.State.alive;
 
@@ -18,7 +18,7 @@ public class Unit : MonoBehaviour,IWidget
 
     
 
-    private void Start() {
+    protected void Start() {
         if (unitData) {
             health = new FiniteField(unitData.health, unitData.healthRegen);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen);
@@ -33,7 +33,6 @@ public class Unit : MonoBehaviour,IWidget
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
         OnPropertyChanged(nameof(stamina),(FiniteField) sender);
     }
-
     private void Health_PropertyChanged(object sender, PropertyChangedEventArgs e) {
         OnPropertyChanged(nameof(health),(FiniteField) sender);
     }
@@ -42,15 +41,14 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public void Die() {
-        this.gameObject.SetActive(false);
-        Destroy(gameObject);
+        state = IWidget.State.dead;
     }
 
     public void Destroy() {
-        throw new System.NotImplementedException();
+        Destroy(gameObject);
     }
 
-    public void TakeDamage(float damage) {
+    public virtual void TakeDamage(float damage) {
         health.Current -= damage;
         if(health.Current <= 0) {
             Die();

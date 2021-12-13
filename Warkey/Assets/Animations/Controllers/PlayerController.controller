@@ -52,7 +52,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -200, y: -110, z: 0}
+  m_AnyStatePosition: {x: -190, y: -110, z: 0}
   m_EntryPosition: {x: 90, y: 200, z: 0}
   m_ExitPosition: {x: 300, y: -110, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -484,7 +484,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: One Hand
     m_StateMachine: {fileID: 8128444371356286804}
-    m_Mask: {fileID: 31900000, guid: 6507f8235b08e1c4b93dd3ea2c6fa2d7, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -545,6 +545,18 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1991544865021974447
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc6f40b95a1c7848b3f1984ff4e32b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1101 &2246760792208000723
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -738,7 +750,8 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 1991544865021974447}
   m_AnyStatePosition: {x: 400, y: -260, z: 0}
   m_EntryPosition: {x: -110, y: 180, z: 0}
   m_ExitPosition: {x: 390, y: -300, z: 0}

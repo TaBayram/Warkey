@@ -154,14 +154,14 @@ public class Chunk
                 }
                 else {
                     foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                        if(objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod <= lodIndex)
+                        if(objectData.isObjectsLoaded)
                             objectData.Visible(true);
                     }
                 }
             }
             else {
                 foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                    if (objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod > lodIndex)
+                    if (objectData.isObjectsLoaded)
                         objectData.Visible(false);
                 }
             }

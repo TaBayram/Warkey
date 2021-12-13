@@ -96,8 +96,6 @@ MonoBehaviour:
   state: 0
   isJumping: 0
   prefabCamera: {fileID: 303023466003755150, guid: 351bc2c79479d404399efa384bf84f57, type: 3}
-  turnSmoothTime: 0.1
-  playerCamera: {fileID: 0}
 --- !u!114 &6786616840240923428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 8030685382622270595}
-  startingWeapon: {fileID: 1425938127745451433, guid: 9787e1c7f3861394085960e792aa3110, type: 3}
+  startingWeapon: {fileID: 2599546502704719843, guid: 9787e1c7f3861394085960e792aa3110, type: 3}
   state: 0
 --- !u!1 &2710970577283667101
 GameObject:
@@ -568,12 +566,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Hips'\n\tTransform 'Spine1'\n\tTransform 'LeftHandMiddle2'\n\tTransform
-    'Neck'\n\tTransform 'LeftHandThumb1'\n\tTransform 'LeftHandRing2'\n\tTransform
-    'RightHandMiddle1'\n\tTransform 'LeftUpLeg'\n\tTransform 'LeftHandIndex2'\n\tTransform
-    'RightHandThumb2'\n\tand more ...\n\tFrom animation clip 'Jumping'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0

@@ -13,5 +13,6 @@ public interface IWidget
     {
         dead = 0,
         alive = 1,
+        dying = 2,
     }
 }

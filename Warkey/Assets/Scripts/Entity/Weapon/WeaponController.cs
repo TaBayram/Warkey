@@ -57,4 +57,8 @@ public class WeaponController : MonoBehaviour
 		}
 	}
 
+	public void SetState(WeaponController.State state) {
+		this.state = state;
+		equippedWeapon.CurrentState = (Weapon.State)state;
+    }
 }

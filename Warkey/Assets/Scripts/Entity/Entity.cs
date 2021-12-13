@@ -35,7 +35,13 @@ public class Entity : MonoBehaviour
     }
 
     private void Movement_onStateChange(Movement.State obj) {
-        animationController?.StateChange(obj);
+        if (obj != Movement.State.idle && weaponController?.state == WeaponController.State.attacking)
+            weaponController.SetState(WeaponController.State.idle);
         
+        animationController?.StateChange(obj);   
+    }
+
+    public bool IsAttacking() {
+        return weaponController ? weaponController.state == WeaponController.State.attacking : false;
     }
 }

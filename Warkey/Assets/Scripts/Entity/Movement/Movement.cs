@@ -42,27 +42,6 @@ public abstract class Movement : MonoBehaviour
         sprinting = 2,
     }
 
-    protected Vector3 Move(Vector2 direction, bool sprint,bool moveAnim = true) {
-        State oldState = state;
-        if (moveAnim) {
-            if (sprint)
-                state = State.sprinting;
-            else
-                state = State.walking;
-        }
-        else {
-            state = State.idle;
-        }
-        if(oldState != state && onStateChange != null) {
-            onStateChange(state);
-        }
-
-        Vector3 move = transform.right * direction.x + transform.forward * direction.y;
-        Vector3 movement = move * Time.deltaTime * ((sprint)?movementData.sprintSpeed: movementData.walkSpeed);
-        MoveCharacter(movement);
-        return movement;
-    }
-
     protected Vector3 Move(Vector3 direction, bool sprint) {
         State oldState = state;
         if(direction != Vector3.zero) {
@@ -116,7 +95,6 @@ public abstract class Movement : MonoBehaviour
             velocity.y += Gravity.GRAVITYSCALED * movementData.weight * Time.deltaTime;
         }
         MoveCharacter(velocity * Time.deltaTime);
-        
     }
 
     private void MoveCharacter(Vector3 velocity) {

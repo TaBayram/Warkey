@@ -4,11 +4,16 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public Animator animator;
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
-    public State state;
     public AnimationClip[] animations;
+
+    protected State state;
+
+    public abstract State CurrentState {
+        get;
+        set;
+    }
 
     public enum State
     {

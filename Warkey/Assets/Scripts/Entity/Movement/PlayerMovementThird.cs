@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class PlayerMovementThird : Movement
 {
-    public PlayerCamera prefabCamera;
-
-    public float turnSmoothTime = 0.1f;
-    public PlayerCamera playerCamera;
+    public const float turnSmoothTime = 0.1f;
+    [SerializeField] private PlayerCamera prefabCamera;
+    
+    private PlayerCamera playerCamera;
     private float turnSmoothVelocity;
+
+
+    public PlayerCamera Camera {
+        get => playerCamera;
+    }
 
     protected override void Start() {
         base.Start();
@@ -19,11 +24,9 @@ public class PlayerMovementThird : Movement
 
 
     }
-    void Update(){
+    protected override void Update(){
         base.Update();
 
-        //float x = Input.GetAxis("Horizontal");
-        //float z = Input.GetAxis("Vertical");
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
