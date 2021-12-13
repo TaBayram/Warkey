@@ -47,6 +47,7 @@ public class Chunk
     bool loadAll = false;
     bool isHeightMapReceived = false;
     bool hasSetEnviromentObjects = false;
+    bool hasRequestedEnviroment = false;
     List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
 
     float maxViewDistance;
@@ -100,6 +101,7 @@ public class Chunk
     }
 
     public void Load(float[,] fallOff,bool loadAll) {
+        if (isHeightMapReceived) return;
         ThreadDataRequest.RequestData(() => HeightMapGenerator.GenerateHeightMap(meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount, heightMapSettings, worldPosition, coordinate, fallOff), OnHeightMapReceived);
         this.loadAll = loadAll;
     }
@@ -115,9 +117,11 @@ public class Chunk
     }
 
     private void RequestEnviromentObjectDatas() {
+        if (hasRequestedEnviroment) return;
         groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
         Transform transform = chunkObject.transform;
         ThreadDataRequest.RequestData(() => EnviromentObjectGenerator.GenerateEnviromentDatas(heightMap, groundSettings, transform), OnEnviromentObjectDataListReceived);
+        hasRequestedEnviroment = true;
     }
 
     private void OnEnviromentObjectDataListReceived(object enviromentObjects) {

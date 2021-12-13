@@ -68,7 +68,7 @@ public abstract class SubChunk
     }
     public abstract void RequestMesh(LODMesh lODMesh);
     public void RequestLODMesh(LODMesh lODMesh) {
-        requestedLODIndex = lODMesh.Lod;
+        requestedLODIndex = lODMesh.lodIndex;
         RequestMesh(lODMesh);
     }
     public void OnLODMeshReceived(int lodIndex) {

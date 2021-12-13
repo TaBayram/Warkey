@@ -130,10 +130,7 @@ public class FiniteWorldGenerator : MonoBehaviour
             for (int xOffset = -maxX + xModifier+1; xOffset < maxX; xOffset++) {
                 Vector2 viewedChunkCoord = new Vector2(xOffset, yOffset);
                 if (!chunkDictionary.ContainsKey(viewedChunkCoord)) {
-                    //Debug.Log(viewedChunkCoord +" " + CanCreateTerrainChunk(viewedChunkCoord));
-                    if (CanCreateTerrainChunk(viewedChunkCoord)) {
-                        CreateChunk(viewedChunkCoord).SetVisible(true);
-                    }
+                    CreateChunk(viewedChunkCoord).SetVisible(true);
                 }
                 
             }
