@@ -78,13 +78,13 @@ public class Chunk
 
         bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
-        terrainChunk = new TerrainChunk(this,viewer,material);
+        terrainChunk = new TerrainChunk(this,material);
         RegisterActions(terrainChunk);
 
-        waterChunk = new WaterChunk(this, viewer, waterMaterial);
+        waterChunk = new WaterChunk(this, waterMaterial);
         RegisterActions(waterChunk);
 
-        pathChunk = new PathChunk(this, viewer, pathMaterial, pathmap);
+        pathChunk = new PathChunk(this, pathMaterial, pathmap);
         RegisterActions(pathChunk);
 
 
@@ -154,14 +154,14 @@ public class Chunk
                 }
                 else {
                     foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                        if(objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod <= lodIndex)
+                        if(objectData.isObjectsLoaded)
                             objectData.Visible(true);
                     }
                 }
             }
             else {
                 foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
-                    if (objectData.isObjectsLoaded && objectData.Settings.visibleMaxLod > lodIndex)
+                    if (objectData.isObjectsLoaded)
                         objectData.Visible(false);
                 }
             }
@@ -169,7 +169,7 @@ public class Chunk
 
         if (wasVisible != visible) {
             SetVisible(visible);
-            onSetVisibleChunk(true);
+            onSetVisibleChunk(visible);
             if (onVisibleChanged != null) {
                 onVisibleChanged(this, visible);
             }

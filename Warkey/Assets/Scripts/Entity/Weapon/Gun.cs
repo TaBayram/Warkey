@@ -2,24 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : Weapon
+public class Gun : MonoBehaviour
 {
-	public Transform muzzle;
-	public Projectile projectile;
-	public float attackSpeed = 1;
-	public float missileSpeed = 35;
-	public float attackDamage = 20;
-
-	float cooldown;
-
-	public override void Attack() {
-
-		if (Time.time > cooldown) {
-			cooldown = Time.time + 1 / attackSpeed;
-			Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
-			newProjectile.speed = (missileSpeed);
-			newProjectile.damage = attackDamage;
-		}
-	}
 
 }

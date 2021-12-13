@@ -15,6 +15,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     XY chunkSize;
 
     public GameObject prefab;
+    public GameObject playerPrefab;
 
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
@@ -28,6 +29,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
         GameObject startPosition = new GameObject("StartPosition");
         startPosition.transform.position = new Vector3(pathData.start.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0), heightMap.values[(int)pathData.start.x, (int)pathData.start.y] + 5, -pathData.start.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
+
+        GameObject playr = Instantiate(playerPrefab, startPosition.transform.position, Quaternion.identity, this.transform);
+        players = new GameObject[] { playr };
 
         foreach (GameObject player in players) {
             player.GetComponent<CharacterController>().enabled = false;

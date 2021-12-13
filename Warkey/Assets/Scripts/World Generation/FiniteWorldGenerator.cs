@@ -55,14 +55,38 @@ public class FiniteWorldGenerator : MonoBehaviour
         meshWorldSize = meshSettings.MeshWorldSize;
         chunkSizeVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / meshWorldSize);
 
-        if(heightMapSettings.useFallOff) {
-            fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount*chunkSize.x), (int)(meshSettings.VerticesPerLineCount * chunkSize.y));
+        if (heightMapSettings.useFallOff) {
+            fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount * chunkSize.x), (int)(meshSettings.VerticesPerLineCount * chunkSize.y));
         }
+        GeneratePath();
+        LoadAll();
+        UpdateVisibleChunks();
+    }
+    private Chunk CreateChunk(Vector2 viewedChunkCoord) {
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord]);
+        chunkDictionary.Add(viewedChunkCoord, chunk);
+        chunk.onVisibleChanged += OnChunkVisibilityChanged;
+        chunk.onChunkLoaded += onChunkLoaded;
+        chunk.Load(fallOffMap,true);
+        
+        onChunkCreated?.Invoke(chunk);
+        onChunkCreated += chunk.UpdateAdjacentChunks;
+        return chunk;
+    }
+    private void onChunkLoaded(Chunk chunk) {
+        count++;
+        if (count == (chunkSize.x * chunkSize.y)) {
+            OnAllLoaded();
+        }
+            
+    }
+
+    private void GeneratePath() {
         float sizeX = meshSettings.VerticesPerLineCount * chunkSize.x;
         float sizeY = meshSettings.VerticesPerLineCount * chunkSize.y;
         heightMap = HeightMapGenerator.GenerateHeightMap((int)sizeX, (int)sizeY, heightMapSettings, Vector2.zero, Vector2.zero, fallOffMap);
         pathData = PathGenerator.GeneratePath(pathSettings, heightMap.values01, new Vector2(50, sizeY - 50), new Vector2(sizeX / Mathf.Max(sizeX, sizeY), -sizeY / Mathf.Max(sizeX, sizeY)));
-        
+
         int maxX = (int)chunkSize.x / 2 + 1;
         int maxY = (int)chunkSize.y / 2 + 1;
         int xModifier = (chunkSize.x % 2 == 0) ? 1 : 0;
@@ -74,18 +98,18 @@ public class FiniteWorldGenerator : MonoBehaviour
         for (int coordY = -maxY + yModifier + 1; coordY < maxY; coordY++) {
             int x = 0;
             for (int coordX = -maxX + xModifier + 1; coordX < maxX; coordX++) {
-               // Debug.Log("coordX " + coordX + " coordY " + coordY);
+                // Debug.Log("coordX " + coordX + " coordY " + coordY);
                 Vector2 viewedChunkCoord = new Vector2(coordX, coordY);
                 //Debug.Log("x " + x + " y " + y);
                 int arrayOffsetX = (int)((x)) * (int)(meshSettings.VerticesPerLineCount);
-                int arrayOffsetY = (int)((chunkSize.y-1 - y)) * (int)(meshSettings.VerticesPerLineCount);
+                int arrayOffsetY = (int)((chunkSize.y - 1 - y)) * (int)(meshSettings.VerticesPerLineCount);
                 //Debug.Log("arrayOffsetX " + arrayOffsetX + " arrayOffsetY " + arrayOffsetY);
-                
+
                 float[,] heightMap2 = new float[meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount];
 
                 for (int yp = 0; yp < meshSettings.VerticesPerLineCount; yp++) {
                     for (int xp = 0; xp < meshSettings.VerticesPerLineCount; xp++) {
-                        heightMap2[xp,yp] = pathData.pathMap[arrayOffsetX + xp, arrayOffsetY + yp];
+                        heightMap2[xp, yp] = pathData.pathMap[arrayOffsetX + xp, arrayOffsetY + yp];
                     }
                 }
                 pathDictionary.Add(viewedChunkCoord, heightMap2);
@@ -95,29 +119,6 @@ public class FiniteWorldGenerator : MonoBehaviour
             y++;
         }
 
-
-        LoadAll();
-        UpdateVisibleChunks();
-    }
-    private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord]);
-        chunkDictionary.Add(viewedChunkCoord, chunk);
-        chunk.onVisibleChanged += OnChunkVisibilityChanged;
-        chunk.onChunkLoaded += onChunkLoaded;
-        chunk.Load(fallOffMap,true);
-        
-        if(onChunkCreated != null)
-            onChunkCreated(chunk);
-
-        onChunkCreated += chunk.UpdateAdjacentChunks;
-        return chunk;
-    }
-    private void onChunkLoaded(Chunk chunk) {
-        count++;
-        if (count == (chunkSize.x * chunkSize.y)) {
-            OnAllLoaded();
-        }
-            
     }
     private void LoadAll() {
         int maxX = (int)chunkSize.x / 2 + 1;
@@ -142,51 +143,6 @@ public class FiniteWorldGenerator : MonoBehaviour
     private void OnAllLoaded() {
         navMeshSurface.BuildNavMesh();
         onWorldReady();
-        /*
-        float[,] heightMap = new float[(int)Mathf.Ceil(sizeX), (int)Mathf.Ceil(sizeY)];
-
-        
-        int maxX = (int)Mathf.Round(sizeX / meshSettings.VerticesPerLineCount) - 1;
-        int maxY = (int)Mathf.Round(sizeY / meshSettings.VerticesPerLineCount) - 1;
-        int coordOffsetX = maxX / 2;
-        int coordOffsetY = maxY / 2;
-
-        
-
-        foreach (Chunk chunk in visibleChunks) {
-            int offsetX = (int)(Mathf.Round(chunk.coordinate.x + coordOffsetX)) * (int)(meshSettings.VerticesPerLineCount);
-            int offsetY = (int)((maxY) - Mathf.Round(chunk.coordinate.y + coordOffsetY)) * (int)(meshSettings.VerticesPerLineCount);
-            for (int y = 0; y < chunk.heightMap.values01.GetLength(1); y++) {
-                for (int x = 0; x < chunk.heightMap.values01.GetLength(0); x++) {
-                    heightMap[offsetX + x, offsetY + y] = chunk.heightMap.values01[x, y];
-                }
-            }
-        }
-
-
-        pathData = PathGenerator.GeneratePath(pathSettings, heightMap, new Vector2(10, sizeY - 10), new Vector2(sizeX/Mathf.Max(sizeX,sizeY), -sizeY / Mathf.Max(sizeX, sizeY)));
-
-        foreach (Chunk chunk in visibleChunks) {
-            int offsetX = (int)(Mathf.Round(chunk.coordinate.x + coordOffsetX)) * (int)(meshSettings.VerticesPerLineCount);
-            int offsetY = (int)((maxY) - Mathf.Round(chunk.coordinate.y + coordOffsetY)) * (int)(meshSettings.VerticesPerLineCount);
-            for (int y = 0; y < chunk.heightMap.values01.GetLength(1); y++) {
-                for (int x = 0; x < chunk.heightMap.values01.GetLength(0); x++) {
-                    heightMap[offsetX + x, offsetY + y] = chunk.heightMap.values01[x, y];
-                }
-            }
-        }
-
-
-        foreach (Chunk chunk in visibleChunks) {
-            int offsetX = (int)(Mathf.Round(chunk.coordinate.x + coordOffsetX)) * (int)(meshSettings.VerticesPerLineCount);
-            int offsetY = (int)((maxY) - Mathf.Round(chunk.coordinate.y + coordOffsetY)) * (int)(meshSettings.VerticesPerLineCount);
-            for (int y = 0; y < chunk.heightMap.values01.GetLength(1); y++) {
-                for (int x = 0; x < chunk.heightMap.values01.GetLength(0); x++) {
-                    heightMap[offsetX + x, offsetY + y] = chunk.heightMap.values01[x, y];
-                }
-            }
-        }*/
-
     }
 
     private void Update() {

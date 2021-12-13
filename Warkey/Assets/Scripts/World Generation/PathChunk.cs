@@ -12,7 +12,7 @@ public class PathChunk : SubChunk
 
     public PathData PathData { set => pathData = value; get => pathData; }
 
-    public PathChunk(Chunk parent, Transform viewer, Material material, float[,] pathmap) : base(parent,false) {
+    public PathChunk(Chunk parent, Material material, float[,] pathmap) : base(parent,false) {
         this.pathSettings = parent.PathSettings;
         this.adjacentChunks = parent.AdjacentChunks;
         pathData = new PathData(pathmap);

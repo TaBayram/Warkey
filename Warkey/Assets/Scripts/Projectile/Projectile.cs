@@ -7,6 +7,7 @@ public abstract class Projectile : MonoBehaviour
     public LayerMask layerMask;
     public float speed;
     public float damage;
+    public Vector3 initialVelocity = Vector3.zero;
 
 
     internal abstract void CheckCollisions(float moveDistance);

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ArtificialIntelligence : MonoBehaviour
 {
+    public Animator animator;
     private State state  = State.Wander;
     private State originalPassiveState;
 
@@ -19,6 +20,10 @@ public class ArtificialIntelligence : MonoBehaviour
 
     public Transform player;
     public LayerMask groundLayer, playerLayer;
+    
+    private bool isDead = false;
+
+    public bool IsDead { get => isDead; set { isDead = value; if (isDead) { animator.SetInteger("attackState", 0); animator.SetLayerWeight(1, 0); } } }
 
     private void Awake() {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -26,14 +31,19 @@ public class ArtificialIntelligence : MonoBehaviour
 
         passiveAIBehaviour = new PassiveAIBehaviour(navMeshAgent,transform, passiveAISettings);
         aggresiveAIBehaviour = new AggresiveAIBehaviour(navMeshAgent,transform, aggresiveAISettings);
-        
+        if (!IsOnNavMesh()) {
+            NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas);
+            if(navMeshHit.hit)
+                navMeshAgent.Warp(navMeshHit.position);
+        } 
     }
 
     private void Update() {
-        if (this.transform == null) return;
+        if (IsDead || this.transform == null) return;
         if (!IsOnNavMesh()) {
-            //Integrate with Character Controller instead of this
-            transform.position = transform.position + Vector3.down * Time.deltaTime;
+            NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 100f, NavMesh.AllAreas);
+            if (navMeshHit.hit)
+                navMeshAgent.Warp(navMeshHit.position);
             return;
         }
 
@@ -89,11 +99,27 @@ public class ArtificialIntelligence : MonoBehaviour
                 break;
         }
 
+        if((int)state == 0) {
+            animator.SetInteger("moveState", 0);
+        }
+        else if((int)state != 4) {
+            animator.SetInteger("moveState", 1);
+        }
+        else {
+            animator.SetInteger("moveState", 0);
+        }
+        if((int)state == 4) {
+            animator.SetInteger("attackState", 1);
+        }
+        else {
+            animator.SetInteger("attackState", 0);
+        }
+
     }
 
     public bool IsOnNavMesh() {
         NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 2f, NavMesh.AllAreas);
-        return navMeshHit.hit;
+        return navMeshAgent.isOnNavMesh;
     }
 
     

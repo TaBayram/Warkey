@@ -16,4 +16,5 @@ MonoBehaviour:
   weight: 1
   walkSpeed: 5
   sprintSpeed: 12
-  jumpHeight: 20
+  jumpHeight: 5
+  jumpForwardScale: 1
