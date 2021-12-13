@@ -30,6 +30,7 @@ public class Unit : MonoBehaviour,IWidget
         }
     }
 
+
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
         OnPropertyChanged(nameof(stamina),(FiniteField) sender);
     }
@@ -51,6 +52,7 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public void TakeDamage(float damage) {
+        
         health.Current -= damage;
         if(health.Current <= 0) {
             Die();
@@ -58,7 +60,7 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     void Update() {
-
+        if (Input.GetKeyDown(KeyCode.G)) TakeDamage(10);
     }
 
     void RegenerateFields() {

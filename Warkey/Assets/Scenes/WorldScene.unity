@@ -519,6 +519,14 @@ PrefabInstance:
       propertyPath: viewer
       value: 
       objectReference: {fileID: 878489753}
+    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+      propertyPath: chunkSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+      propertyPath: chunkSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: players.Array.data[0]
       value: 
@@ -772,6 +780,22 @@ PrefabInstance:
     - target: {fileID: 7969199135003955436, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969199135003955437, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
+      propertyPath: m_Value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969199135003955437, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
+      propertyPath: m_MaxValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969199135003955437, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969199135003955438, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
+      propertyPath: gradient.m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7969199135858859896, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_AnchorMax.x
