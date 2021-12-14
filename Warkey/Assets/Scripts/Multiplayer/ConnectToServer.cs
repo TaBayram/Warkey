@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
+    public GameObject panel;
+    CreateAndJoinRooms createAndJoinRooms;
+
     // Start is called before the first frame update
     void Start()
     {
+        createAndJoinRooms = GetComponent<CreateAndJoinRooms>();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -19,6 +23,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        SceneManager.LoadScene("LobbyScene");
+        panel.SetActive(false);
+        createAndJoinRooms.Enable();
     }
 }

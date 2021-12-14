@@ -6,9 +6,13 @@ using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
-
+    public GameObject panel;
     public InputField createInput;
     public InputField joinInput;
+
+    public void Enable() {
+        panel.SetActive(true);
+    }
 
     public void CreateRoom()
     {
