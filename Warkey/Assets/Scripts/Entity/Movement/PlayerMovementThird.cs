@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerMovementThird : Movement
 {
@@ -15,18 +16,23 @@ public class PlayerMovementThird : Movement
         get => playerCamera;
     }
 
+    private void Awake() {
+        characterController = GetComponent<CharacterController>();
+
+        if (GetComponent<PhotonView>().IsMine) {
+            playerCamera = Instantiate<PlayerCamera>(prefabCamera);
+            if (this.transform.parent != null) playerCamera.transform.parent = transform.parent.transform;
+            playerCamera.BindPlayer(transform);
+        }
+    }
+
     protected override void Start() {
         base.Start();
-         
-        characterController = GetComponent<CharacterController>();
-        playerCamera = Instantiate<PlayerCamera>(prefabCamera, transform.parent.transform);
-        playerCamera.BindPlayer(transform);
-
-
+        
     }
     protected override void Update(){
         base.Update();
-
+        if (!GetComponent<PhotonView>().IsMine) return;
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
@@ -44,6 +50,7 @@ public class PlayerMovementThird : Movement
     }
 
     public void RotateToTarget() {
+        if (playerCamera == null) return;
         float targetAngle = playerCamera.CameraTransform.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(FiniteWorldGenerator))]
 public class FiniteWorldGameGenerator : MonoBehaviour
 {
+    public GameEntities gameEntities;
     public FiniteWorldGenerator finiteWorldGenerator;
     PathData pathData;
     public HeightMap heightMap;
@@ -14,8 +15,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     XY chunkMatrix;
     XY chunkSize;
 
-    public GameObject prefab;
-    public GameObject playerPrefab;
+    public GameObject enemyPrefab;
 
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
@@ -30,8 +30,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         GameObject startPosition = new GameObject("StartPosition");
         startPosition.transform.position = new Vector3(pathData.start.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0), heightMap.values[(int)pathData.start.x, (int)pathData.start.y] + 5, -pathData.start.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
 
-        GameObject playr = Instantiate(playerPrefab, startPosition.transform.position, Quaternion.identity, this.transform);
-        players = new GameObject[] { playr };
+        players =  gameEntities.CreatePlayerHeroes();
 
         foreach (GameObject player in players) {
             player.GetComponent<CharacterController>().enabled = false;
@@ -41,8 +40,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
         foreach (Vector2 item in pathData.points) {
             if(Random.Range(0f,1f) < 0.1) {
-                GameObject prefa = Instantiate(prefab, GetPositionFromPathData(item), Quaternion.identity, this.transform);
+                GameObject prefa = Instantiate(enemyPrefab, GetPositionFromPathData(item), Quaternion.identity, this.transform);
                 prefa.GetComponent<ArtificialIntelligence>().player = players[0].transform;
+                prefa.GetComponentInChildren<HUDBillboard>().BindCamera(players[0].GetComponent<PlayerMovementThird>().Camera.CameraTransform);
             }
         }
     }

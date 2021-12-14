@@ -8,9 +8,14 @@ public class HUDPlayerContainer : MonoBehaviour
 
     public HUDBar healthBar;
     public HUDBar staminaBar;
-    public Unit unit;
+    private Unit unit;
 
     private void Start() {
+        
+    }
+
+    public void BindUnit(Unit unit) {
+        this.unit = unit;
         unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
     }
 

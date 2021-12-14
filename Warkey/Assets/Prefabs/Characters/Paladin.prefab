@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6786616840240923428}
   - component: {fileID: 6535898625453402832}
   - component: {fileID: 4100661796457472914}
+  - component: {fileID: 2464713899535096047}
+  - component: {fileID: 8229531785357038033}
   m_Layer: 7
   m_Name: Paladin
   m_TagString: Untagged
@@ -144,6 +146,45 @@ MonoBehaviour:
   weaponHold: {fileID: 8030685382622270595}
   startingWeapon: {fileID: 2599546502704719843, guid: 9787e1c7f3861394085960e792aa3110, type: 3}
   state: 0
+--- !u!114 &2464713899535096047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496866731616768025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 0
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8229531785357038033}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &8229531785357038033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496866731616768025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1 &2710970577283667101
 GameObject:
   m_ObjectHideFlags: 0

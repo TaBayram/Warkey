@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUDBar : MonoBehaviour
 {
-    private const float valueThreshold = 5;
+    private const float valueThreshold = 0.5f;
     public Slider slider;
     public Gradient gradient;
     public Image fill;

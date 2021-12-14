@@ -28,7 +28,6 @@ public class WeaponController : MonoBehaviour
 		if (startingWeapon != null) {
 			EquipWeapon(startingWeapon);
 		}
-		
 	}
 
 	public void EquipWeapon(Weapon weapon) {

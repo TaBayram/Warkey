@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4182100847567166420}
+  - {fileID: 4698913441161523355}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -233,3 +234,73 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &5813148915671596744
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 436514461343678683}
+    m_Modifications:
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504488760068989287, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_Name
+      value: EnemyHealthBarHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216099609440215992, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216099609440215992, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+--- !u!4 &4698913441161523355 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+  m_PrefabInstance: {fileID: 5813148915671596744}
+  m_PrefabAsset: {fileID: 0}
