@@ -19,7 +19,7 @@ public class PlayerMovementThird : Movement
     private void Awake() {
         characterController = GetComponent<CharacterController>();
 
-        if (GetComponent<PhotonView>().IsMine) {
+        if (GetComponent<PhotonView>().IsMine || !PhotonNetwork.IsConnected) {
             playerCamera = Instantiate<PlayerCamera>(prefabCamera);
             if (this.transform.parent != null) playerCamera.transform.parent = transform.parent.transform;
             playerCamera.BindPlayer(transform);
@@ -32,7 +32,7 @@ public class PlayerMovementThird : Movement
     }
     protected override void Update(){
         base.Update();
-        if (!GetComponent<PhotonView>().IsMine) return;
+        if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 

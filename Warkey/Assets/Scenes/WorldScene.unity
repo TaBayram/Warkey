@@ -185,12 +185,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -230,7 +230,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2130232046}
-  - {fileID: 1155518578}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -354,11 +353,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!4 &1155518578 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7969199136492590841, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
-  m_PrefabInstance: {fileID: 1794913818}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1155518579 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7969199136492590840, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
@@ -802,7 +796,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 357779815}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 599694485947542778, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_RootOrder
@@ -866,15 +860,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7969199136492590841, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7969199136492590841, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -519.39996
+      value: -88.89996
       objectReference: {fileID: 0}
     - target: {fileID: 7969199136492590841, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -326.6
+      value: -63.600006
       objectReference: {fileID: 0}
     - target: {fileID: 7969199136492590841, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
       propertyPath: m_LocalPosition.z
