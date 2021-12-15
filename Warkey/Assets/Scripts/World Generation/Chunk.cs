@@ -120,7 +120,7 @@ public class Chunk
         if (hasRequestedEnviroment) return;
         groundSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
         Transform transform = chunkObject.transform;
-        ThreadDataRequest.RequestData(() => EnviromentObjectGenerator.GenerateEnviromentDatas(heightMap, groundSettings, transform), OnEnviromentObjectDataListReceived);
+        ThreadDataRequest.RequestData(() => EnviromentObjectGenerator.GenerateEnviromentDatas(heightMap, groundSettings, transform, coordinate), OnEnviromentObjectDataListReceived);
         hasRequestedEnviroment = true;
     }
 

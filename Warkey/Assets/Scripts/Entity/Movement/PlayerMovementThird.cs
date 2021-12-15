@@ -33,16 +33,18 @@ public class PlayerMovementThird : Movement
     protected override void Update(){
         base.Update();
         if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
+        if (!entity.CanMove()) return;
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(x, 0f, z).normalized;
-
         Vector3 moveDirection = Vector3.zero;
         if (direction.magnitude >= 0.1f) {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + ((playerCamera != null)? playerCamera.CameraTransform.eulerAngles.y : 0);
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if(!isOn)
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
             moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
         Move(moveDirection.normalized, Input.GetKey(KeyCode.LeftShift));
@@ -51,8 +53,23 @@ public class PlayerMovementThird : Movement
 
     public void RotateToTarget() {
         if (playerCamera == null) return;
-        float targetAngle = playerCamera.CameraTransform.eulerAngles.y;
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+        rotationalTarget = playerCamera.CameraTransform.eulerAngles.y;
+        if(!isOn)
+            Invoke("Rotate", 0.005f);
+    }
+
+    float rotationalTarget;
+    bool isOn = false;
+
+    private void Rotate() {
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationalTarget, ref turnSmoothVelocity, turnSmoothTime);
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        if(Mathf.Abs(rotationalTarget - angle) > 0.01f) {
+            Invoke("Rotate", 0.005f);
+            isOn = true;
+        }
+        else {
+            isOn = false;
+        }
     }
 }

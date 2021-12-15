@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2320455629915159228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7262580285353013288}
+  m_Layer: 7
+  m_Name: Sword_joint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7262580285353013288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320455629915159228}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.07989221, y: -0.02893435, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7015935318098214117}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &2496866731616768025
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,10 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ddc3390f8b550242bc580db0d6cbd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  replaceableAttackAnimations:
-  - {fileID: -203655887218126122, guid: 8095ec984ad8f8b49a18d34e0448b879, type: 3}
-  - {fileID: -203655887218126122, guid: cae5292bc39f3b64e9523bcfd9ec6164, type: 3}
-  - {fileID: -203655887218126122, guid: 0e1544f9e9fc4e1428c555a233d987f9, type: 3}
+  replaceableMeleeAttackAnimations:
+  - {fileID: 7400000, guid: 9fde70f4e2b38f845bb15c7b19ba7167, type: 2}
+  - {fileID: 7400000, guid: 5e3fb0f7f4cd7d74797d8d2c44d972ec, type: 2}
+  - {fileID: 7400000, guid: 0ce31e4cab6a67740890b96e70e2384b, type: 2}
+  - {fileID: 7400000, guid: 0e0a0b5a7c2b486479c407b6f032368c, type: 2}
+  replaceableRangedAttackAnimations:
+  - {fileID: 7400000, guid: 02a9394125f151e49a629a26117e45fb, type: 2}
+  - {fileID: 7400000, guid: fba841f702442a9478172f9d68f4f73a, type: 2}
   animator: {fileID: 7660401763676200027}
   movementState: 0
   weaponState: 0
@@ -143,7 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cff149dcdb521846b0e3024097a3057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHold: {fileID: 8030685382622270595}
+  rightHand: {fileID: 8030685382622270595}
+  leftHand: {fileID: 7262580285353013288}
   startingWeapon: {fileID: 2599546502704719843, guid: 9787e1c7f3861394085960e792aa3110, type: 3}
   state: 0
 --- !u!114 &2464713899535096047
@@ -584,6 +620,11 @@ GameObject:
 --- !u!4 &1725694802830751481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: da0a27eb2b8bbbe40aafa91d65fdef1c, type: 3}
+  m_PrefabInstance: {fileID: 1186803208011092242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7015935318098214117 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1070232985009656329, guid: da0a27eb2b8bbbe40aafa91d65fdef1c, type: 3}
   m_PrefabInstance: {fileID: 1186803208011092242}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8562667731284950911 stripped

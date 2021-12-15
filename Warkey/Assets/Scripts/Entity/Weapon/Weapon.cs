@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public bool isMainHandRight;
+
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
     public AnimationClip[] animations;
@@ -19,9 +21,14 @@ public abstract class Weapon : MonoBehaviour
     {
         idle = 0,
         attacking = 1,
+        defending = 2,
     }
 
     public abstract void Attack(Vector3 initialVelocity);
+
+    public abstract void Defend(bool pressed);
+
+    public abstract WeaponAnimations GetAnimations();
 
     public void OnStateChange() {
         onStateChange?.Invoke(state);
@@ -36,5 +43,15 @@ public abstract class Weapon : MonoBehaviour
 [System.Serializable]
 public struct WeaponAnimations
 {
+    public bool isRanged;
+    public AnimationClip defendAnimation;
+    public AnimationClip idleAnimation;
+    public AnimationClip[] attackAnimations;
 
+    public WeaponAnimations(bool isRanged, AnimationClip defendAnimation, AnimationClip idleAnimation, AnimationClip[] attackAnimations) {
+        this.isRanged = isRanged;
+        this.defendAnimation = defendAnimation;
+        this.idleAnimation = idleAnimation;
+        this.attackAnimations = attackAnimations;
+    }
 }

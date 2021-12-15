@@ -7,6 +7,7 @@ public class RangedWeapon : Weapon
 	[SerializeField] private Transform muzzle;
 	[SerializeField] private Projectile projectile;
 	[SerializeField] private AnimationClip attackAnimation;
+	[SerializeField] private AnimationClip aimAnimation;
 	[SerializeField] private float attackSpeed = 1;
 	[SerializeField] private float attackDamage = 20;
 	[SerializeField] private float launchSpeed = 35;
@@ -30,7 +31,9 @@ public class RangedWeapon : Weapon
             OnStateChange();
         }
     }
+	private void Awake() {
 
+	}
 
 	public override void Attack(Vector3 entityVelocity) {
 		StartAttacking(entityVelocity);
@@ -51,6 +54,15 @@ public class RangedWeapon : Weapon
 		newProjectile.initialVelocity = ((entityVelocity != null) ? entityVelocity : Vector3.zero);
 	}
 
+    public override void Defend(bool pressed) {
+		if (pressed)
+			CurrentState = State.defending;
+		else
+			CurrentState = State.idle;
+	}
 
+	public override WeaponAnimations GetAnimations() {
+		WeaponAnimations weaponAnimations = new WeaponAnimations(true, aimAnimation, null, new AnimationClip[]{ attackAnimation });
+		return weaponAnimations;
+	}
 }
-

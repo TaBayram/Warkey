@@ -6,21 +6,17 @@ using UnityEngine;
 [RequireComponent(typeof(Entity))]
 public class WeaponController : MonoBehaviour
 {
-	private Entity entity;
+	protected Entity entity;
 
-    public Transform weaponHold;
+    public Transform rightHand;
+	public Transform leftHand;
     public Weapon startingWeapon;
-	private Weapon equippedWeapon;
-
-	public State state;
+	public Weapon.State state;
 
 	public event System.Action<Weapon.State> onStateChange;
-	
-	public enum State
-	{
-		idle = 0,
-		attacking = 1,
-	}
+
+	private Weapon equippedWeapon;
+	private bool isDefending;
 
 	void Start() {
 		entity = GetComponent<Entity>();
@@ -34,11 +30,20 @@ public class WeaponController : MonoBehaviour
 		if (equippedWeapon != null) {
 			Destroy(equippedWeapon.gameObject);
 		}
-		equippedWeapon = Instantiate(weapon, weaponHold.position, weaponHold.rotation) as Weapon;
-		equippedWeapon.transform.parent = weaponHold;
+        if (weapon.isMainHandRight) {
+			equippedWeapon = Instantiate(weapon, rightHand.position, rightHand.rotation);
+			equippedWeapon.transform.parent = rightHand;
+		}
+        else {
+			equippedWeapon = Instantiate(weapon, leftHand.position, leftHand.rotation);
+			equippedWeapon.transform.parent = leftHand;
+		}
+
+		
         equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
-        equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest; ;
-		entity.animationController.OnWeaponChanged(equippedWeapon.animations);
+        equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest;
+
+		entity.animationController.OnWeaponChanged(equippedWeapon.GetAnimations());
 	}
 
     private void EquippedWeapon_onAnimationChangeRequest(string arg1, object arg2) {
@@ -46,7 +51,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private void EquippedWeapon_onStateChange(Weapon.State obj) {
-		state = (State)(int)obj;
+		state = obj;
 		onStateChange(obj);
 	}
 
@@ -56,8 +61,15 @@ public class WeaponController : MonoBehaviour
 		}
 	}
 
-	public void SetState(WeaponController.State state) {
+	public void Defend(bool pressed) {
+		if (equippedWeapon != null && isDefending != pressed) {
+			isDefending = pressed;
+			equippedWeapon.Defend(pressed);
+		}
+	}
+
+	public void SetState(Weapon.State state) {
 		this.state = state;
-		equippedWeapon.CurrentState = (Weapon.State)state;
+		equippedWeapon.CurrentState = state;
     }
 }

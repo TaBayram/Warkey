@@ -10,6 +10,9 @@ public class MeleeWeapon : Weapon
     [SerializeField] protected float attackSpeed = 1f;
     [SerializeField] protected float baseDamage = 20;
     [SerializeField] MeleeWeaponAttack[] attacks;
+    [SerializeField] AnimationClip defendClip;
+    [SerializeField] AudioSource audioSource;
+    
 
     private bool hasPressedForCombo = false;
     private bool takeInputForCombo = false;
@@ -26,13 +29,6 @@ public class MeleeWeapon : Weapon
                 StopCoroutine(coroutine);
             }
             OnStateChange();
-        }
-    }
-
-    private void Awake() {
-        animations = new AnimationClip[attacks.Length];
-        for(int i = 0; i < attacks.Length; i++) {
-            animations[i] = attacks[i].animationClip;
         }
     }
 
@@ -66,6 +62,7 @@ public class MeleeWeapon : Weapon
     }
 
     void OnAttackEnd() {
+        if (state != State.attacking) return;
         if (hasPressedForCombo && (currentAttackIndex + 1) < maxCombo && (currentAttackIndex + 1) < attacks.Length) {
             currentAttackIndex++;
             if (currentAttackIndex == 1) {
@@ -91,7 +88,24 @@ public class MeleeWeapon : Weapon
         if (state == State.attacking && !alreadyHit.Contains(other) && other.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
             other.gameObject.GetComponent<IWidget>().TakeDamage(baseDamage);
             alreadyHit.Add(other);
+            audioSource.Play();
         }
+    }
+
+    public override void Defend(bool pressed) {
+        if (pressed)
+            CurrentState = State.defending;
+        else
+            CurrentState = State.idle;
+    }
+
+    public override WeaponAnimations GetAnimations() {
+        WeaponAnimations weaponAnimations = new WeaponAnimations(false,defendClip,null,new AnimationClip[this.attacks.Length]);
+        for(int i = 0; i < this.attacks.Length; i++) {
+            weaponAnimations.attackAnimations[i] = this.attacks[i].animationClip;
+        }
+
+        return weaponAnimations;
     }
 }
 

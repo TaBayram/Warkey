@@ -23,6 +23,11 @@ public class Entity : MonoBehaviour
         }
     }
 
+    private void Update() {
+        if (weaponController != null && weaponController.state == Weapon.State.defending && movement != null && movement.GetType() == typeof(PlayerMovementThird))
+            ((PlayerMovementThird)movement).RotateToTarget();
+    }
+
     private void WeaponController_onStateChange(Weapon.State obj) {
         if (obj == Weapon.State.attacking && movement != null && movement.GetType() == typeof(PlayerMovementThird))
             ((PlayerMovementThird)movement).RotateToTarget();
@@ -35,13 +40,14 @@ public class Entity : MonoBehaviour
     }
 
     private void Movement_onStateChange(Movement.State obj) {
-        if (obj != Movement.State.idle && weaponController?.state == WeaponController.State.attacking)
-            weaponController.SetState(WeaponController.State.idle);
-        
         animationController?.StateChange(obj);   
     }
 
-    public bool IsAttacking() {
-        return weaponController ? weaponController.state == WeaponController.State.attacking : false;
+    public bool CanMove() {
+        return weaponController == null ? true : weaponController.state != Weapon.State.attacking;
+    }
+
+    public bool CanAttack() {
+        return movement == null ? true : movement.state != Movement.State.sprinting;
     }
 }

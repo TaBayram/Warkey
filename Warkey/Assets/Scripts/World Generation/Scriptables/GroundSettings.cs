@@ -17,6 +17,13 @@ public class EnviromentObjectSettings
 {
     public bool enabled;
     public GameObject gameObject;
+    public bool useNoise;
+    public NoiseSettings noiseSettings;
+    [Range(0, 1)]
+    public float noiseMin;
+    [Range(0, 1)]
+    public float noiseMax;
+
     public float blockRadius;
     public float elevation = 0;
     [Range(0,2)]

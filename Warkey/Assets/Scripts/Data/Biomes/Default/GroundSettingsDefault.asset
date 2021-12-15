@@ -19,19 +19,39 @@ MonoBehaviour:
     sampleCountBeforeRejection: 25
   enviromentObjects:
   - enabled: 1
-    visibleMaxLod: 2
-    gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
-    blockRadius: 20
-    elevation: -0.25
-    minThreshold: 0.3
-    maxThreshold: 0.8
+    gameObject: {fileID: 919132149155446097, guid: daeec03b4bbbaf342a4712333e53deac, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 1
+      scale: 100
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 5
+      offset: {x: 0, y: 0}
+    noiseMin: 0.25
+    noiseMax: 0.75
+    blockRadius: 10
+    elevation: 0
+    minThreshold: 0.35
+    maxThreshold: 0.75
     lessenTowardsEdges: 1
     lessenScale: 0
     jitterScale: 0
-    correctRotation: 0
+    correctRotation: 1
   - enabled: 0
-    visibleMaxLod: 0
     gameObject: {fileID: 465249269838783120, guid: abb74e8ac13bec2489f7bfcc04c7d3cd, type: 3}
+    useNoise: 0
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0
     blockRadius: 5
     elevation: -40.75
     minThreshold: 0.4

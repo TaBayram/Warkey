@@ -19,12 +19,16 @@ public class AIUnit : Unit
     }
 
     public new void Die() {
+        SetLayerRecursively(gameObject,LayerMask.NameToLayer("Ground"));
+        state = IWidget.State.dead;
         ai.IsDead = true;
-        animator.SetTrigger("die");
         Invoke("Destroy", 5);
+        animator.enabled = false;
+        GetComponentInChildren<AudioSource>().Play();
     }
 
     public override void TakeDamage(float damage) {
+        if (state == IWidget.State.dead) return;
         animator.SetTrigger("hit");
         health.Current -= damage;
         if (health.Current <= 0) {
@@ -32,4 +36,13 @@ public class AIUnit : Unit
         }
     }
 
+    void SetLayerRecursively(GameObject obj, int newLayer  ) {
+        obj.layer = newLayer;
+        foreach(Transform child  in obj.transform) {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
+
 }
+
+

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    [SerializeField] private AnimationClip[] replaceableAttackAnimations;
+    [SerializeField] private AnimationClip[] replaceableMeleeAttackAnimations;
+    [SerializeField] private AnimationClip[] replaceableRangedAttackAnimations;
 
 
     public Animator animator;
@@ -21,18 +22,7 @@ public class AnimationController : MonoBehaviour
 
     public void StateChange(Movement.State state) {
         if(state != movementState) {
-            
-            switch (state) {
-                case Movement.State.idle:
-                    animator.SetInteger(Variables.moveState, (int)state);
-                    break;
-                case Movement.State.walking:
-                    animator.SetInteger(Variables.moveState, (int)state);
-                    break;
-                case Movement.State.sprinting:
-                    animator.SetInteger(Variables.moveState, (int)state);
-                    break;
-            }
+            animator.SetInteger(Variables.moveState, (int)state);
             movementState = state;
         }
     }
@@ -43,14 +33,7 @@ public class AnimationController : MonoBehaviour
 
     public void StateChange(Weapon.State state) {
         if (state != weaponState) {
-            switch (state) {
-                case Weapon.State.idle:
-                    animator.SetInteger(Variables.attackState, (int)state);
-                    break;
-                case Weapon.State.attacking:
-                    animator.SetInteger(Variables.attackState, (int)state);
-                    break;
-            }
+            animator.SetInteger(Variables.attackState, (int)state);
             weaponState = state;
         }
     }
@@ -73,9 +56,20 @@ public class AnimationController : MonoBehaviour
         
     }
 
-    public void OnWeaponChanged(AnimationClip[] animationClips) {
-        for (int i = 0; i < Mathf.Min(animationClips.Length, 3); i++)
-            animatorOverride[replaceableAttackAnimations[i].name] = animationClips[i];
+    public void OnWeaponChanged(WeaponAnimations weaponAnimations) {
+        if (weaponAnimations.isRanged) {
+            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(2, 1);
+            animatorOverride[replaceableRangedAttackAnimations[0].name] =  weaponAnimations.attackAnimations[0];
+            animatorOverride[replaceableRangedAttackAnimations[1].name] = weaponAnimations.attackAnimations[0];
+        }
+        else {
+            animator.SetLayerWeight(1, 1);
+            animator.SetLayerWeight(2, 0);
+            for (int i = 0; i < 3 && i < weaponAnimations.attackAnimations.Length; i++)
+                animatorOverride[replaceableMeleeAttackAnimations[i].name] = weaponAnimations.attackAnimations[i];
+            animatorOverride[replaceableMeleeAttackAnimations[3].name] = weaponAnimations.defendAnimation;
+        }
     }
     
 

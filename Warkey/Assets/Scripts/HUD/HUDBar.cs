@@ -12,6 +12,21 @@ public class HUDBar : MonoBehaviour
     public float smoothing = 5f;
     private float targetValue;
 
+    public Unit unit;
+
+    private void Start() {
+        if (unit != null) {
+            unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
+        }
+    }
+
+    private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        if (e.PropertyName == "health") {
+            SetMaxValue(((FiniteField)sender).Max);
+            SetValue(((FiniteField)sender).Current);
+        }
+    }
+
 
     public void SetMaxValue(float health)
     {

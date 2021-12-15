@@ -8,7 +8,13 @@ public static class EnviromentObjectGenerator
     public const float sqrMaxDistanceThreshold = maxDistanceThreshold*maxDistanceThreshold;
 
 
-    public static List<ValidPoint> GenerateValidPoints(EnviromentObjectSettings enviromentObject, float[,] heightMap, PoissonDiscSettings poissonDiscSettings) {
+    public static List<ValidPoint> GenerateValidPoints(EnviromentObjectSettings enviromentObject, float[,] heightMap, PoissonDiscSettings poissonDiscSettings, Vector2 coord) {
+        float[,] noiseMap = null;
+        if (enviromentObject.useNoise) {
+            noiseMap = Noise.GenerateNoiseMap(heightMap.GetLength(0), heightMap.GetLength(1), enviromentObject.noiseSettings, coord);
+        }
+
+
         List<Vector2> poissonDiscGrid = PoissonDiscSampling.GeneratePoints(poissonDiscSettings,enviromentObject.blockRadius);
         List<ValidPoint> validGrid = new List<ValidPoint>();
         int mapWidth = heightMap.GetLength(0);
@@ -32,6 +38,11 @@ public static class EnviromentObjectGenerator
                         continue;
                     }
                     else {
+                        if (enviromentObject.useNoise) {
+                            float noiseHeight = noiseMap[(int)validPoint.x, (int)validPoint.y];
+                            if (enviromentObject.noiseMin > noiseHeight || enviromentObject.noiseMax < noiseHeight) continue;
+                        }
+
                         Vector2 jitter =  Jitter(enviromentObject.blockRadius, enviromentObject.jitterScale,ref random);
                         validGrid.Add(new ValidPoint(validPoint, jitter));
                         poissonDiscGrid.RemoveAt(i);
@@ -43,11 +54,11 @@ public static class EnviromentObjectGenerator
         return validGrid;
     }
 
-    public static List<EnviromentObjectData> GenerateEnviromentDatas(HeightMap heightMap,GroundSettings groundSettings,Transform parent) {
+    public static List<EnviromentObjectData> GenerateEnviromentDatas(HeightMap heightMap,GroundSettings groundSettings,Transform parent,Vector2 coord) {
         List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
         for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
             if (groundSettings.enviromentObjects[i].enabled) {
-                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings);
+                List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings, coord);
                 EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], parent,heightMap.values);
                 enviromentObjectDatas.Add(enviromentObjectData);
             }

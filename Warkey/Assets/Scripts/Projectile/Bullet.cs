@@ -28,7 +28,7 @@ public class Bullet : Projectile
     void Update() {
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
-        transform.Translate(Vector3.forward * moveDistance + initialVelocity);
+        transform.Translate(Vector3.forward * moveDistance);
     }
 
 

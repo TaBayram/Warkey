@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnviromentObjectData
 {
-    const int rotationSampleRadius = 5;
+    const int rotationSampleRadius = 2;
     public readonly Transform parent;
     private GameObject enviromentHolder;
     private EnviromentObjectSettings settings;
