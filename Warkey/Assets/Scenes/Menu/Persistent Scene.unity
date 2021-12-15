@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -281
       objectReference: {fileID: 0}
+    - target: {fileID: 3529562428260163344, guid: 177f8a6f8aaff98458ee83d224bb7218, type: 3}
+      propertyPath: m_Name
+      value: LoadingBar
+      objectReference: {fileID: 0}
     - target: {fileID: 5717697075267834734, guid: 177f8a6f8aaff98458ee83d224bb7218, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.11880493
