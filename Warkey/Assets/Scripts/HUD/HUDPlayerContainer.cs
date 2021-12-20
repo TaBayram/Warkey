@@ -15,11 +15,10 @@ public class HUDPlayerContainer : MonoBehaviour
 
     private void Awake()
     {
-        inventory = new Inventory();
-        inventoryUI.SetInventory(inventory);
     }
     private void Start() {
-        
+        inventory = new Inventory();
+        inventoryUI.SetInventory(inventory);
     }
 
     public void BindUnit(Unit unit) {

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
 
-	public List<Item> itemList;
+	private List<Item> itemList;
 	public Inventory()
     {
+		itemList = new List<Item>();
 		AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
 		AddItem(new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
 		AddItem(new Item { itemType = Item.ItemType.Bread, amount = 1 });
-		itemList = new List<Item>();
 
 	}
 	public void AddItem(Item item)

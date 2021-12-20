@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 //[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : MonoBehaviour
+public class Item
 {
 	public enum ItemType
     {
@@ -12,6 +12,17 @@ public class Item : MonoBehaviour
     }
 	public ItemType itemType;
 	public int amount;
+
+	public Sprite GetSprite()
+    {
+        switch (itemType)
+        {
+			default:
+			case ItemType.HealthPotion: return ItemAssets.Instance.healthPotion;
+            case ItemType.StaminaPotion: return ItemAssets.Instance.staminaPotion;
+            case ItemType.Bread: return ItemAssets.Instance.Bread;
+        }
+    }
 
 	/*
 	new public string name = "New Item";    // Name of the item
