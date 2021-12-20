@@ -18,10 +18,13 @@ public class RangedWeapon : Weapon
 	[SerializeField] private int subPool = 20;
 	[SerializeField] private float reloadTime;
 
+	[SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
+	[SerializeField] private Transform aimTransform;
 
 	private float cooldown;
 	private int currentSubPool;
 	private int currentMainPool;
+	private Vector3 mouseWorldPosition;
 
 
 	public override State CurrentState {
@@ -33,6 +36,22 @@ public class RangedWeapon : Weapon
     }
 	private void Awake() {
 
+	}
+
+	private void Start() {
+		aimTransform.parent = transform.root;
+	}
+	private void Update() {
+		if (CurrentState == State.defending) {
+
+			Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+			Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+			if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
+				aimTransform.position = raycastHit.point;
+				mouseWorldPosition = raycastHit.point;
+			}
+
+		}
 	}
 
 	public override void Attack(Vector3 entityVelocity) {
@@ -49,10 +68,11 @@ public class RangedWeapon : Weapon
 
 	private IEnumerator Shoot(Vector3 entityVelocity) {
 		yield return new WaitForSeconds(launchDelay);
-		Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+		Vector3 aimDir = (mouseWorldPosition - muzzle.position).normalized;
+		Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)) as Projectile;
 		newProjectile.speed = (launchSpeed);
 		newProjectile.damage = attackDamage;
-		newProjectile.initialVelocity = ((entityVelocity != null) ? entityVelocity : Vector3.zero);
+
 		CurrentState = State.defending;
 	}
 
