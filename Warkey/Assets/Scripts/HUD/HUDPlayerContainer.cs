@@ -9,6 +9,7 @@ public class HUDPlayerContainer : MonoBehaviour
     public HUDBar healthBar;
     public HUDBar staminaBar;
     private Unit unit;
+    [SerializeField] private WeaponUI weaponUI;
 
     private void Start() {
         
@@ -43,4 +44,11 @@ public class HUDPlayerContainer : MonoBehaviour
         staminaBar.SetMaxValue(field.Max);
         staminaBar.SetValue(field.Current);
     }
+
+    
+    public void updateWeapon(Weapon weapon)
+    {
+        weaponUI.UpdateInfo(weapon.weaponIcon);
+    }
+    
 }

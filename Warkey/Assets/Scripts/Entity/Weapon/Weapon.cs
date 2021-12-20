@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Weapon : MonoBehaviour
 {
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
     public AnimationClip[] animations;
+    public Sprite weaponIcon;
 
     protected State state;
 
