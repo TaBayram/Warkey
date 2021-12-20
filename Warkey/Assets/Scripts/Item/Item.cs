@@ -1,9 +1,19 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject
+//[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+public class Item : MonoBehaviour
 {
+	public enum ItemType
+    {
+		HealthPotion,
+		StaminaPotion,
+		Bread
+    }
+	public ItemType itemType;
+	public int amount;
+
+	/*
 	new public string name = "New Item";    // Name of the item
 	public Sprite icon = null;              // Item icon
 	public bool isDefaultItem = false;      // Is the item default wear?
@@ -21,4 +31,7 @@ public class Item : ScriptableObject
 	{
 		Inventory.instance.Remove(this);
 	}
+	*/
+
+
 }

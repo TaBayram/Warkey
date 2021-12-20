@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+
+	public List<Item> itemList;
+	public Inventory()
+    {
+		AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+		AddItem(new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
+		AddItem(new Item { itemType = Item.ItemType.Bread, amount = 1 });
+		itemList = new List<Item>();
+
+	}
+	public void AddItem(Item item)
+    {
+		itemList.Add(item);
+    }
+
+	public List<Item> GetItemList()
+    {
+		return itemList;
+    }
+	/*
 	#region Singleton
 
 	public static Inventory instance;
@@ -64,4 +84,5 @@ public class Inventory : MonoBehaviour
 		if (onItemChangedCallback != null)
 			onItemChangedCallback.Invoke();
 	}
+	*/
 }

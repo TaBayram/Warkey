@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemPickup : Interactable 
 {
+	/*
 	public Item item;   // Item to put in the inventory on pickup
 
 	// When the player interacts with the item
@@ -24,4 +25,5 @@ public class ItemPickup : Interactable
 		if (wasPickedUp)
 			Destroy(gameObject);    // Destroy item from scene
 	}
+	*/
 }

@@ -10,7 +10,14 @@ public class HUDPlayerContainer : MonoBehaviour
     public HUDBar staminaBar;
     private Unit unit;
     [SerializeField] private WeaponUI weaponUI;
+    private Inventory inventory;
+    [SerializeField] private InventoryUI inventoryUI;
 
+    private void Awake()
+    {
+        inventory = new Inventory();
+        inventoryUI.SetInventory(inventory);
+    }
     private void Start() {
         
     }
