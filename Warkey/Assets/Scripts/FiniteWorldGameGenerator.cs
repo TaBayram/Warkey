@@ -41,7 +41,6 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         foreach (Vector2 item in pathData.points) {
             if(Random.Range(0f,1f) < 0.1) {
                 GameObject prefa = Instantiate(enemyPrefab, GetPositionFromPathData(item), Quaternion.identity, this.transform);
-                prefa.GetComponent<ArtificialIntelligence>().player = players[0].transform;
                 prefa.GetComponentInChildren<HUDBillboard>().BindCamera(players[0].GetComponent<PlayerMovementThird>().Camera.CameraTransform);
             }
         }

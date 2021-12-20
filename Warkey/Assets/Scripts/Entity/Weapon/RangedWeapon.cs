@@ -43,6 +43,7 @@ public class RangedWeapon : Weapon
 		if (Time.time > cooldown) {
 			cooldown = Time.time + attackSpeed;
 			StartCoroutine(Shoot(entityVelocity));
+			CurrentState = State.attacking;
 		}
 	}
 
@@ -52,6 +53,7 @@ public class RangedWeapon : Weapon
 		newProjectile.speed = (launchSpeed);
 		newProjectile.damage = attackDamage;
 		newProjectile.initialVelocity = ((entityVelocity != null) ? entityVelocity : Vector3.zero);
+		CurrentState = State.defending;
 	}
 
     public override void Defend(bool pressed) {
@@ -65,4 +67,8 @@ public class RangedWeapon : Weapon
 		WeaponAnimations weaponAnimations = new WeaponAnimations(true, aimAnimation, null, new AnimationClip[]{ attackAnimation });
 		return weaponAnimations;
 	}
+
+    public override void Stop() {
+        throw new System.NotImplementedException();
+    }
 }

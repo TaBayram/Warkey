@@ -4,32 +4,38 @@ using UnityEngine;
 
 public class AIUnit : Unit
 {
-    ArtificialIntelligence ai;
+    AIEntity ai;
     public Animator animator;
+    public RagdollManager ragdollManager;
+
+    public new event System.Action<float> onDamageTaken;
 
     private new void Start() {
         base.Start();
 
-        ai = GetComponent<ArtificialIntelligence>();
+        ai = GetComponent<AIEntity>();
         animator = GetComponentInChildren<Animator>();
     }
 
     public new void Destroy() {
-        Destroy(gameObject);
+        Destroy(gameObject,5);
     }
 
-    public new void Die() {
-        SetLayerRecursively(gameObject,LayerMask.NameToLayer("Ground"));
+    public new void Die() { 
+        SetLayerRecursively(gameObject,LayerMask.NameToLayer("Dead"));
+        widgetAudio?.PlayAudio(WidgetAudio.Name.death);
         state = IWidget.State.dead;
         ai.IsDead = true;
         Invoke("Destroy", 5);
-        animator.enabled = false;
-        GetComponentInChildren<AudioSource>().Play();
+        disabler?.DisableComponents(0);
+        disabler?.RemoveComponents(0);
+        ragdollManager?.CreateRagdoll();
     }
 
     public override void TakeDamage(float damage) {
         if (state == IWidget.State.dead) return;
         animator.SetTrigger("hit");
+        onDamageTaken?.Invoke(damage);
         health.Current -= damage;
         if (health.Current <= 0) {
             Die();

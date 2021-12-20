@@ -57,6 +57,9 @@ public abstract class Movement : MonoBehaviour
         if (oldState != state && onStateChange != null) {
             onStateChange(state);
         }
+        if (direction == Vector3.zero)
+            return direction;
+
         Vector3 movement = Vector3.zero;
         if (!isJumping) {
             movement = direction * Time.deltaTime * ((sprint) ? movementData.sprintSpeed : movementData.walkSpeed);

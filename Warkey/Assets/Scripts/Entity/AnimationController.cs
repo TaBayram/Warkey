@@ -13,7 +13,7 @@ public class AnimationController : MonoBehaviour
     public Weapon.State weaponState;
 
     protected AnimatorOverrideController animatorOverride;
-    AnimationState animationState;
+
     private void Start() {
         animator = GetComponentInChildren<Animator>();
         animatorOverride = new AnimatorOverrideController(animator.runtimeAnimatorController);
@@ -22,19 +22,22 @@ public class AnimationController : MonoBehaviour
 
     public void StateChange(Movement.State state) {
         if(state != movementState) {
-            animator.SetInteger(Variables.moveState, (int)state);
+            animator.SetInteger(AnimatorVariables.moveState, (int)state);
             movementState = state;
         }
     }
 
     public void isJumping(bool isJumping) {
-        animator.SetBool(Variables.isJumping, isJumping);
+        animator.SetBool(AnimatorVariables.isJumping, isJumping);
     }
 
     public void StateChange(Weapon.State state) {
         if (state != weaponState) {
-            animator.SetInteger(Variables.attackState, (int)state);
+            animator.SetInteger(AnimatorVariables.attackState, (int)state);
             weaponState = state;
+        }
+        if(state == Weapon.State.idle) {
+            animator.Play("Idle", 0, 0f);
         }
     }
 
@@ -60,26 +63,30 @@ public class AnimationController : MonoBehaviour
         if (weaponAnimations.isRanged) {
             animator.SetLayerWeight(1, 0);
             animator.SetLayerWeight(2, 1);
+            if (replaceableRangedAttackAnimations == null) return;
             animatorOverride[replaceableRangedAttackAnimations[0].name] =  weaponAnimations.attackAnimations[0];
             animatorOverride[replaceableRangedAttackAnimations[1].name] = weaponAnimations.attackAnimations[0];
         }
         else {
             animator.SetLayerWeight(1, 1);
             animator.SetLayerWeight(2, 0);
-            for (int i = 0; i < 3 && i < weaponAnimations.attackAnimations.Length; i++)
+            if (replaceableMeleeAttackAnimations == null) return;
+            for (int i = 0; i < 3 && i < weaponAnimations.attackAnimations.Length && i < replaceableMeleeAttackAnimations.Length; i++) {
                 animatorOverride[replaceableMeleeAttackAnimations[i].name] = weaponAnimations.attackAnimations[i];
-            animatorOverride[replaceableMeleeAttackAnimations[3].name] = weaponAnimations.defendAnimation;
+            }
+                
+            if(replaceableMeleeAttackAnimations.Length > 3)
+                animatorOverride[replaceableMeleeAttackAnimations[3].name] = weaponAnimations.defendAnimation;
         }
     }
-    
+}
 
-    public static class Variables
-    {
-        public static string moveState = "moveState";
-        public static string attackState = "attackState";
-        public static string isJumping = "isJumping";
-        public static string attackOne = "AttackOne";
-        public static string attackTwo = "AttackTwo";
-    }
+public static class AnimatorVariables
+{
+    public static string moveState = "moveState";
+    public static string attackState = "attackState";
+    public static string isJumping = "isJumping";
+    public static string attackOne = "AttackOne";
+    public static string attackTwo = "AttackTwo";
 }
 

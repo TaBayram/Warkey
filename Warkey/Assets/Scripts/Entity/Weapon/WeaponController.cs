@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
 {
 	protected Entity entity;
 
+	[SerializeField] private LayerMask enemyLayer;
     public Transform rightHand;
 	public Transform leftHand;
     public Weapon startingWeapon;
@@ -17,6 +18,8 @@ public class WeaponController : MonoBehaviour
 
 	private Weapon equippedWeapon;
 	private bool isDefending;
+
+	public float AttackRange { get => equippedWeapon.AttackRange; }
 
 	void Start() {
 		entity = GetComponent<Entity>();
@@ -42,9 +45,16 @@ public class WeaponController : MonoBehaviour
 		
         equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
         equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest;
+        equippedWeapon.onRotateRequest += EquippedWeapon_onRotateRequest;
+		equippedWeapon.enemyLayer = enemyLayer;
+		equippedWeapon.parent = transform;
 
-		entity.animationController.OnWeaponChanged(equippedWeapon.GetAnimations());
+		entity.OnWeaponChanged(equippedWeapon.GetAnimations());
 	}
+
+    private void EquippedWeapon_onRotateRequest(float obj) {
+		entity.RotateToCameraTarget(obj);
+    }
 
     private void EquippedWeapon_onAnimationChangeRequest(string arg1, object arg2) {
 		entity.animationController.SetValue(arg1, arg2);

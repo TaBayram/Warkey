@@ -60,7 +60,7 @@ public class TerrainGenerator : MonoBehaviour
     }
 
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial,null);
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial,null,null);
         chunkDictionary.Add(viewedChunkCoord, chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         //chunk.onStateChanged +=    

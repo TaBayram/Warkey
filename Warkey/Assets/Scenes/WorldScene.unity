@@ -565,8 +565,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2496866731616768025, guid: ebfbf427c540fcc4f8723d556bbf35a4, type: 3}
     - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+      propertyPath: players.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: players.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6477479063983046004, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6477479063983046005, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: m_RootOrder

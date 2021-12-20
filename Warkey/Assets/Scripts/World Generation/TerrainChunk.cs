@@ -6,10 +6,11 @@ using Unity.AI.Navigation;
 
 public class TerrainChunk: SubChunk
 {
-    public TerrainChunk(Chunk parent, Material material) : base(parent){
+    public TerrainChunk(Chunk parent, Material material, PhysicMaterial physicMaterial) : base(parent){
         
         subObject = new GameObject("Terrain");
         meshCollider = subObject.AddComponent<MeshCollider>();
+        meshCollider.material = physicMaterial;
         meshRenderer = subObject.AddComponent<MeshRenderer>();
         meshFilter = subObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;

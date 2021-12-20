@@ -33,7 +33,12 @@ public class PlayerMovementThird : Movement
     protected override void Update(){
         base.Update();
         if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
-        if (!entity.CanMove()) return;
+        if (!entity.CanMove()) {
+            if(state != State.idle) {
+                Move(Vector3.zero, false);
+            }
+            return;
+        }
 
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
@@ -43,7 +48,7 @@ public class PlayerMovementThird : Movement
         if (direction.magnitude >= 0.1f) {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + ((playerCamera != null)? playerCamera.CameraTransform.eulerAngles.y : 0);
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            if(!isOn)
+            if(!isRotating)
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
@@ -51,25 +56,25 @@ public class PlayerMovementThird : Movement
         VerticalMovement(Input.GetButtonDown("Jump"));
     }
 
-    public void RotateToTarget() {
+    public void RotateToTarget(float duration = 0) {
         if (playerCamera == null) return;
-        rotationalTarget = playerCamera.CameraTransform.eulerAngles.y;
-        if(!isOn)
-            Invoke("Rotate", 0.005f);
+        float rotationalTarget = playerCamera.CameraTransform.eulerAngles.y;
+        StartCoroutine(Rotate(rotationalTarget,duration == 0?false:true,duration));
     }
 
-    float rotationalTarget;
-    bool isOn = false;
+    bool isRotating = false;
+    float duration;
 
-    private void Rotate() {
+    private IEnumerator Rotate(float rotationalTarget, bool hasDuration, float duration) {
+        isRotating = true;
+        yield return new WaitForSeconds(0.005f);
+        isRotating = false;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationalTarget, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        if(Mathf.Abs(rotationalTarget - angle) > 0.01f) {
-            Invoke("Rotate", 0.005f);
-            isOn = true;
-        }
-        else {
-            isOn = false;
+        if(Mathf.Abs(rotationalTarget - angle) > 0.05f && (!hasDuration || duration > 0) ) {
+            duration -= 0.005f;
+            this.duration = duration;
+            StartCoroutine(Rotate(rotationalTarget, hasDuration, duration));
         }
     }
 }

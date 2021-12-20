@@ -5,11 +5,13 @@ using UnityEngine.AI;
 
 public abstract class AIBehaviour
 {
-    protected Transform transform;
+    protected AIEntity aiEntity;
     protected NavMeshAgent navMeshAgent;
+    protected Transform transform;
 
-    public AIBehaviour(NavMeshAgent navMeshAgent, Transform transform) {
-        this.navMeshAgent = navMeshAgent;
-        this.transform = transform;
+    public AIBehaviour(AIEntity aiEntity) {
+        this.aiEntity = aiEntity;
+        this.navMeshAgent = aiEntity.navMeshAgent;
+        this.transform = aiEntity.gameObject.transform;
     }
 }

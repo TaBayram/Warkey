@@ -11,7 +11,7 @@ public class PassiveAIBehaviour:AIBehaviour
     BehaviourData wanderData;
     BehaviourData fleeData;
 
-    public PassiveAIBehaviour(NavMeshAgent navMeshAgent, Transform transform, PassiveAISettings passiveAISettings) :base(navMeshAgent, transform) {
+    public PassiveAIBehaviour(AIEntity aIEntity, PassiveAISettings passiveAISettings) :base(aIEntity) {
         this.passiveAISettings = passiveAISettings;
         patrolData = new BehaviourData();
         wanderData = new BehaviourData();

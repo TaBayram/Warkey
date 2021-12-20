@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    EntityData entityData;
-
     public Unit unit;
     public Movement movement;
     public WeaponController weaponController;
@@ -28,19 +27,25 @@ public class Entity : MonoBehaviour
             ((PlayerMovementThird)movement).RotateToTarget();
     }
 
-    private void WeaponController_onStateChange(Weapon.State obj) {
-        if (obj == Weapon.State.attacking && movement != null && movement.GetType() == typeof(PlayerMovementThird))
-            ((PlayerMovementThird)movement).RotateToTarget();
-
+    protected void WeaponController_onStateChange(Weapon.State obj) {
         animationController?.StateChange(obj);
     }
 
-    private void Movement_onVelocityChange(Vector3 obj) {
+    internal void OnWeaponChanged(WeaponAnimations weaponAnimations) {
+        animationController?.OnWeaponChanged(weaponAnimations);
+    }
+
+    protected void Movement_onVelocityChange(Vector3 obj) {
         velocity = obj;
     }
 
-    private void Movement_onStateChange(Movement.State obj) {
+    protected void Movement_onStateChange(Movement.State obj) {
         animationController?.StateChange(obj);   
+    }
+
+    public void RotateToCameraTarget(float duration) {
+        if (movement != null && movement.GetType() == typeof(PlayerMovementThird))
+            ((PlayerMovementThird)movement).RotateToTarget(duration);
     }
 
     public bool CanMove() {
@@ -50,4 +55,5 @@ public class Entity : MonoBehaviour
     public bool CanAttack() {
         return movement == null ? true : movement.state != Movement.State.sprinting;
     }
+
 }

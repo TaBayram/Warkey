@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(fileName = nameof(TextureSettings), menuName = "World Generation/"+nameof(TextureSettings))]
 public class TextureSettings : UpdateableData
 {
     const int textureSize = 512;

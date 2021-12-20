@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(fileName =nameof(GroundSettings),menuName = "World Generation/" + nameof(GroundSettings))]
 public class GroundSettings : UpdateableData
 {
     public PoissonDiscSettings poissonDiscSettings;

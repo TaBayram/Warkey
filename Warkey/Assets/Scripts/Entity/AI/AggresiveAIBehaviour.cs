@@ -6,24 +6,43 @@ using Unity.AI.Navigation;
 public class AggresiveAIBehaviour : AIBehaviour
 {
     AggresiveAISettings aggresiveAISettings;
-    float attackCooldown;
+    WeaponController weaponController;
 
-    public AggresiveAIBehaviour(NavMeshAgent navMeshAgent, Transform transform, AggresiveAISettings aggresiveAISettings) : base(navMeshAgent, transform) {
+    private bool lookAtTarget;
+
+    public AggresiveAIBehaviour(AIEntity aIEntity, AggresiveAISettings aggresiveAISettings) : base(aIEntity) {
         this.aggresiveAISettings = aggresiveAISettings;
+        this.weaponController = aiEntity.weaponController;
 
+        if(this.aiEntity.unit != null)
+            this.aiEntity.unit.onDamageTaken += Unit_onDamageTaken;
+        this.weaponController.onStateChange += WeaponController_onStateChange;
+    }
+
+    private void WeaponController_onStateChange(Weapon.State obj) {
+        if(obj == Weapon.State.attacking) {
+            lookAtTarget = true;
+        }
+    }
+
+    private void Unit_onDamageTaken(float damage) {
+        if (aggresiveAISettings.chaseWhenDamaged) {
+            //aiEntity.FillTargetPlayer()
+        }
     }
 
     public void Attack(Transform target) {
-        navMeshAgent.ResetPath();
-        if (Time.time > attackCooldown) {
+        if (lookAtTarget) {
+            navMeshAgent.ResetPath();
+            lookAtTarget = false;
             transform.LookAt(target);
-            attackCooldown = Time.time + 1 / aggresiveAISettings.attackSpeed;
-            target.GetComponent<IWidget>().TakeDamage(aggresiveAISettings.attackDamage);
         }
-
+            
+        weaponController.Attack();
     }
 
     public void Chase(Transform chased) {
         navMeshAgent.SetDestination(chased.position);
     }
+
 }

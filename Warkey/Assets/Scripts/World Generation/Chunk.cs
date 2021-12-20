@@ -59,7 +59,7 @@ public class Chunk
     protected Vector2 ViewerPosition { get { return new Vector2(viewer.position.x, viewer.position.z); } }
     public AdjacentChunks AdjacentChunks { get => adjacentChunks; }
 
-    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap) {
+    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap, PhysicMaterial physicMaterial) {
         this.coordinate = coord;
         this.chunkMatrix = chunkMatrix;
         this.LODSettings = lODSettings;
@@ -79,7 +79,7 @@ public class Chunk
 
         bounds = new Bounds(position, Vector2.one * meshSettings.MeshWorldSize);
 
-        terrainChunk = new TerrainChunk(this,material);
+        terrainChunk = new TerrainChunk(this,material,physicMaterial);
         RegisterActions(terrainChunk);
 
         waterChunk = new WaterChunk(this, waterMaterial);

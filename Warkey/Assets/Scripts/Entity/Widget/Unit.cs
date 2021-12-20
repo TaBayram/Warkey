@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-[RequireComponent(typeof(Entity))]
 public class Unit : MonoBehaviour,IWidget
 {
     public const float regenInterval = 0.25f;
 
-    public UnitData unitData;
+    [SerializeField] protected UnitData unitData;
+    [SerializeField] protected Disabler disabler;
+    [SerializeField] protected WidgetAudio widgetAudio;
     protected FiniteField health;
     protected FiniteField stamina;
 
     public IWidget.State state = IWidget.State.alive;
 
     public event PropertyChangedEventHandler FinitePropertyChanged;
+    public event System.Action<float> onDamageTaken;
 
     
 
@@ -42,6 +44,8 @@ public class Unit : MonoBehaviour,IWidget
 
     public void Die() {
         state = IWidget.State.dead;
+        disabler?.DisableComponents(0);
+        disabler?.RemoveComponents(0);
     }
 
     public void Destroy() {
@@ -49,8 +53,9 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public virtual void TakeDamage(float damage) {
+        onDamageTaken?.Invoke(damage);
         health.Current -= damage;
-        if(health.Current <= 0) {
+        if (health.Current <= 0) {
             Die();
         }
     }

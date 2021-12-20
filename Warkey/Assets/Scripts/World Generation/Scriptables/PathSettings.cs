@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(fileName = nameof(PathSettings), menuName = "World Generation/" + nameof(PathSettings))]
 public class PathSettings : UpdateableData
 {
     public int seed;

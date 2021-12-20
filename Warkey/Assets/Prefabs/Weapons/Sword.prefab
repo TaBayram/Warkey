@@ -174,8 +174,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.75, z: 0.2}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 0.3, y: 1, z: 0.3}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!114 &2599546502704719843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,20 +190,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMainHandRight: 1
   animations: []
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackRange: 1
   attackSpeed: 1
   baseDamage: 20
+  maxTargetPerAttack: 0
   attacks:
   - animationClip: {fileID: -203655887218126122, guid: fcc982942bccb5d46984a88a0dcdad04, type: 3}
-    damageActivationDelay: 0.2
+    damageActivationDelay: 0.4
     damageEndTime: 1
+    damageMultiplier: 1
     movement: {x: 0, y: 0, z: 0}
   - animationClip: {fileID: -203655887218126122, guid: 0ae1a4ffdd6bca74f83cb7580d201019, type: 3}
-    damageActivationDelay: 0.13
+    damageActivationDelay: 0.26
     damageEndTime: 1
+    damageMultiplier: 1
     movement: {x: 0, y: 0, z: 0}
   - animationClip: {fileID: -203655887218126122, guid: cd8f07b5fe117a74096e96162e42c20f, type: 3}
-    damageActivationDelay: 0.13
+    damageActivationDelay: 0.26
     damageEndTime: 1
+    damageMultiplier: 1.5
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: -203655887218126122, guid: 7520581fd68c6954fbf737495f153dc5, type: 3}
   audioSource: {fileID: 5865703988633012473}

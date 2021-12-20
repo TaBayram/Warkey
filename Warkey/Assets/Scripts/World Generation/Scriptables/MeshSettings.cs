@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(fileName = nameof(MeshSettings), menuName = "World Generation/" + nameof(MeshSettings))]
 public class MeshSettings : UpdateableData 
 {
     public const int lodCount = 5;

@@ -4,13 +4,17 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    [HideInInspector] public Transform parent;
     public bool isMainHandRight;
-
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
-    public AnimationClip[] animations;
+    public event System.Action<float> onRotateRequest;
+    [HideInInspector] public AnimationClip[] animations;
+    [HideInInspector] public LayerMask enemyLayer;
 
     protected State state;
+    [SerializeField] protected float attackRange = 1f;
+    [SerializeField] protected float knockback = 1f;
 
     public abstract State CurrentState {
         get;
@@ -23,15 +27,18 @@ public abstract class Weapon : MonoBehaviour
         attacking = 1,
         defending = 2,
     }
-
+    public float AttackRange { get => attackRange; }
     public abstract void Attack(Vector3 initialVelocity);
-
     public abstract void Defend(bool pressed);
-
+    public abstract void Stop();
     public abstract WeaponAnimations GetAnimations();
 
     public void OnStateChange() {
         onStateChange?.Invoke(state);
+    }
+
+    public void OnRotateRequest(float duration = 0) {
+        onRotateRequest?.Invoke(duration);
     }
 
     public void OnRequest(string name, object value) {

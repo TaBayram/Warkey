@@ -19,6 +19,8 @@ public class FiniteWorldGenerator : MonoBehaviour
     public Material waterMaterial;
     public Material pathMaterial;
 
+    public PhysicMaterial groundMaterial;
+
     public XY chunkSize;
     public LODSettings LODSettings;
 
@@ -63,7 +65,7 @@ public class FiniteWorldGenerator : MonoBehaviour
         UpdateVisibleChunks();
     }
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord]);
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord], groundMaterial);
         chunkDictionary.Add(viewedChunkCoord, chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         chunk.onChunkLoaded += onChunkLoaded;
@@ -78,7 +80,6 @@ public class FiniteWorldGenerator : MonoBehaviour
         if (count == (chunkSize.x * chunkSize.y)) {
             OnAllLoaded();
         }
-            
     }
 
     private void GeneratePath() {
