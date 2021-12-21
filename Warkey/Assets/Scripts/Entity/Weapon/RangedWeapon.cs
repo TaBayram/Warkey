@@ -50,7 +50,13 @@ public class RangedWeapon : Weapon
 				aimTransform.position = raycastHit.point;
 				mouseWorldPosition = raycastHit.point;
 			}
+			
+		}
+	}
 
+	private void LateUpdate() {
+		if (CurrentState == State.defending) {
+			OnRotateRequest(0.015f * Time.deltaTime);
 		}
 	}
 

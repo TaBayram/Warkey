@@ -38,6 +38,12 @@ public class MeleeWeapon : Weapon
         }
     }
 
+    private void LateUpdate() {
+        if(CurrentState == State.defending) {
+            OnRotateRequest(0.015f*Time.deltaTime);
+        }
+    }
+
     public override void Attack(Vector3 vector) {
         if (state == State.idle) {
             CurrentState = State.attacking;

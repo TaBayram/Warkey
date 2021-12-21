@@ -23,8 +23,6 @@ public class Entity : MonoBehaviour
     }
 
     private void Update() {
-        if (weaponController != null && weaponController.state == Weapon.State.defending && movement != null && movement.GetType() == typeof(PlayerMovementThird))
-            ((PlayerMovementThird)movement).RotateToTarget();
     }
 
     protected void WeaponController_onStateChange(Weapon.State obj) {

@@ -707,7 +707,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Ranged
     m_StateMachine: {fileID: -4549989147769964667}
-    m_Mask: {fileID: 31900000, guid: 6507f8235b08e1c4b93dd3ea2c6fa2d7, type: 2}
+    m_Mask: {fileID: 31900000, guid: c77cf791eb2c0eb49802bbcf2db73a90, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

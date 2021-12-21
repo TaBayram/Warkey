@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 1f87017b489d35f4c9f32ba9b4d8cdec
+guid: f85e0d7496655f949881f4f57a3f78fa
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: StandingBow
+    second: mixamo.com
+  - first:
+      74: 1038152519482517614
+    second: BowStanding
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -42,7 +45,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: StandingBow
+      name: BowStanding
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
@@ -54,7 +57,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
