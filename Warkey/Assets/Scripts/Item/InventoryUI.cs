@@ -27,7 +27,6 @@ public class InventoryUI : MonoBehaviour
 
     private void RefreshInventoryItems()
     {
-        
         int x = 0;
         float y = -2.5f;
         float itemSlotCellsize = 30f;
