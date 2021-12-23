@@ -10,8 +10,14 @@ public class ItemAssets : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject pfItemWorld;
-    public Sprite healthPotion;
-    public Sprite staminaPotion;
-    public Sprite Bread;
+    //public GameObject pfItemWorld;
+    
+    public Sprite healthPotionSprite;
+    public Sprite staminaPotionSprite;
+    public Sprite BreadSprite;
+    
+    public GameObject healthPotionObject;
+    public GameObject staminaPotionObject;
+    public GameObject BreadObject;
+
 }

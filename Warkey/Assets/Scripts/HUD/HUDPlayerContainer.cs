@@ -20,23 +20,12 @@ public class HUDPlayerContainer : MonoBehaviour
         inventory = new Inventory();
         inventoryUI.SetInventory(inventory);
         
-        ItemWorld.SpawnItemWorld(new Vector3(10, 0.5f), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });
+        ItemWorld.SpawnBread(new Vector3(10, 0.5f), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+        ItemWorld.SpawnHealthPotion(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
+        ItemWorld.SpawnStaminaPotion(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });
 
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
-        if (itemWorld != null)
-        {
-            Debug.Log("touched item");
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestroySelf();
-        }
-    }
 
     public void BindUnit(Unit unit) {
         this.unit = unit;
