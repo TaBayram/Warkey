@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,91 +11,96 @@ public class DialogueManager : MonoBehaviour
     bool isTalking = false;
 
     float distance;
-    float curResponseTracker = 0;
+    int currentPlayerMessageIndex = 0;
 
-    public GameObject player;
+    int currentNPCMessageIndex = 0;
+
+    public AudioSource audioSource;
+
+    public List<GameObject> players;
     public GameObject dialogueUI;
 
     public Text npcName;
     public Text npcDialogueBox;
     public Text playerResponse;
 
-    
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         dialogueUI.SetActive(false);
 
     }
 
     void OnMouseOver()
     {
-        distance = Vector3.Distance(player.transform.position, this.transform.position);
-        if(distance<=2.5f)
+        foreach (GameObject player in players)
         {
-            if(Input.GetAxis("Mouse ScrollWheel")>0f)
+            distance = Vector3.Distance(player.transform.position, this.transform.position);
+            if (distance <= 2.5f)
             {
-                curResponseTracker++;
-                if(curResponseTracker >= npc.playerDialogue.Length - 1)
+                if (Input.GetKeyDown(KeyCode.E) && isTalking == false)
                 {
-                    curResponseTracker = npc.playerDialogue.Length - 1;
+                    StartConversation();
                 }
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-            {
-                curResponseTracker--;
-                if (curResponseTracker < 0)
+                else if (Input.GetKeyDown(KeyCode.E) && isTalking == true)
                 {
-                    curResponseTracker = 0;
+                    EndDialogue();
                 }
+                bool hasIndexChanged = false;
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                {
+
+                    currentPlayerMessageIndex++; hasIndexChanged = true;
+                    if (currentPlayerMessageIndex >= npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length - 1)
+                    {
+                        currentPlayerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length - 1;
+                    }
+                }
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                {
+                    currentPlayerMessageIndex--; hasIndexChanged = true;
+                    if (currentPlayerMessageIndex < 0)
+                    {
+                        currentPlayerMessageIndex = 0;
+                    }
+                }
+                //trigger dialogue
+
+
+                //for (int i = 0; i < curResponseTracker.Length; i++)
+                //{
+
+                //}
+                if (hasIndexChanged)
+                {
+                    int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
+                    playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
+
+
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
+                    ShowNPCMessage(npc.playerDialogMessages[playerMessageIndex].npcDialogIndex);
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isExitMessage)
+                    {
+                        EndDialogue();
+                    }
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter)
+                    {
+                        SceneManager.LoadScene("Terrain Scene");
+                    }
+                }
+
             }
-            //trigger dialogue
-            if(Input.GetKeyDown(KeyCode.E) && isTalking==false)
-            {
-                StartConversation();
-            }
-            else if(Input.GetKeyDown(KeyCode.E) && isTalking==true)
+            else if (distance > 2.5f && isTalking == true)
             {
                 EndDialogue();
             }
-
-            //for (int i = 0; i < curResponseTracker.Length; i++)
-            //{
-
-            //}
-            if (curResponseTracker == 0 && npc.playerDialogue.Length > 0)
-            {
-                playerResponse.text = npc.playerDialogue[0];
-                if (Input.GetMouseButtonDown(0))
-                {
-                    SoundManager.PlaySound("1");
-                    npcDialogueBox.text = npc.dialogue[1];
-                }
-            }
-            else if (curResponseTracker == 1 && npc.playerDialogue.Length > 0)
-            {
-                playerResponse.text = npc.playerDialogue[1];
-                if (Input.GetMouseButtonDown(0))
-                {
-                    SoundManager.PlaySound("2");
-                    npcDialogueBox.text = npc.dialogue[2];
-                }
-            }
-            else if (curResponseTracker == 2 && npc.playerDialogue.Length > 0)
-            {
-                playerResponse.text = npc.playerDialogue[2];
-                if (Input.GetMouseButtonDown(0))
-                {
-                    SoundManager.PlaySound("3");
-                    npcDialogueBox.text = npc.dialogue[3];
-                }
-            }
-        }
-        else if(distance>2.5f && isTalking == true)
-        {
-            EndDialogue();
         }
     }
 
@@ -103,11 +108,10 @@ public class DialogueManager : MonoBehaviour
     void StartConversation()
     {
         isTalking = true;
-        curResponseTracker = 1;
+        currentPlayerMessageIndex = 1;
         dialogueUI.SetActive(true);
         npcName.text = npc.name;
-        npcDialogueBox.text = npc.dialogue[0];
-        SoundManager.PlaySound("1");
+        ShowNPCMessage(0);
 
 
     }
@@ -119,6 +123,18 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(false);
 
     }
+    private void ShowNPCMessage(int index)
+    {
+        currentNPCMessageIndex = index;
+        npcDialogueBox.text = npc.nPCDialogMessages[index].dialogMessage.message;
+        audioSource.clip = npc.nPCDialogMessages[index].dialogMessage.audio;
+        audioSource.Play();
+        currentPlayerMessageIndex = 0;
+        int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
+        playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
 
- 
+
+    }
+
+
 }

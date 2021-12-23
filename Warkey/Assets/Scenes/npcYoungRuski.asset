@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
-  m_Name: Jeff
+  m_Name: npcYoungRuski
   m_EditorClassIdentifier: 
   nPCDialogMessages:
   - dialogMessage:
-      message: Hi
+      message: Hello my friend
       audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
-    playerDialogIndexes: 0000000001000000
+    playerDialogIndexes: 000000000100000002000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
-      message: thanks
-      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
-    playerDialogIndexes: 0200000001000000
-    isExitMessage: 0
-    isQuestAccepter: 0
-  - dialogMessage:
-      message: 'blessed palce '
-      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+      message: Here is our blessed place brother
+      audio: {fileID: 8300000, guid: c413c23b80ae893429df241340e6bf9f, type: 3}
     playerDialogIndexes: 0100000002000000
     isExitMessage: 0
+    isQuestAccepter: 1
+  - dialogMessage:
+      message: See u later brother
+      audio: {fileID: 8300000, guid: 40d777982da5df048845bff832c41d3d, type: 3}
+    playerDialogIndexes: 
+    isExitMessage: 1
     isQuestAccepter: 0
   playerDialogMessages:
   - dialogMessage:
-      message: Wassup
+      message: Hey what is that place
       audio: {fileID: 0}
     npcDialogIndex: 1
   - dialogMessage:
-      message: What is that place
+      message: let me know this place
+      audio: {fileID: 0}
+    npcDialogIndex: 1
+  - dialogMessage:
+      message: goodbye
       audio: {fileID: 0}
     npcDialogIndex: 2
-  - dialogMessage:
-      message: Good bye
-      audio: {fileID: 0}
-    npcDialogIndex: 0
