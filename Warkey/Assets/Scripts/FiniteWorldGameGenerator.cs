@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(FiniteWorldGenerator))]
 public class FiniteWorldGameGenerator : MonoBehaviour
 {
     public const float spawnProtectionDistance = 100*10;

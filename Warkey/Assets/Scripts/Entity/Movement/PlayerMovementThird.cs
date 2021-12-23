@@ -87,4 +87,8 @@ public class PlayerMovementThird : Movement
             isRotating = false;
         }
     }
+
+    private void OnDestroy() {
+        Destroy(playerCamera);
+    }
 }

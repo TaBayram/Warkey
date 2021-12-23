@@ -15,7 +15,7 @@ MonoBehaviour:
   entitySettings:
   - prefab: {fileID: 7958137458794860659, guid: 206baadb900c5ff48ad505c69a938c84, type: 3}
     canDynamicSpawn: 1
-    canStaticSpawn: 0
+    canStaticSpawn: 1
     spawnChance: 0.9
     spawnDistance: 10
   bossSettings: []
