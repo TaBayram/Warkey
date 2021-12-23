@@ -353,6 +353,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!4 &1068325505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6477479063983046005, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+  m_PrefabInstance: {fileID: 1604325062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1155518579 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7969199136492590840, guid: f500f6cd1de23ad42b5a371007b92b5c, type: 3}
@@ -519,7 +524,7 @@ PrefabInstance:
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: viewer
       value: 
-      objectReference: {fileID: 1440112139}
+      objectReference: {fileID: 1068325505}
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: chunkSize.x
       value: 1
@@ -568,6 +573,10 @@ PrefabInstance:
       propertyPath: players.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
+      propertyPath: worldEntitySettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 492ad4f9c7d62aa4bb0a19f9e04878d6, type: 2}
     - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: players.Array.data[0]
       value: 

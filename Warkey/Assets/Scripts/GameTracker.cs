@@ -13,8 +13,9 @@ public class GameTracker
             return instance; 
         }
     }
-
     private GameTracker() { }
+
+    private List<PlayerTracker> playerTrackers = new List<PlayerTracker>();
 
 
 }

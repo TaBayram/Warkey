@@ -20,9 +20,12 @@ public abstract class Movement : MonoBehaviour
 
     public Movement.State state = State.idle;
     public bool isJumping = false;
+    public bool isRotating = false;
 
     public event System.Action<State> onStateChange;
     public event System.Action<Vector3> onVelocityChange;
+
+    protected float movementMultiplier = 1f;
     
     public Vector3 Velocity { get => characterController.velocity; }
 
@@ -42,6 +45,13 @@ public abstract class Movement : MonoBehaviour
         sprinting = 2,
     }
 
+    public void RotateToTarget(Transform target) {
+        //transform.LookAt(target);
+        //Quaternion.Look(transform.rotation, )
+        float rotationalTarget = Quaternion.LookRotation(target.position - transform.position).eulerAngles.y;
+        transform.rotation = Quaternion.Euler(0f, rotationalTarget, 0f);
+    }
+
     protected Vector3 Move(Vector3 direction, bool sprint) {
         State oldState = state;
         if(direction != Vector3.zero) {
@@ -57,15 +67,23 @@ public abstract class Movement : MonoBehaviour
         if (oldState != state && onStateChange != null) {
             onStateChange(state);
         }
-        if (direction == Vector3.zero)
+        if (state == State.idle)
             return direction;
 
         Vector3 movement = Vector3.zero;
         if (!isJumping) {
-            movement = direction * Time.deltaTime * ((sprint) ? movementData.sprintSpeed : movementData.walkSpeed);
+            movement = direction * Time.deltaTime * movementMultiplier * ((sprint) ? movementData.sprintSpeed : movementData.walkSpeed);
             MoveCharacter(movement);
         }
         return movement;
+    }
+
+    protected void Stop() {
+        State oldState = state;
+        state = State.idle;
+        if (oldState != state && onStateChange != null) {
+            onStateChange(state);
+        }
     }
 
 

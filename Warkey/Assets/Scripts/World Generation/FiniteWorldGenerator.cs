@@ -1,13 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
-using System.Linq;
 
 public class FiniteWorldGenerator : MonoBehaviour
 {
     const float viewerMoveThresholdForChunkUpdate = 5f;
     const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
+
+    private int seed;
 
     public MeshSettings meshSettings;
     public HeightMapSettings heightMapSettings;
@@ -30,6 +30,7 @@ public class FiniteWorldGenerator : MonoBehaviour
     Dictionary<Vector2, Chunk> chunkDictionary = new Dictionary<Vector2, Chunk>();
     Dictionary<Vector2, float[,]> pathDictionary = new Dictionary<Vector2, float[,]>();
     List<Chunk> visibleChunks = new List<Chunk>();
+    List<Chunk> allChunks = new List<Chunk>();
 
     float meshWorldSize;
     int chunkSizeVisibleInViewDistance;
@@ -46,8 +47,13 @@ public class FiniteWorldGenerator : MonoBehaviour
     Vector2 viewerPosition;
     Vector2 viewerPositionOld;
 
-
     public event System.Action onWorldReady;
+
+    private void Awake() {
+        groundSettings.poissonDiscSettings.seed = seed;
+        heightMapSettings.noiseSettings.seed = seed;
+        pathSettings.seed = seed;
+    }
 
     private void Start() {
         textureData.ApplyToMaterial(mapMaterial);
@@ -67,6 +73,7 @@ public class FiniteWorldGenerator : MonoBehaviour
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
         Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord], groundMaterial);
         chunkDictionary.Add(viewedChunkCoord, chunk);
+        allChunks.Add(chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         chunk.onChunkLoaded += onChunkLoaded;
         chunk.Load(fallOffMap,true);
@@ -205,6 +212,14 @@ public class FiniteWorldGenerator : MonoBehaviour
         }
         else {
             visibleChunks.Remove(chunk);
+        }
+    }
+
+    public void BindViewer(Transform transform) {
+        viewer = transform;
+
+        foreach(Chunk chunk in allChunks) {
+            chunk.BindViewer(transform);
         }
     }
 

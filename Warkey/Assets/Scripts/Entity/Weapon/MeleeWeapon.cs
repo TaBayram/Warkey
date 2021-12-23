@@ -116,13 +116,13 @@ public class MeleeWeapon : Weapon
         if (!IsInDamageTime()) return;
         if (maxTargetPerAttack != 0 && alreadyHit.Count > maxTargetPerAttack) return;
         if (state == State.attacking && !alreadyHit.Contains(other) && 1 << other.gameObject.layer == enemyLayer.value) {
-            other.gameObject.GetComponent<IWidget>().TakeDamage(currentAttackDamage);
+            other.gameObject.GetComponent<IWidget>()?.TakeDamage(currentAttackDamage);
             alreadyHit.Add(other);
             audioSource.Play();
 
             var ent = other.gameObject.GetComponent<AIEntity>();
             if (ent) {
-                ent.GetKnockedBack((other.transform.position - this.parent.position).normalized*10*1);
+                ent.GetKnockedBack((other.transform.position - this.parent.position).normalized*10*knockback);
             }
         }
     }

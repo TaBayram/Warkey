@@ -61,6 +61,13 @@ public struct HeightMap
         this.values01 = values01;
     }
 
+    public bool IsInMatrix(Vector2 vector) {
+        bool x = vector.x >= 0 && vector.x < values.GetLength(0);
+        bool y = vector.y >= 0 && vector.y < values.GetLength(1);
+
+        return x && y;
+    }
+
     public int sizeX { get => values.GetLength(0); }
     public int sizeY { get => values.GetLength(1); }
 }

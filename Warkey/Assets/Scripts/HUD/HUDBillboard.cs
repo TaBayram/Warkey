@@ -11,6 +11,10 @@ public class HUDBillboard : MonoBehaviour
         targetCamera = transform;
     }
 
+    private void Awake() {
+        targetCamera = Camera.main.transform;
+    }
+
     void LateUpdate()
     {
         if (targetCamera == null || ((targetCamera.position - transform.position).sqrMagnitude) > viewThreshold*viewThreshold) {

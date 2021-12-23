@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour,IWidget
 {
-    public const float regenInterval = 0.25f;
+    public const float regenInterval = 0.10f;
 
     [SerializeField] protected UnitData unitData;
     [SerializeField] protected Disabler disabler;
@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour,IWidget
     public event PropertyChangedEventHandler FinitePropertyChanged;
     public event System.Action<float> onDamageTaken;
 
+    private float staminaRegenCooldown = 1f;
     
 
     protected void Start() {
@@ -60,13 +61,32 @@ public class Unit : MonoBehaviour,IWidget
         }
     }
 
+    public void Heal(float heal) {
+        health.Current += heal;
+    }
+
+    public bool UseStamina(float value) {
+        if(stamina.Current >= value) {
+            stamina.Current -= value;
+            staminaRegenCooldown = stamina.Cooldown;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     void Update() {
 
     }
 
+
     void RegenerateFields() {
         health.Current += health.Regen*regenInterval;
-        stamina.Current += stamina.Regen*regenInterval;
+        if (staminaRegenCooldown <= 0)
+            stamina.Current += stamina.Regen * regenInterval;
+        else
+            staminaRegenCooldown -= regenInterval;
     }
 
 }
@@ -77,10 +97,12 @@ public class FiniteField
     private float max;
     private float current;
     private float regen;
+    private float cooldown;
 
     public float Current { get => current; set { current = Mathf.Min(value, max); OnPropertyChanged(); } }
     public float Regen { get => regen; set => regen = value; }
     public float Max { get => max; set { max = value; current = Mathf.Min(current, max); OnPropertyChanged(); }  }
+    public float Cooldown { get => cooldown; set => cooldown = value; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 

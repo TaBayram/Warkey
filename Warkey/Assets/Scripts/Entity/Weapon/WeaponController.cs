@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour
 	public Weapon.State state;
 
 	public event System.Action<Weapon.State> onStateChange;
+	public event System.Action<Weapon> onWeaponChange;
 
 	private Weapon equippedWeapon;
 	private bool isDefending;
@@ -50,10 +51,12 @@ public class WeaponController : MonoBehaviour
 		equippedWeapon.parent = transform;
 
 		entity.OnWeaponChanged(equippedWeapon.GetAnimations());
+
+		onWeaponChange?.Invoke(weapon);
 	}
 
-    private void EquippedWeapon_onRotateRequest(float obj) {
-		entity.RotateToCameraTarget(obj);
+    private void EquippedWeapon_onRotateRequest(float obj,Transform transform) {
+		entity.RotateToCameraTarget(obj, transform);
     }
 
     private void EquippedWeapon_onAnimationChangeRequest(string arg1, object arg2) {

@@ -84,15 +84,15 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  attackRange: 1
-  knockback: 1
+  attackRange: 10
+  knockback: 5
   muzzle: {fileID: 1149727108116823510}
-  projectile: {fileID: 279033490766135661, guid: 35674c53922113a40bc361f037c5972c, type: 3}
+  projectile: {fileID: 3489410033416826239, guid: 35674c53922113a40bc361f037c5972c, type: 3}
   attackAnimation: {fileID: -203655887218126122, guid: b5dc57c6b205b4641ba481435193a3ec, type: 3}
   aimAnimation: {fileID: 1038152519482517614, guid: f85e0d7496655f949881f4f57a3f78fa, type: 3}
   attackSpeed: 1
   attackDamage: 20
-  launchSpeed: 20
+  launchSpeed: 50
   launchDelay: 0.2
   IsUnlimited: 0
   mainPool: 20
@@ -101,6 +101,9 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 65536
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 2368
   aimTransform: {fileID: 1947063667258992560}
 --- !u!1 &6452582029855588149
 GameObject:
@@ -119,7 +122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3084197420837054581
 Transform:
   m_ObjectHideFlags: 0

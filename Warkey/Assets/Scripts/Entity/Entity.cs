@@ -27,6 +27,14 @@ public class Entity : MonoBehaviour
 
     protected void WeaponController_onStateChange(Weapon.State obj) {
         animationController?.StateChange(obj);
+
+        if (movement == null) return;
+        if(obj == Weapon.State.defending) {
+            movement.isRotating = true;
+        }
+        else {
+            movement.isRotating = false;
+        }
     }
 
     internal void OnWeaponChanged(WeaponAnimations weaponAnimations) {
@@ -41,17 +49,41 @@ public class Entity : MonoBehaviour
         animationController?.StateChange(obj);   
     }
 
-    public void RotateToCameraTarget(float duration) {
-        if (movement != null && movement.GetType() == typeof(PlayerMovementThird))
-            ((PlayerMovementThird)movement).RotateToTarget(duration);
+    public void RotateToCameraTarget(float duration,Transform transform = null) {
+        if (transform == null) {
+            if (movement != null && movement.GetType() == typeof(PlayerMovementThird))
+                ((PlayerMovementThird)movement).RotateToTarget(duration);
+        }
+        else {
+            if (movement != null)
+                (movement).RotateToTarget(transform);
+        }
+
     }
 
-    public bool CanMove() {
-        return weaponController == null ? true : weaponController.state != Weapon.State.attacking;
+    public float MovementScaler() {
+        if (weaponController == null) return 1;
+
+        switch (weaponController.state) {
+            case Weapon.State.attacking:
+                return .25f;
+            case Weapon.State.defending:
+                return .5f;
+            default: 
+                return 1;
+        }
     }
 
     public bool CanAttack() {
         return movement == null ? true : movement.state != Movement.State.sprinting;
     }
 
+    internal bool UseStamina(float v) {
+        if(unit != null) {
+            return unit.UseStamina(v);
+        }
+        else {
+            return true;
+        }
+    }
 }

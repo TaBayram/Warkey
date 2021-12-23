@@ -10,7 +10,6 @@ public class PlayerTracker
 
     public int gold;
 
-
     public GameObject prefabHero;
     public GameObject hero;
 

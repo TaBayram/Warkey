@@ -9,6 +9,7 @@ public class MovementData : ScriptableObject
     public float weight;
     public float walkSpeed;
     public float sprintSpeed;
+    public float sprintStaminaCost;
     public float jumpHeight;
     public float jumpForwardScale = 1f;
 }

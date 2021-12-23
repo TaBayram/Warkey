@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangedWeapon : Weapon
 {
 	[SerializeField] private Transform muzzle;
-	[SerializeField] private Projectile projectile;
+	[SerializeField] private GameObject projectile;
 	[SerializeField] private AnimationClip attackAnimation;
 	[SerializeField] private AnimationClip aimAnimation;
 	[SerializeField] private float attackSpeed = 1;
@@ -25,6 +25,7 @@ public class RangedWeapon : Weapon
 	private int currentSubPool;
 	private int currentMainPool;
 	private Vector3 mouseWorldPosition;
+	private Vector3 centerPosition;
 
 
 	public override State CurrentState {
@@ -46,9 +47,15 @@ public class RangedWeapon : Weapon
 
 			Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 			Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-			if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
+			if(Physics.Raycast(ray,out RaycastHit raycastHit1, 99f, enemyLayer)) {
+				aimTransform.position = raycastHit1.point;
+				mouseWorldPosition = raycastHit1.point;
+				centerPosition = ray.origin;
+			}
+			else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
 				aimTransform.position = raycastHit.point;
 				mouseWorldPosition = raycastHit.point;
+				centerPosition = ray.origin;
 			}
 			
 		}
@@ -56,12 +63,15 @@ public class RangedWeapon : Weapon
 
 	private void LateUpdate() {
 		if (CurrentState == State.defending) {
-			OnRotateRequest(0.015f * Time.deltaTime);
+			OnRotateRequest(0.015f * Time.deltaTime,aimTransform);
 		}
 	}
 
 	public override void Attack(Vector3 entityVelocity) {
-		StartAttacking(entityVelocity);
+		if (CurrentState == State.defending)
+			StartAttacking(entityVelocity);
+		else
+			CurrentState = State.defending;
 	}
 
 	private void StartAttacking(Vector3 entityVelocity) {
@@ -75,14 +85,23 @@ public class RangedWeapon : Weapon
 	private IEnumerator Shoot(Vector3 entityVelocity) {
 		yield return new WaitForSeconds(launchDelay);
 		Vector3 aimDir = (mouseWorldPosition - muzzle.position).normalized;
-		Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)) as Projectile;
+		Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<Projectile>();
 		newProjectile.speed = (launchSpeed);
 		newProjectile.damage = attackDamage;
+		newProjectile.straighten = true;
+		newProjectile.range = attackRange;
+		newProjectile.layerMask = enemyLayer;
+		newProjectile.knockback = knockback;
+		newProjectile.straightenedRotation = Quaternion.LookRotation((mouseWorldPosition - centerPosition).normalized, Vector3.up);
 
-		CurrentState = State.defending;
+
+		Defend(pressed);
 	}
 
+	bool pressed;
+
     public override void Defend(bool pressed) {
+		this.pressed = pressed;
 		if (pressed)
 			CurrentState = State.defending;
 		else
@@ -95,6 +114,6 @@ public class RangedWeapon : Weapon
 	}
 
     public override void Stop() {
-        throw new System.NotImplementedException();
+		CurrentState = State.idle;
     }
 }

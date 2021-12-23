@@ -88,7 +88,7 @@ public class Chunk
         pathChunk = new PathChunk(this, pathMaterial, pathmap);
         RegisterActions(pathChunk);
 
-
+        CreateCornerBlock();
         maxViewDistance = LODSettings.LODInfos[LODSettings.LODCount - 1].visibleDistanceThreshold;
     }
 
@@ -223,8 +223,48 @@ public class Chunk
         int xModifier = (chunkMatrix.x % 2 == 0) ? 1 : 0;
         int yModifier = (chunkMatrix.y % 2 == 0) ? 1 : 0;
 
-
         return coordinate.x == -maxX + xModifier && coordinate.y == maxY + yModifier;
+    }
+
+    GameObject colliders;
+
+    public void CreateCornerBlock() {
+        colliders = new GameObject("Corners");
+
+        int maxX = (int)chunkMatrix.x / 2;
+        int maxY = (int)chunkMatrix.y / 2;
+        int xModifier = (chunkMatrix.x % 2 == 0) ? 1 : 0;
+        int yModifier = (chunkMatrix.y % 2 == 0) ? 1 : 0;
+
+        int right = maxX;
+        int left = -maxX + xModifier;
+        int up = maxY;
+        int down = -maxY + yModifier;
+        if (coordinate.x == right) {
+            BoxCollider collider = colliders.AddComponent<BoxCollider>();
+            var x = meshSettings.MeshWorldSize / 2;
+            collider.center = chunkObject.gameObject.transform.position + Vector3.right * x;
+            collider.size = new Vector3(5f, 300f, meshSettings.MeshWorldSize);
+        }
+        if (coordinate.x == left) {
+            BoxCollider collider = colliders.AddComponent<BoxCollider>();
+            var x = meshSettings.MeshWorldSize / 2;
+            collider.center = chunkObject.gameObject.transform.position + Vector3.left * x;
+            collider.size = new Vector3(5f, 300f, meshSettings.MeshWorldSize);
+        }
+        if (coordinate.y == up) {
+            BoxCollider collider = colliders.AddComponent<BoxCollider>();
+            var z = meshSettings.MeshWorldSize / 2;
+            collider.center = chunkObject.gameObject.transform.position + Vector3.forward * z;
+            collider.size = new Vector3(meshSettings.MeshWorldSize, 300f, 5f);
+        }
+        if (coordinate.y == down) {
+            BoxCollider collider = colliders.AddComponent<BoxCollider>();
+            var z = meshSettings.MeshWorldSize / 2;
+            collider.center = chunkObject.gameObject.transform.position + Vector3.back * z;
+            collider.size = new Vector3(meshSettings.MeshWorldSize, 300f, 5f);
+        }
+        colliders.transform.parent = this.chunkObject.transform;
     }
 
     int count = 0;
@@ -233,6 +273,10 @@ public class Chunk
         if(count == 3) {
             onChunkLoaded(this);
         }
+    }
+
+    public void BindViewer(Transform transform) {
+        viewer = transform;
     }
 
 }
