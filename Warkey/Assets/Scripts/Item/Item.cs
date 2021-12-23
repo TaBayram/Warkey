@@ -17,11 +17,11 @@ public class Item
     {
         switch (itemType)
         {
-			default:
 			case ItemType.HealthPotion: return ItemAssets.Instance.healthPotion;
             case ItemType.StaminaPotion: return ItemAssets.Instance.staminaPotion;
             case ItemType.Bread: return ItemAssets.Instance.Bread;
-        }
+			default: return ItemAssets.Instance.Bread;
+		}
     }
 
 	/*

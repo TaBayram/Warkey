@@ -19,11 +19,11 @@ public class HUDPlayerContainer : MonoBehaviour
     private void Start() {
         inventory = new Inventory();
         inventoryUI.SetInventory(inventory);
-        /*
-        ItemWorld.SpwanItemWorld(new Vector3(10, 5), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-        ItemWorld.SpwanItemWorld(new Vector3(-20, 5), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
-        ItemWorld.SpwanItemWorld(new Vector3(30, 5), new Item { itemType = Item.ItemType.Bread, amount = 1 });
-        */
+        
+        ItemWorld.SpawnItemWorld(new Vector3(10, 0.5f), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });
+
     }
 
 
