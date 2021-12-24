@@ -7,12 +7,17 @@ public class SpawnPlayers : MonoBehaviour
 {
     public GameObject playerPrefab;
 
-    public float xWidth;
-    public float zWidth;
+    public float minX;
+    public float maxX;
+    public float minZ;
+    public float maxZ;
+    public float exactX;
+
+    public List<GameObject> spawnedPlayers = new List<GameObject>();
 
     private void Start()
     {
-        Vector3 randomPosition = this.transform.position + new Vector3(Random.Range(-xWidth, xWidth), 0, Random.Range(-zWidth, zWidth));
-        var prefab = PhotonNetwork.Instantiate("Paladin", randomPosition, Quaternion.identity);
+        Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), exactX, Random.Range(minZ, maxZ));
+        spawnedPlayers.Add(PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity)); 
     }
 }
