@@ -9,10 +9,23 @@ public class HUDPlayerContainer : MonoBehaviour
     public HUDBar healthBar;
     public HUDBar staminaBar;
     private Unit unit;
+    [SerializeField] private WeaponUI weaponUI;
+    private Inventory inventory;
+    [SerializeField] private InventoryUI inventoryUI;
 
-    private void Start() {
-        
+    private void Awake()
+    {
     }
+    private void Start() {
+        inventory = new Inventory();
+        inventoryUI.SetInventory(inventory);
+        
+        ItemWorld.SpawnBread(new Vector3(10, 0.5f), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+        ItemWorld.SpawnHealthPotion(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
+        ItemWorld.SpawnStaminaPotion(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });
+
+    }
+
 
     public void BindUnit(Unit unit) {
         this.unit = unit;
@@ -43,4 +56,11 @@ public class HUDPlayerContainer : MonoBehaviour
         staminaBar.SetMaxValue(field.Max);
         staminaBar.SetValue(field.Current);
     }
+
+    
+    public void updateWeapon(Weapon weapon)
+    {
+        weaponUI.UpdateInfo(weapon.weaponIcon);
+    }
+    
 }
