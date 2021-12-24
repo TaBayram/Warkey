@@ -18,7 +18,18 @@ public class PlayerStorage
     
 
     public PlayerStorageData Load() {
-        return loaded = (PlayerStorageData)storageHandler.LoadData(filename);
+        var obj = storageHandler.LoadData(filename);
+        if(obj == null) {
+            loaded = new PlayerStorageData();
+            loaded.experience = 0;
+            loaded.level = 1;
+            loaded.playedHero = HeroesData.Instance.Heroes[0].uniqueName;
+            loaded.gold = 0;
+        }
+        else {
+            loaded = (PlayerStorageData)obj;
+        }
+        return loaded;
     }
 
     public bool Save(PlayerStorageData save) {

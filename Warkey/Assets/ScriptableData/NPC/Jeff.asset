@@ -16,7 +16,7 @@ MonoBehaviour:
   - dialogMessage:
       message: Hi
       audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
-    playerDialogIndexes: 0000000001000000
+    playerDialogIndexes: 000000000100000003000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
@@ -31,6 +31,12 @@ MonoBehaviour:
     playerDialogIndexes: 0100000002000000
     isExitMessage: 0
     isQuestAccepter: 0
+  - dialogMessage:
+      message: Thank you
+      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+    playerDialogIndexes: 0100000002000000
+    isExitMessage: 0
+    isQuestAccepter: 1
   playerDialogMessages:
   - dialogMessage:
       message: Wassup
@@ -44,3 +50,7 @@ MonoBehaviour:
       message: Good bye
       audio: {fileID: 0}
     npcDialogIndex: 0
+  - dialogMessage:
+      message: I accept
+      audio: {fileID: 0}
+    npcDialogIndex: 3

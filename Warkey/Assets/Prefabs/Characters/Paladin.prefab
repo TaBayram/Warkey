@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 3747483084752894619}
   - component: {fileID: 8668747900945568749}
   - component: {fileID: 6597694473952384342}
+  - component: {fileID: 6535898625453402832}
   - component: {fileID: 1442953760595564250}
   - component: {fileID: 6786616840240923428}
-  - component: {fileID: 6535898625453402832}
   - component: {fileID: 4100661796457472914}
   - component: {fileID: 2464713899535096047}
   - component: {fileID: 8229531785357038033}
@@ -109,6 +109,29 @@ MonoBehaviour:
   weaponController: {fileID: 4100661796457472914}
   animationController: {fileID: 6535898625453402832}
   velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &6535898625453402832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496866731616768025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ddc3390f8b550242bc580db0d6cbd53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replaceableMeleeAttackAnimations:
+  - {fileID: 7400000, guid: 9fde70f4e2b38f845bb15c7b19ba7167, type: 2}
+  - {fileID: 7400000, guid: 5e3fb0f7f4cd7d74797d8d2c44d972ec, type: 2}
+  - {fileID: 7400000, guid: 0ce31e4cab6a67740890b96e70e2384b, type: 2}
+  - {fileID: 7400000, guid: 0e0a0b5a7c2b486479c407b6f032368c, type: 2}
+  replaceableRangedAttackAnimations:
+  - {fileID: 7400000, guid: 02a9394125f151e49a629a26117e45fb, type: 2}
+  - {fileID: 7400000, guid: fba841f702442a9478172f9d68f4f73a, type: 2}
+  animator: {fileID: 7660401763676200027}
+  movementState: 0
+  weaponState: 0
 --- !u!114 &1442953760595564250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,29 +171,6 @@ MonoBehaviour:
   disabler: {fileID: 0}
   widgetAudio: {fileID: 0}
   state: 1
---- !u!114 &6535898625453402832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2496866731616768025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ddc3390f8b550242bc580db0d6cbd53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  replaceableMeleeAttackAnimations:
-  - {fileID: 7400000, guid: 9fde70f4e2b38f845bb15c7b19ba7167, type: 2}
-  - {fileID: 7400000, guid: 5e3fb0f7f4cd7d74797d8d2c44d972ec, type: 2}
-  - {fileID: 7400000, guid: 0ce31e4cab6a67740890b96e70e2384b, type: 2}
-  - {fileID: 7400000, guid: 0e0a0b5a7c2b486479c407b6f032368c, type: 2}
-  replaceableRangedAttackAnimations:
-  - {fileID: 7400000, guid: 02a9394125f151e49a629a26117e45fb, type: 2}
-  - {fileID: 7400000, guid: fba841f702442a9478172f9d68f4f73a, type: 2}
-  animator: {fileID: 7660401763676200027}
-  movementState: 0
-  weaponState: 0
 --- !u!114 &4100661796457472914
 MonoBehaviour:
   m_ObjectHideFlags: 0

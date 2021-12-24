@@ -12,11 +12,15 @@ public class HUDBillboard : MonoBehaviour
     }
 
     private void Awake() {
-        targetCamera = Camera.main.transform;
+        if(Camera.main)
+            targetCamera = Camera.main.transform;
     }
 
     void LateUpdate()
     {
+        if(targetCamera == null && Camera.main) {
+            targetCamera = Camera.main.transform;
+        }
         if (targetCamera == null || ((targetCamera.position - transform.position).sqrMagnitude) > viewThreshold*viewThreshold) {
             healthBar.SetActive(false);   
         }

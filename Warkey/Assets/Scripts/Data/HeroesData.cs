@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HeroesData : MonoBehaviour
 {
-    private static string prefabPath = "Data/Heroes.prefab";
+    private static string prefabPath = "Data/Heroes";
     private static HeroesData instance;   
 
     public static HeroesData Instance {
@@ -29,10 +29,6 @@ public class HeroesData : MonoBehaviour
         for(int i = 0; i < heroes.Length; i++){
             heroes[i].uniqueName = heroes[i].prefab.name;
         }
-    }
-
-    private void Start() {
-        DontDestroyOnLoad(this.gameObject);
 
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
         if (pool != null && heroes != null) {
@@ -40,6 +36,10 @@ public class HeroesData : MonoBehaviour
                 pool.ResourceCache.Add(hero.prefab.name, hero.prefab);
             }
         }
+    }
+
+    private void Start() {
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public GameObject GetHeroPrefab(string name) {

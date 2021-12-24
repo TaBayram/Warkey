@@ -13,6 +13,9 @@ public class GameTracker
             return instance; 
         }
     }
+
+    public List<PlayerTracker> PlayerTrackers { get => playerTrackers; set => playerTrackers = value; }
+
     private GameTracker() { }
 
     private List<PlayerTracker> playerTrackers = new List<PlayerTracker>();

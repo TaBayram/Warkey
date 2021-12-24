@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -30,9 +31,6 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        dialogueUI.SetActive(false);
-
     }
 
     void OnMouseOver()
@@ -77,22 +75,23 @@ public class DialogueManager : MonoBehaviour
                 //}
                 if (hasIndexChanged)
                 {
-                    int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
-                    playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
-
+                    if(npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes != null && npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length > 0) {
+                        int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
+                        playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
+                    }
 
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
                     int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
                     ShowNPCMessage(npc.playerDialogMessages[playerMessageIndex].npcDialogIndex);
-                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isExitMessage)
-                    {
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isExitMessage) {
                         EndDialogue();
+                        return;
                     }
-                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter)
-                    {
-                        SceneManager.LoadScene("Terrain Scene");
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter) {
+                        SceneManager.LoadScene("WorldScene");
+                        return;
                     }
                 }
 
@@ -130,8 +129,10 @@ public class DialogueManager : MonoBehaviour
         audioSource.clip = npc.nPCDialogMessages[index].dialogMessage.audio;
         audioSource.Play();
         currentPlayerMessageIndex = 0;
-        int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
-        playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
+        if (npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes != null && npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length > 0) {
+            int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
+            playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
+        }
 
 
     }

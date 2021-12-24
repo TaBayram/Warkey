@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
     public GameObject panel;
-    public InputField createInput;
-    public InputField joinInput;
+    public TMP_InputField createInput;
+    public TMP_InputField joinInput;
+    public TMP_InputField nicknameInput;
 
     public void Enable() {
         panel.SetActive(true);
@@ -16,7 +18,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(createInput.text);
+        PhotonNetwork.CreateRoom(createInput.text, new Photon.Realtime.RoomOptions { MaxPlayers = 4 });
+        
     }
 
     public void JoinRoom()
@@ -26,6 +29,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("TavernScene");
+        
+        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LocalPlayer.NickName = nicknameInput.text;
     }
 }

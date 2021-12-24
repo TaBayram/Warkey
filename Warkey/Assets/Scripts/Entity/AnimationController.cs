@@ -14,7 +14,7 @@ public class AnimationController : MonoBehaviour
 
     protected AnimatorOverrideController animatorOverride;
 
-    private void Start() {
+    private void Awake() {
         animator = GetComponentInChildren<Animator>();
         animatorOverride = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverride;

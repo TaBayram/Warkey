@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nPCDialogMessages:
   - dialogMessage:
-      message: MY lord
+      message: My Lord
       audio: {fileID: 8300000, guid: 8ec442a103a70d540986539cd9c3eac0, type: 3}
     playerDialogIndexes: 000000000100000002000000
     isExitMessage: 0
