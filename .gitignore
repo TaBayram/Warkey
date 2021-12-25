@@ -5,6 +5,7 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 Warkey/Logs/
+Warkey/UserSettings/
 
 
 # Visual Studio cache directory
