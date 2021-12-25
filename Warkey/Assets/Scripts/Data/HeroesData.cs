@@ -39,6 +39,7 @@ public class HeroesData : MonoBehaviour
     }
 
     private void Start() {
+        Construct();
         DontDestroyOnLoad(this.gameObject);
     }
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+
 public class PlayerTracker
 {
     private string nickname;
@@ -11,7 +13,8 @@ public class PlayerTracker
     private int gold;
     private GameObject prefabHero;
     private GameObject hero;
-    private bool isMine;
+    private Player player;
+
 
     private PlayerStorage playerStorage;
     private PlayerStorage.PlayerStorageData playerStorageData;
@@ -22,9 +25,11 @@ public class PlayerTracker
     public GameObject Hero { get => hero; set => hero = value; }
     public string Nickname { get => nickname; set => nickname = value; }
     public GameObject PrefabHero { get => prefabHero; }
-    public bool IsMine { get => isMine; set => isMine = value; }
+    public bool IsLocal { get => player.IsLocal; }
+    public Player Player { get => player; set => player = value; }
 
-    public PlayerTracker() {
+    public PlayerTracker(Player player) {
+        this.player = player;
         playerStorage = new PlayerStorage();
         LoadPlayer();
     }

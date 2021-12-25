@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [HideInInspector] public Transform parent;
+    public Sprite icon;
+
     public bool isMainHandRight;
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;

@@ -16,7 +16,7 @@ public class LobyManager : MonoBehaviourPunCallbacks
 
     [HideInInspector] public List<GameObject> spawnedPlayers = new List<GameObject>();    
     [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
-    // Start is called before the first frame update
+
     private void Start()
     {
         dialogueMenuComponents = dialogueMenu.GetComponent<DialogueMenu>();
@@ -24,20 +24,27 @@ public class LobyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.IsMasterClient) {
             CreateNPCs();
         }
+        Invoke(nameof(SpawnPlayerHero), 1);
 
-        var player = new PlayerTracker();
-        player.IsMine = true;
-        Debug.Log("S "+PhotonNetwork.LocalPlayer.NickName);
-        GameTracker.Instance.PlayerTrackers.Add(player);
-        player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, playerSpawnLocations[spawnedPlayers.Count].position, Quaternion.identity);
-        spawnedPlayers.Add(player.Hero);
+        foreach(Player player in PhotonNetwork.PlayerList) {
+            GameTracker.Instance.AddPlayer(player);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) {
-        Debug.Log("Entered " + newPlayer.UserId);
+        GameTracker.Instance.AddPlayer(newPlayer);
+
         foreach (GameObject gobject in spawnedNPCs) {
             dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
             dialogueManagerComponents.players = spawnedPlayers;
+        }
+    }
+
+    public void SpawnPlayerHero() {
+        PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
+        if(player != null) {
+            player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, playerSpawnLocations[spawnedPlayers.Count].position, Quaternion.identity);
+            spawnedPlayers.Add(player.Hero);
         }
     }
 

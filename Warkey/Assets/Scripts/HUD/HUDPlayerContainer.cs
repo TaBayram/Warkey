@@ -60,7 +60,7 @@ public class HUDPlayerContainer : MonoBehaviour
     
     public void updateWeapon(Weapon weapon)
     {
-        weaponUI.UpdateInfo(weapon.weaponIcon);
+        weaponUI.UpdateInfo(weapon.icon);
     }
     
 }

@@ -6,7 +6,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 {
     public const float spawnProtectionDistance = 100*10;
 
-    public GameEntities gameEntities;
+    public WorldPlayerManager gameEntities;
     public FiniteWorldGenerator finiteWorldGenerator;
     public WorldEntitySettings worldEntitySettings;
     private PathData pathData;

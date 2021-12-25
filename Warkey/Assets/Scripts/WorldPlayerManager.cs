@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class GameEntities : MonoBehaviour
+public class WorldPlayerManager : MonoBehaviour
 {
     public int playerCount = 1;
     public GameObject playerPrefab;
