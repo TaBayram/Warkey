@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
+  m_Name: Jeff
+  m_EditorClassIdentifier: 
+  nPCDialogMessages:
+  - dialogMessage:
+      message: Hi
+      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+    playerDialogIndexes: 000000000100000003000000
+    isExitMessage: 0
+    isQuestAccepter: 0
+  - dialogMessage:
+      message: thanks
+      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+    playerDialogIndexes: 0200000001000000
+    isExitMessage: 0
+    isQuestAccepter: 0
+  - dialogMessage:
+      message: 'blessed palce '
+      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+    playerDialogIndexes: 0100000002000000
+    isExitMessage: 0
+    isQuestAccepter: 0
+  - dialogMessage:
+      message: Thank you
+      audio: {fileID: 8300000, guid: 0e6c686e89073514daeee24d305cae53, type: 3}
+    playerDialogIndexes: 0100000002000000
+    isExitMessage: 0
+    isQuestAccepter: 1
+  playerDialogMessages:
+  - dialogMessage:
+      message: Wassup
+      audio: {fileID: 0}
+    npcDialogIndex: 1
+  - dialogMessage:
+      message: What is that place
+      audio: {fileID: 0}
+    npcDialogIndex: 2
+  - dialogMessage:
+      message: Good bye
+      audio: {fileID: 0}
+    npcDialogIndex: 0
+  - dialogMessage:
+      message: I accept
+      audio: {fileID: 0}
+    npcDialogIndex: 3

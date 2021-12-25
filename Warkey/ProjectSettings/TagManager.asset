@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - test
   layers:
   - Default
   - TransparentFX
@@ -11,17 +12,17 @@ TagManager:
   - 
   - Water
   - UI
+  - Ground
+  - Player
+  - Enemy
+  - Destructible
+  - SoftEnviroment
+  - HardEnviroment
+  - Dead
+  - Ragdoll
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Aim
   - 
   - 
   - 

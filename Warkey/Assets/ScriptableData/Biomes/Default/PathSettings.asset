@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbf08bf8c4279b449778ca2947353aa, type: 3}
+  m_Name: PathSettings
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  seed: 0
+  maxIteration: 0
+  maxSubIteration: 0
+  distance:
+    min: 3
+    max: 6
+  maxSteepChange: 0.015
+  height:
+    min: 0.3
+    max: 1
+  negativeStrength: 0.15
+  branchSettings:
+  - branchChance: 0.005
+    branchIteration: 500
+    branchWidth: 3
+    branchNegativeStrength: 0.3
+  - branchChance: 0.01
+    branchIteration: 100
+    branchWidth: 2
+    branchNegativeStrength: 0.5
+  - branchChance: 0.005
+    branchIteration: 50
+    branchWidth: 1
+    branchNegativeStrength: 0.8
+  startRadius: 0
+  pathWidth: 6
+  pathHeightOffset: 0.05
+  smoothWeight: 3

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b164f312e7a3340a67616dd4ace88b, type: 3}
+  m_Name: TextureDataBiome1
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0.6127534, b: 1, a: 1}
+    key1: {r: 0.674647, g: 0.9607843, b: 0.6117647, a: 1}
+    key2: {r: 0.025471674, g: 0.509434, b: 0, a: 0}
+    key3: {r: 0.060236584, g: 0.3773585, b: 0.019579923, a: 0}
+    key4: {r: 0.09348297, g: 0.33962262, b: 0, a: 0}
+    key5: {r: 0.28893736, g: 0.4056604, b: 0.30343843, a: 0}
+    key6: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+    key7: {r: 1, g: 1, b: 1, a: 0}
+    ctime0: 0
+    ctime1: 5975
+    ctime2: 14456
+    ctime3: 23130
+    ctime4: 32189
+    ctime5: 44911
+    ctime6: 54548
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 8
+    m_NumAlphaKeys: 2
+  layers:
+  - time: 0
+    texture: {fileID: 2800000, guid: aa605481a01008e48bc33918fc5d2380, type: 3}
+  - time: 0.09117266
+    texture: {fileID: 0}
+  - time: 0.22058442
+    texture: {fileID: 0}
+  - time: 0.3529412
+    texture: {fileID: 0}
+  - time: 0.49117264
+    texture: {fileID: 0}
+  - time: 0.6852979
+    texture: {fileID: 0}
+  - time: 0.8323491
+    texture: {fileID: 0}
+  - time: 1
+    texture: {fileID: 0}
+  textureStrength: 0.75
+  textureScale: 10
+  resetLayers: 0

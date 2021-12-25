@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e81a3518224fe4ba6c57fb4c63b66e, type: 3}
+  m_Name: GroundSettingsDefault
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  poissonDiscSettings:
+    seed: 0
+    sampleRegionSize: {x: 245, y: 245}
+    sampleCountBeforeRejection: 25
+  enviromentObjects:
+  - enabled: 1
+    gameObject: {fileID: 138394, guid: 709333b5c7078b54c9169b329c7e3889, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 1
+      scale: 100
+      octaves: 3
+      persistance: 0.406
+      lacunarity: 2
+      seed: 5
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0.316
+    blockRadius: 10
+    elevation: 0
+    minThreshold: 0.35
+    maxThreshold: 0.75
+    lessenTowardsEdges: 1
+    lessenScale: 0
+    jitterScale: 0
+    correctRotation: 0
+  - enabled: 1
+    gameObject: {fileID: 100000, guid: b6972eaa35c2e574e8ab5083a59d8459, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0.215
+    blockRadius: 7
+    elevation: 0
+    minThreshold: 0
+    maxThreshold: 0.78
+    lessenTowardsEdges: 1
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+  - enabled: 1
+    gameObject: {fileID: 100000, guid: 1e84b98fc4c200c4aa16e1ec38895673, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0.215
+    blockRadius: 7
+    elevation: 0
+    minThreshold: 0
+    maxThreshold: 0.78
+    lessenTowardsEdges: 1
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+  - enabled: 1
+    gameObject: {fileID: 100004, guid: 70417e08343ef354db9a6c398faf67bc, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0.255
+    blockRadius: 7
+    elevation: 0
+    minThreshold: 0
+    maxThreshold: 0.66
+    lessenTowardsEdges: 1
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+  - enabled: 1
+    gameObject: {fileID: 2706285236661141760, guid: 975ca1de1ebfe964491f7f9df16a60be, type: 3}
+    useNoise: 0
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0.73
+    blockRadius: 1
+    elevation: 0.25
+    minThreshold: 0.32
+    maxThreshold: 0.78
+    lessenTowardsEdges: 1
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 1

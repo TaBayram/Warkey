@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+using Photon.Realtime;
+
+public class ConnectToServer : MonoBehaviourPunCallbacks
+{
+    public TMPro.TMP_Text text;
+    CreateAndJoinRooms createAndJoinRooms;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        createAndJoinRooms = GetComponent<CreateAndJoinRooms>();
+        PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
+        TryToConnect();
+    }
+
+    private void TryToConnect() {
+        text.text = "CONNECTING...";
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause) {
+        Debug.Log(cause);
+        text.text = "Couldn't connect! Trying again in 5 seconds";
+        Invoke(nameof(TryToConnect), 5);
+        
+    }
+
+    public override void OnJoinedLobby()
+    {
+        text.gameObject.SetActive(false);
+        createAndJoinRooms.Enable();
+    }
+
+}

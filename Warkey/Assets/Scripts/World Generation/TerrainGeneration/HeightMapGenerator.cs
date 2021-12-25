@@ -4,9 +4,8 @@ using UnityEngine;
 
 public static class HeightMapGenerator 
 {
-    public static HeightMap GenerateHeightMap(int width, int height, HeightMapSettings settings, Vector2 sampleCenter) {
+    public static HeightMap GenerateHeightMap(int width, int height, HeightMapSettings settings, Vector2 sampleCenter, Vector2 coord, float[,] fallOff) {
         float[,] values = Noise.GenerateNoiseMap(width, height, settings.noiseSettings, sampleCenter);
-        float[,] values01 = (float[,])values.Clone();
         AnimationCurve heightCurve = new AnimationCurve(settings.heightCurve.keys);
         float minValue = float.MaxValue;
         float maxValue = float.MinValue;
@@ -14,8 +13,17 @@ public static class HeightMapGenerator
         float max01Value = float.MinValue;
 
         if (settings.useFallOff) {
-            values = FallOffGenerator.ApplyFalloffMap(values, FallOffGenerator.GenerateFalloffMap(width));
+            if(fallOff == null) {
+                values = FallOffGenerator.ApplyFalloffMap(values, FallOffGenerator.GenerateFalloffMap(width,height));
+            }
+            else {
+                values = FallOffGenerator.ApplyFalloffMapOffset(values, fallOff, coord);
+            }
+            //
+            
         }
+
+        float[,] values01 = (float[,])values.Clone();
 
         for (int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
@@ -52,4 +60,14 @@ public struct HeightMap
         this.max01Value = max01Value;
         this.values01 = values01;
     }
+
+    public bool IsInMatrix(Vector2 vector) {
+        bool x = vector.x >= 0 && vector.x < values.GetLength(0);
+        bool y = vector.y >= 0 && vector.y < values.GetLength(1);
+
+        return x && y;
+    }
+
+    public int sizeX { get => values.GetLength(0); }
+    public int sizeY { get => values.GetLength(1); }
 }
