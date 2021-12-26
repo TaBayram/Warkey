@@ -23,8 +23,8 @@ public class Unit : MonoBehaviour,IWidget
 
     protected void Start() {
         if (unitData) {
-            health = new FiniteField(unitData.health, unitData.healthRegen);
-            stamina = new FiniteField(unitData.stamina, unitData.staminaRegen);
+            health = new FiniteField(unitData.health, unitData.healthRegen, unitData.healthCooldown);
+            stamina = new FiniteField(unitData.stamina, unitData.staminaRegen, unitData.staminaCooldown);
 
             health.PropertyChanged += Health_PropertyChanged;
             stamina.PropertyChanged += Stamina_PropertyChanged;
@@ -65,7 +65,8 @@ public class Unit : MonoBehaviour,IWidget
         health.Current += heal;
     }
 
-    public bool UseStamina(float value) {
+    public bool UseStamina(float value,float minV = 0) {
+        if (minV != 0 && stamina.Current < minV) return false;
         if(stamina.Current >= value) {
             stamina.Current -= value;
             staminaRegenCooldown = stamina.Cooldown;
@@ -115,12 +116,13 @@ public class FiniteField
         current += current * increase;
     }
 
-    public FiniteField(float max, float regen = 0) {
+    public FiniteField(float max, float regen = 0, float cooldown = 0) {
         this.max = max;
         this.current = max;
         this.regen = regen;
+        this.cooldown = cooldown;
     }
-    
+
 
     private void OnPropertyChanged(string name = null) {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

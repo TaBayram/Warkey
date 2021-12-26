@@ -38,7 +38,7 @@ public class LobyManager : MonoBehaviourPunCallbacks
             dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
             dialogueManagerComponents.players = spawnedPlayers;
         }
-    }
+    }    
 
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);

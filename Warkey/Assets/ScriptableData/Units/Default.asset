@@ -15,5 +15,7 @@ MonoBehaviour:
   unitName: Default
   health: 100
   healthRegen: 1
+  healthCooldown: 0
   stamina: 100
   staminaRegen: 10
+  staminaCooldown: 2

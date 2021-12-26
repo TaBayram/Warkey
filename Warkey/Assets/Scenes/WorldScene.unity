@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -512,7 +512,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCount: 1
-  playerPrefab: {fileID: 2496866731616768025, guid: ebfbf427c540fcc4f8723d556bbf35a4, type: 3}
   hUDPlayerContainer: {fileID: 1155518579}
 --- !u!1001 &1604325062
 PrefabInstance:
@@ -534,25 +533,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
-      propertyPath: textureData
-      value: 
-      objectReference: {fileID: 11400000, guid: dafcf182fab12164ea79d185b406846b, type: 2}
-    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
-      propertyPath: meshSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: c6147cc18107ee24586bd34e27d5f74b, type: 2}
-    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: pathSettings
       value: 
       objectReference: {fileID: 11400000, guid: bd3cee5fd0e154c498e89a95e7cc09a0, type: 2}
-    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
-      propertyPath: groundSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: c3ef75bc25a593b4e8a49fe68dda215f, type: 2}
-    - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
-      propertyPath: heightMapSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: 95487ccc90257834096315e1bdd81353, type: 2}
     - target: {fileID: 6477479063983045963, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: prefab
       value: 

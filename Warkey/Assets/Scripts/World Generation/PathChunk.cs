@@ -30,7 +30,14 @@ public class PathChunk : SubChunk
     }
     public override void RequestMesh(LODMesh lODMesh) {
         pathData.heightMap = PathGenerator.SetPathHeight(pathData.pathMap, this.heightMap.values, pathSettings);
-        lODMesh.RequestMesh(new HeightMap(this.pathData.heightMap,0,0), meshSettings, LODMesh.MeshType.path);
+        if (pathSettings.useMesh)
+            lODMesh.RequestMesh(new HeightMap(this.pathData.heightMap,0,0), meshSettings, LODMesh.MeshType.path);
+        else {
+            if (!isLoaded) {
+                isLoaded = true;
+                OnLoadFinish();
+            }
+        }
     }
 
     public override void SetHeightMap(HeightMap heightMap) {
@@ -78,8 +85,15 @@ public class PathChunk : SubChunk
 
     private void OnPathDataReceived(object pathData) {
        // this.pathData = (PathData)pathData;
-        lODMeshes[previousLODIndex].RequestMesh(new HeightMap(this.pathData.heightMap, 0, 0), meshSettings, LODMesh.MeshType.path);
-        hasSetPath = true;
+       if(pathSettings.useMesh)
+            lODMeshes[previousLODIndex].RequestMesh(new HeightMap(this.pathData.heightMap, 0, 0), meshSettings, LODMesh.MeshType.path);
+        else {
+            if (!isLoaded) {
+                isLoaded = true;
+                OnLoadFinish();
+            }
+        }
+       hasSetPath = true;
     }
 }
 

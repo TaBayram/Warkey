@@ -695,7 +695,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Melee
     m_StateMachine: {fileID: 8128444371356286804}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: 6507f8235b08e1c4b93dd3ea2c6fa2d7, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

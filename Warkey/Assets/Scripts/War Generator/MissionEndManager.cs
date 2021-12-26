@@ -11,12 +11,20 @@ public class MissionEndManager : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player")) {
             playersInside.Add(other.gameObject);
+            CheckMissionEnd();
+            onPlayerEnter?.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
             playersInside.Remove(other.gameObject);
+        }
+    }
+
+    private void CheckMissionEnd() {
+        if(playersInside.Count == GameTracker.Instance.GetPlayerTrackers().Count) {
+            Debug.Log("End");
         }
     }
 }

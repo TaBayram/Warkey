@@ -46,6 +46,7 @@ public class FiniteWorldGenerator : MonoBehaviour
     public Transform viewer;
     Vector2 viewerPosition;
     Vector2 viewerPositionOld;
+    private bool isWorldReady = false;
 
     public event System.Action onWorldReady;
 
@@ -143,11 +144,16 @@ public class FiniteWorldGenerator : MonoBehaviour
                 
             }
         }
+
+        Invoke(nameof(OnAllLoaded), 10);
     }
 
     private void OnAllLoaded() {
-        navMeshSurface.BuildNavMesh();
-        onWorldReady();
+        if (!isWorldReady) {
+            isWorldReady = true;
+            navMeshSurface.BuildNavMesh();
+            onWorldReady();
+        }
     }
 
     private void Update() {
