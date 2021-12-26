@@ -16,7 +16,7 @@ MonoBehaviour:
   useMesh: 1
   seed: 0
   maxIteration: 0
-  maxSubIteration: 0
+  maxSubIteration: 21875
   distance:
     min: 3
     max: 6
@@ -38,7 +38,7 @@ MonoBehaviour:
     branchIteration: 50
     branchWidth: 1
     branchNegativeStrength: 0.8
-  startRadius: 0
+  startRadius: 0.18
   pathWidth: 6
   pathHeightOffset: 0.05
   smoothWeight: 3
