@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8326301967989696542}
   - component: {fileID: 6657165657159408311}
   - component: {fileID: 5318318278561111796}
-  - component: {fileID: 830485756402604991}
+  - component: {fileID: 7706607220467924696}
   m_Layer: 0
   m_Name: Large Rock 1
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7990842717870125400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,20 +96,25 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3707393989712682981, guid: 33bfff9c871cd694f8602aff8bc06f9d, type: 3}
---- !u!136 &830485756402604991
-CapsuleCollider:
+--- !u!205 &7706607220467924696
+LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7990842717870125400}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.002
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6657165657159408311}
   m_Enabled: 1
-  m_Radius: 1.96
-  m_Height: 2.42
-  m_Direction: 1
-  m_Center: {x: 0.06, y: 1.13, z: -0.18242902}

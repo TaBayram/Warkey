@@ -43,6 +43,8 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             player.GetComponent<CharacterController>().enabled = false;
             player.transform.position = (startPosition.transform.position);
             player.GetComponent<CharacterController>().enabled = true;
+
+            finiteWorldGenerator.BindViewer(player.transform);
         }
 
         var obj = new GameObject("End");

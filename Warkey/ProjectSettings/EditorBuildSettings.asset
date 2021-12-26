@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Multiplayer/LobbyScene.unity
+    path: Assets/Scenes/LobbyScene.unity
     guid: 2d21ff28a4d172443a0bf6f3a1d7f697
   - enabled: 1
-    path: Assets/Scenes/Lobby.unity
+    path: Assets/Scenes/CampScene.unity
     guid: ee2c7eeb25d40e540bdc82c9cc73da64
   - enabled: 1
     path: Assets/Scenes/Menu/MainMenu.unity

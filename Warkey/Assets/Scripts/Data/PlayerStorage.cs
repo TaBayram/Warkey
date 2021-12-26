@@ -38,7 +38,7 @@ public class PlayerStorage
             storageHandler.SaveData(save, filename);
             return true;
         }
-        catch(Exception exception) {
+        catch (Exception) {
             return false;
         }
     }

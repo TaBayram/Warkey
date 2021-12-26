@@ -6,7 +6,6 @@ using Photon.Pun;
 public class WorldPlayerManager : MonoBehaviour
 {
     public int playerCount = 1;
-    public GameObject playerPrefab;
     public HUDPlayerContainer hUDPlayerContainer;
 
     private void Start() {
@@ -20,9 +19,13 @@ public class WorldPlayerManager : MonoBehaviour
     public GameObject[] CreatePlayerHeroes() {
         GameObject[] heroes = new GameObject[playerCount];
 
-        for(int i = 0; i < playerCount; i++) {
-            heroes[i] = Instantiate(playerPrefab, transform.position, Quaternion.identity, this.transform);
-            BindPlayerUnit(heroes[i].GetComponent<Unit>());
+        foreach(PlayerTracker player in GameTracker.Instance.GetPlayerTrackers()) {
+            if (player.IsLocal) {
+                player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, transform.position, Quaternion.identity);
+                player.Hero.transform.parent = this.transform;
+                BindPlayerUnit(player.Hero.GetComponent<Unit>());
+                heroes[0] = player.Hero;
+            }
         }
 
         return heroes;

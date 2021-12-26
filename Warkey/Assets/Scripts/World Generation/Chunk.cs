@@ -43,7 +43,7 @@ public class Chunk
     event System.Action<bool> onSetVisibleChunk;
     event System.Action<HeightMap> onHeightMapSet;
 
-
+    bool areSubsLoaded = false;
     bool loadAll = false;
     bool isHeightMapReceived = false;
     bool hasSetEnviromentObjects = false;
@@ -270,10 +270,12 @@ public class Chunk
     int count = 0;
     public void SubchunkLoadCompletion(SubChunk subChunk) {
         count++;
-        if(count == 3) {
+        if(count == 3 && !areSubsLoaded) {
+            areSubsLoaded = true;
             onChunkLoaded(this);
         }
     }
+
 
     public void BindViewer(Transform transform) {
         viewer = transform;

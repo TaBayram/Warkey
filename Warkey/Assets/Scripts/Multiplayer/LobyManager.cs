@@ -25,8 +25,8 @@ public class LobyManager : MonoBehaviourPunCallbacks
             CreateNPCs();
         }
         Invoke(nameof(SpawnPlayerHero), 1);
-
-        foreach(Player player in PhotonNetwork.PlayerList) {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        foreach (Player player in PhotonNetwork.PlayerList) {
             GameTracker.Instance.AddPlayer(player);
         }
     }
@@ -38,7 +38,7 @@ public class LobyManager : MonoBehaviourPunCallbacks
             dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
             dialogueManagerComponents.players = spawnedPlayers;
         }
-    }
+    }    
 
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);

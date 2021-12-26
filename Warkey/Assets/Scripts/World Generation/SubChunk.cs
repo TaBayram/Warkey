@@ -152,6 +152,10 @@ public abstract class SubChunk
     public bool IsVisible() {
         return subObject.activeSelf;
     }
+
+    protected void OnLoadFinish() {
+        onLoadFinish?.Invoke(this);
+    }
 }
 
 

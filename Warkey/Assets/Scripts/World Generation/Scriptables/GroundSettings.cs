@@ -37,4 +37,9 @@ public class EnviromentObjectSettings
     public float jitterScale;
     public bool correctRotation;
 
+    public bool useRandomSize;
+    public MinMax sizeScale;
+
+    public bool randomizeYRotation;
+
 }

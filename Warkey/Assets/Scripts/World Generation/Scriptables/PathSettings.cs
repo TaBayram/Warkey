@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(PathSettings), menuName = "World Generation/" + nameof(PathSettings))]
 public class PathSettings : UpdateableData
 {
+    public bool useMesh;
     public int seed;
     [Range(0, 100000)]
     public int maxIteration;

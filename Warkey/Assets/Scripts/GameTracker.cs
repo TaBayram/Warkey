@@ -32,6 +32,12 @@ public class GameTracker
         return tracker;
     }
 
+    public void RemovePlayer(Player player) {
+        PlayerTracker exists = GetPlayerTracker(player);
+        if ((exists) != null) return;
+        playerTrackers.Remove(exists);
+    }
+
     public PlayerTracker GetPlayerTracker(Player player) {
         foreach(PlayerTracker playerTracker in playerTrackers) {
             if(playerTracker.Player.ActorNumber == player.ActorNumber) {
@@ -40,6 +46,12 @@ public class GameTracker
         }
 
         return null;
+    }
+
+
+
+    public List<PlayerTracker> GetPlayerTrackers() {
+        return new List<PlayerTracker>(this.playerTrackers);
     }
 
 }

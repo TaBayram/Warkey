@@ -78,9 +78,9 @@ public class Entity : MonoBehaviour
         return movement == null ? true : movement.state != Movement.State.sprinting;
     }
 
-    internal bool UseStamina(float v) {
+    internal bool UseStamina(float v, float minV = 0) {
         if(unit != null) {
-            return unit.UseStamina(v);
+            return unit.UseStamina(v,minV);
         }
         else {
             return true;
