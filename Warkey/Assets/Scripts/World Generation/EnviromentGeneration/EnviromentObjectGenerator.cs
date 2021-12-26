@@ -59,7 +59,7 @@ public static class EnviromentObjectGenerator
         for (int i = 0; i < groundSettings.enviromentObjects.Length; i++) {
             if (groundSettings.enviromentObjects[i].enabled) {
                 List<ValidPoint> grid = EnviromentObjectGenerator.GenerateValidPoints(groundSettings.enviromentObjects[i], heightMap.values01, groundSettings.poissonDiscSettings, coord);
-                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], parent,heightMap.values);
+                EnviromentObjectData enviromentObjectData = new EnviromentObjectData(grid, groundSettings.enviromentObjects[i], parent,heightMap.values, groundSettings.poissonDiscSettings.seed);
                 enviromentObjectDatas.Add(enviromentObjectData);
             }
         }

@@ -39,6 +39,11 @@ MonoBehaviour:
     lessenScale: 0
     jitterScale: 0
     correctRotation: 0
+    useRandomSize: 1
+    sizeScale:
+      min: 0.25
+      max: 5
+    randomizeYRotation: 1
   - enabled: 1
     gameObject: {fileID: 100000, guid: b6972eaa35c2e574e8ab5083a59d8459, type: 3}
     useNoise: 1
@@ -60,6 +65,11 @@ MonoBehaviour:
     lessenScale: 0.457
     jitterScale: 0
     correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 1
   - enabled: 1
     gameObject: {fileID: 100000, guid: 1e84b98fc4c200c4aa16e1ec38895673, type: 3}
     useNoise: 1
@@ -81,6 +91,11 @@ MonoBehaviour:
     lessenScale: 0.457
     jitterScale: 0
     correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 0
   - enabled: 1
     gameObject: {fileID: 100004, guid: 70417e08343ef354db9a6c398faf67bc, type: 3}
     useNoise: 1
@@ -102,6 +117,11 @@ MonoBehaviour:
     lessenScale: 0.457
     jitterScale: 0
     correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 0
   - enabled: 1
     gameObject: {fileID: 2706285236661141760, guid: 975ca1de1ebfe964491f7f9df16a60be, type: 3}
     useNoise: 0
@@ -123,3 +143,8 @@ MonoBehaviour:
     lessenScale: 0.457
     jitterScale: 0
     correctRotation: 1
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 0

@@ -6,6 +6,7 @@ public class EnviromentObjectData
 {
     const int rotationSampleRadius = 2;
     public readonly Transform parent;
+    public readonly int seed;
     private GameObject enviromentHolder;
     private EnviromentObjectSettings settings;
     private List<ObjectPlace> objectPlaces = new List<ObjectPlace>();
@@ -15,9 +16,10 @@ public class EnviromentObjectData
 
     public EnviromentObjectSettings Settings { get => settings;}
 
-    public EnviromentObjectData(List<ValidPoint> validGrid, EnviromentObjectSettings enviromentObject, Transform parent, float[,] heightMap) {
+    public EnviromentObjectData(List<ValidPoint> validGrid, EnviromentObjectSettings enviromentObject, Transform parent, float[,] heightMap, int seed) {
         this.settings = enviromentObject;
         this.parent = parent;
+        this.seed = seed;
 
         CreateObjectPlaces(validGrid,heightMap);
     }
@@ -63,10 +65,25 @@ public class EnviromentObjectData
         enviromentHolder = new GameObject("Enviroment Holder");
         enviromentHolder.transform.parent = parent;
         enviromentHolder.transform.position = parent.position;
+        System.Random random = new System.Random(seed + 1);
+
         for (int i = 0; i < objectPlaces.Count; i++) {
             GameObject gameObject = MonoBehaviour.Instantiate(settings.gameObject, enviromentHolder.transform);
             gameObject.transform.localPosition = objectPlaces[i].position;
             gameObject.transform.Rotate(objectPlaces[i].rotation.x, 0, objectPlaces[i].rotation.z);
+
+            if (settings.useRandomSize) {
+                float randomScale = RandomHelper.Range(settings.sizeScale.min, settings.sizeScale.max, ref random);
+
+                gameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+            }
+            if (settings.randomizeYRotation) {
+                float randomRotation = RandomHelper.Range(0, 360, ref random);
+
+                gameObject.transform.Rotate(Quaternion.Euler(0f, randomRotation, 0f).eulerAngles);
+            }
+
+
             gameObjects.Add(gameObject);
         }
         isObjectsLoaded = true;

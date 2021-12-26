@@ -25,8 +25,8 @@ public class LobyManager : MonoBehaviourPunCallbacks
             CreateNPCs();
         }
         Invoke(nameof(SpawnPlayerHero), 1);
-
-        foreach(Player player in PhotonNetwork.PlayerList) {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        foreach (Player player in PhotonNetwork.PlayerList) {
             GameTracker.Instance.AddPlayer(player);
         }
     }
