@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass
-  m_Shader: {fileID: -6465566751694194690, guid: 75e6d1a66f3ac044c9ea490da4afdca4, type: 3}
+  m_Shader: {fileID: 10601, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,16 +19,20 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: 5733619f617fd954cac22d3d11fd1b93, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Main_Texture:
-        m_Texture: {fileID: 2800000, guid: 1feb216fc671b9045b6b54f4747ae9f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: b3d0250e4b7a1ac4abe98a38d34d2048, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - WindNoiseTexture:
-        m_Texture: {fileID: 2800000, guid: 29311ae2c059248488b68b9031f18f0d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 1feb216fc671b9045b6b54f4747ae9f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5c744e80ad52c884c9ac4c9139b3aaae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -51,8 +55,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1feb216fc671b9045b6b54f4747ae9f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5c744e80ad52c884c9ac4c9139b3aaae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -67,7 +75,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowOffset:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TranslucencyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -85,8 +101,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - AlphaCutoff: 0.229
     - WindStrength: 0
     - Wind_Density: 2
+    - Wind_Speed: 0.19
+    - Wind_Strength: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -107,9 +126,11 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Shininess: 0.078125
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SquashAmount: 1
     - _SrcBlend: 5
     - _Surface: 1
     - _WorkflowMode: 1
@@ -118,11 +139,14 @@ Material:
     - WindPeriod: {r: 0.1, g: 0.1, b: 0, a: 0}
     - WindPositionScale: {r: 0, g: 0, b: 0, a: 0}
     - WindStrength: {r: 0, g: 0, b: 0, a: 0}
+    - Wind_Direction: {r: 1, g: 0, b: 0, a: 0}
     - Wind_Movement: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0.28778535, g: 0.6886792, b: 0.20465466, a: 1}
-    - _Color: {r: 0.15746616, g: 0.5283019, b: 0.15699537, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1926556817468385888
 MonoBehaviour:
