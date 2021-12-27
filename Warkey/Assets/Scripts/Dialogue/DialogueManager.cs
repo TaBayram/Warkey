@@ -25,12 +25,22 @@ public class DialogueManager : MonoBehaviour
     public Text npcDialogueBox;
     public Text playerResponse;
 
-
+    [SerializeField] Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit raycastHit, 100f, 1 << LayerMask.NameToLayer("Ground"))) {
+            transform.position = raycastHit.point;
+        }
+
+    }
+
+    private void Update() {
+        if (!audioSource.isPlaying) {
+            animator.SetInteger("talkState", 0);
+        }
     }
 
     void OnMouseOver()
@@ -134,8 +144,10 @@ public class DialogueManager : MonoBehaviour
             playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
         }
 
-
+        animator.SetInteger("talkState", 1);
     }
+
+
 
 
 }

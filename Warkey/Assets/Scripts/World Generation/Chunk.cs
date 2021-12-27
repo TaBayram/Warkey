@@ -9,7 +9,6 @@ public class Chunk
     public Vector2 coordinate;
     public Vector2 worldPosition;
     public Vector2 chunkMatrix;
-
     private AdjacentChunks adjacentChunks = new AdjacentChunks();
 
 

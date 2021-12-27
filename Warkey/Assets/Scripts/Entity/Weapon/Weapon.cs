@@ -18,6 +18,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float attackRange = 1f;
     [SerializeField] protected float knockback = 1f;
 
+    protected float buffedAttackDamage;
+
     public abstract State CurrentState {
         get;
         set;
