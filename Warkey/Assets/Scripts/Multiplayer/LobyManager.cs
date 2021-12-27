@@ -19,15 +19,27 @@ public class LobyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        FindObjectOfType<NetworkManager>().onPlayerHeroReceived += LobyManager_onPlayerHeroReceived;
+
         dialogueMenuComponents = dialogueMenu.GetComponent<DialogueMenu>();
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient) {
             CreateNPCs();
         }
         Invoke(nameof(SpawnPlayerHero), 1);
-        PhotonNetwork.AutomaticallySyncScene = true;
+        
+
         foreach (Player player in PhotonNetwork.PlayerList) {
             GameTracker.Instance.AddPlayer(player);
+        }
+    }
+
+    private void LobyManager_onPlayerHeroReceived(PlayerTracker obj) {
+        spawnedPlayers.Add(obj.Hero);
+        foreach (GameObject gobject in spawnedNPCs) {
+            dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
+            dialogueManagerComponents.players = spawnedPlayers;
         }
     }
 
@@ -43,9 +55,12 @@ public class LobyManager : MonoBehaviourPunCallbacks
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
         if(player != null) {
-            player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, playerSpawnLocations[spawnedPlayers.Count].position, Quaternion.identity);
+            player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, playerSpawnLocations[GameTracker.Instance.GetPlayerTrackers().Count-1].position, Quaternion.identity);
+            FindObjectOfType<NetworkManager>().SendHero(player.Hero.GetComponent<PhotonView>().ViewID);
             spawnedPlayers.Add(player.Hero);
         }
+
+        //SEND DATA TO ALL PLAYERS TO BIND HERO
     }
 
     public void CreateNPCs() {

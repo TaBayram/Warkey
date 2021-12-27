@@ -2080,6 +2080,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6295326096541879303, guid: 7b6b389108407bc41a1880f941c75a1a, type: 3}
+      propertyPath: heroes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295326096541879303, guid: 7b6b389108407bc41a1880f941c75a1a, type: 3}
+      propertyPath: heroes.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 2496866731616768025, guid: ebfbf427c540fcc4f8723d556bbf35a4, type: 3}
+    - target: {fileID: 6295326096541879303, guid: 7b6b389108407bc41a1880f941c75a1a, type: 3}
+      propertyPath: heroes.Array.data[1].uniqueName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295326096541879303, guid: 7b6b389108407bc41a1880f941c75a1a, type: 3}
+      propertyPath: heroes.Array.data[2].uniqueName
+      value: Paladin
+      objectReference: {fileID: 0}
     - target: {fileID: 7646756939249653756, guid: 7b6b389108407bc41a1880f941c75a1a, type: 3}
       propertyPath: m_Name
       value: Heroes
