@@ -22,6 +22,9 @@ public class GameTracker
 
     private List<PlayerTracker> playerTrackers = new List<PlayerTracker>();
 
+    public NetworkManager NetworkManager;
+    public WorldSettingsHolder WorldSettingsHolder;
+
 
     public PlayerTracker AddPlayer(Player player) {
         PlayerTracker exists = GetPlayerTracker(player);
@@ -47,7 +50,6 @@ public class GameTracker
 
         return null;
     }
-
 
 
     public List<PlayerTracker> GetPlayerTrackers() {

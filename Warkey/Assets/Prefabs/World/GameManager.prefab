@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8103406538818213292}
   - component: {fileID: 1254137790149990997}
+  - component: {fileID: 6210573910712221232}
   - component: {fileID: 8045053198340499858}
   m_Layer: 0
   m_Name: GameManager
@@ -45,6 +46,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ca9c56fcf4b25489e1e8f5f37f8ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6210573910712221232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311241861893163401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa99c00454919e45ab535d296486879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 8045053198340499858}
+  worldSettings:
+    seed: 0
+    worldSize:
+      x: 0
+      y: 0
+    biome: 
 --- !u!114 &8045053198340499858
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     GameTracker gameTracker = GameTracker.Instance;
 
     private void Start() {
+        gameTracker.NetworkManager = this;
+
         DontDestroyOnLoad(this.gameObject);
     }
 

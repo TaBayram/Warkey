@@ -100,7 +100,7 @@ public class DialogueManager : MonoBehaviour
                         return;
                     }
                     if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter) {
-                        SceneManager.LoadScene("WorldScene");
+                        StartQuest();
                         return;
                     }
                 }
@@ -147,6 +147,19 @@ public class DialogueManager : MonoBehaviour
         animator.SetInteger("talkState", 1);
     }
 
+
+    private void StartQuest() {
+        GameTracker.Instance.WorldSettingsHolder.SetWorldSettings();
+        GameTracker.Instance.WorldSettingsHolder.SendWorldSettings();
+
+
+        Invoke(nameof(ChangeScene), 2);
+        
+    }
+
+    private void ChangeScene() {
+        SceneManager.LoadScene("WorldScene");
+    }
 
 
 

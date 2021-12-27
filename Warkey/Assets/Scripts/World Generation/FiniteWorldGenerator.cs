@@ -51,11 +51,13 @@ public class FiniteWorldGenerator : MonoBehaviour
     public event System.Action onWorldReady;
 
     private void SetMap() {
-        
+        WorldSettings settings = GameTracker.Instance.WorldSettingsHolder.worldSettings;
 
-        groundSettings.poissonDiscSettings.seed = seed;
-        heightMapSettings.noiseSettings.seed = seed;
-        pathSettings.seed = seed;
+        groundSettings.poissonDiscSettings.seed = settings.seed;
+        heightMapSettings.noiseSettings.seed = settings.seed;
+        pathSettings.seed = settings.seed;
+
+        chunkSize = settings.worldSize;
     }
     
     private void Awake() {
