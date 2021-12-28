@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 477794}
   - component: {fileID: 22752544}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Billboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 406146}
   - component: {fileID: 20513420}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PF Jatoba LOD Group URP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 3360612}
   - component: {fileID: 2309156}
   - component: {fileID: 13611796}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Jatoba LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 441142}
   - component: {fileID: 3371122}
   - component: {fileID: 2352802}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Jatoba LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 469908}
   - component: {fileID: 3315552}
   - component: {fileID: 2300954}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Jatoba LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

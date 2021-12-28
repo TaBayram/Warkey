@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e81a3518224fe4ba6c57fb4c63b66e, type: 3}
+  m_Name: GroundSettingsDefault
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  poissonDiscSettings:
+    seed: 0
+    sampleRegionSize: {x: 245, y: 245}
+    sampleCountBeforeRejection: 25
+  enviromentObjects:
+  - enabled: 1
+    gameObject: {fileID: 7578678617977150393, guid: dea983fa76fec7b459b8e05d6e584bac, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0.203
+    noiseMax: 0.478
+    blockRadius: 30
+    elevation: -1
+    minThreshold: 0.38
+    maxThreshold: 2
+    lessenTowardsEdges: 1
+    lessenScale: 0.442
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 1
+    sizeScale:
+      min: 1
+      max: 2
+    randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 7708452469633554044, guid: 9057951c251d2bb43b2240cc7e1e6752, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 1
+      offset: {x: 0, y: 0}
+    noiseMin: 0.365
+    noiseMax: 0.45
+    blockRadius: 30
+    elevation: -1
+    minThreshold: 0.41
+    maxThreshold: 2
+    lessenTowardsEdges: 1
+    lessenScale: 0.442
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 1
+    sizeScale:
+      min: 1
+      max: 2
+    randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 7165335445619164222, guid: 964c0b70e96d04f49927ab50668fba4d, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 3
+      offset: {x: 0, y: 0}
+    noiseMin: 0.127
+    noiseMax: 0.316
+    blockRadius: 25
+    elevation: -1.2
+    minThreshold: 0.38
+    maxThreshold: 2
+    lessenTowardsEdges: 1
+    lessenScale: 0.442
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 1
+    sizeScale:
+      min: 1
+      max: 2
+    randomizeYRotation: 1
