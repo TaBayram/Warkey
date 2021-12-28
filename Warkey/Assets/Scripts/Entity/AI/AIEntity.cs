@@ -59,6 +59,10 @@ public class AIEntity : Entity
                 navMeshAgent.Warp(navMeshHit.position);
         } 
     }
+
+    private void Start() {
+        CurrentState = State.Patrol;
+    }
     private void Update() {
         if (IsDead || this.transform == null) return;
         if (!IsOnNavMesh()) {

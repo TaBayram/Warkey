@@ -9,6 +9,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     GameTracker gameTracker = GameTracker.Instance;
 
     public event System.Action<PlayerTracker> onPlayerHeroReceived;
+    public event System.Action<PlayerTracker> onPlayerLeft;
 
     private void Start() {
         gameTracker.NetworkManager = this;
@@ -19,6 +20,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer) {
         gameTracker.RemovePlayer(otherPlayer);
+        onPlayerLeft?.Invoke(GameTracker.Instance.GetPlayerTracker(otherPlayer));
     }
 
     public void SendHero(int viewID) {
