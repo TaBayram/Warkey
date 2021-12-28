@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
 
     public Vector3 velocity;
 
-    private void Start() {
+    protected virtual void Start() {
         if(movement != null) {
             movement.onStateChange += Movement_onStateChange;
             movement.onVelocityChange += Movement_onVelocityChange;
@@ -22,7 +22,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    private void Update() {
+    protected virtual void Update() {
     }
 
     protected void WeaponController_onStateChange(Weapon.State obj) {

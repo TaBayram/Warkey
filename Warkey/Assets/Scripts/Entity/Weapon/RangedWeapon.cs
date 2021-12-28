@@ -18,14 +18,10 @@ public class RangedWeapon : Weapon
 	[SerializeField] private int subPool = 20;
 	[SerializeField] private float reloadTime;
 
-	[SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
-	[SerializeField] private Transform aimTransform;
-
 	private float cooldown;
 	private int currentSubPool;
 	private int currentMainPool;
-	private Vector3 mouseWorldPosition;
-	private Vector3 centerPosition;
+
 
 
 	public override State CurrentState {
@@ -39,32 +35,9 @@ public class RangedWeapon : Weapon
 
 	}
 
-	private void Start() {
+	protected override void Start() {
+		base.Start();
 		aimTransform.parent = transform.root;
-	}
-	private void Update() {
-		if (CurrentState == State.defending) {
-
-			Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-			Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-			if(Physics.Raycast(ray,out RaycastHit raycastHit1, 99f, enemyLayer)) {
-				aimTransform.position = raycastHit1.point;
-				mouseWorldPosition = raycastHit1.point;
-				centerPosition = ray.origin;
-			}
-			else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
-				aimTransform.position = raycastHit.point;
-				mouseWorldPosition = raycastHit.point;
-				centerPosition = ray.origin;
-			}
-			
-		}
-	}
-
-	private void LateUpdate() {
-		if (CurrentState == State.defending) {
-			OnRotateRequest(0.015f * Time.deltaTime,aimTransform);
-		}
 	}
 
 	public override void Attack(Vector3 entityVelocity) {
@@ -116,4 +89,5 @@ public class RangedWeapon : Weapon
     public override void Stop() {
 		CurrentState = State.idle;
     }
+
 }

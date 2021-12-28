@@ -922,6 +922,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -1824824446595371411, guid: 6105144706ab91241a7bae7930ad0219, type: 3}
   m_PrefabInstance: {fileID: 58433038169036730}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &2323925519195979048 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2346275881050335890, guid: 6105144706ab91241a7bae7930ad0219, type: 3}
+  m_PrefabInstance: {fileID: 58433038169036730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5883122919738370603 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6105144706ab91241a7bae7930ad0219, type: 3}
@@ -937,6 +942,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6105144706ab91241a7bae7930ad0219, type: 3}
   m_PrefabInstance: {fileID: 58433038169036730}
   m_PrefabAsset: {fileID: 0}
+--- !u!205 &8910104269522174572
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868897138509834987}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00014984608, y: 1.0407339, z: 0.024002403}
+  m_Size: 2.705893
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.015182935
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2323925519195979048}
+  m_Enabled: 1
 --- !u!114 &2723010038298211844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,7 +968,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868897138509834987}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 

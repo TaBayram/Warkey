@@ -55,7 +55,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
 
         if (PhotonNetwork.IsMasterClient) {
-            InvokeRepeating(nameof(Spawn), 10, 5);
+            InvokeRepeating(nameof(Spawn), 60, 30);
             CreateOnPath(pathData, true);
             CreateOnEnd();
         }

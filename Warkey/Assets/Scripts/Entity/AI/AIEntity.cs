@@ -60,10 +60,11 @@ public class AIEntity : Entity
         } 
     }
 
-    private void Start() {
+    protected override void Start() {
         CurrentState = State.Patrol;
+        base.Start();
     }
-    private void Update() {
+    protected override void Update() {
         if (IsDead || this.transform == null) return;
         if (!IsOnNavMesh()) {
             NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 100f, NavMesh.AllAreas);

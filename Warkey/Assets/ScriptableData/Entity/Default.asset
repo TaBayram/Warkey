@@ -21,7 +21,7 @@ MonoBehaviour:
   - prefab: {fileID: 7958137458794860659, guid: aa9fb0b15ccde364ebbfac3f6aa5b57f, type: 3}
     canDynamicSpawn: 1
     canStaticSpawn: 1
-    spawnChance: 0.4
+    spawnChance: 0.05
     spawnDistance: 20
   bossSettings: []
   MissionEndAreaPrefab: {fileID: 950307967065024318, guid: aedaee512a738e2468b214fc011b4834, type: 3}

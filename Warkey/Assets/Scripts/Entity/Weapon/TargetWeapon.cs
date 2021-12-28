@@ -23,7 +23,7 @@ public class TargetWeapon : Weapon
     private float currentAttackDamage;
     private Coroutine coroutine;
 
-
+    [SerializeField] private ParticleSystem particle;
 
     public override State CurrentState {
         get => state;
@@ -37,13 +37,6 @@ public class TargetWeapon : Weapon
             OnStateChange();
         }
     }
-
-    private void LateUpdate() {
-        if(CurrentState == State.defending) {
-            OnRotateRequest(0.015f*Time.deltaTime);
-        }
-    }
-
     public override void Attack(Vector3 vector) {
         if (state == State.idle) {
             CurrentState = State.attacking;
@@ -64,6 +57,8 @@ public class TargetWeapon : Weapon
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
         OnRequest("attackSpeed", 1/attackSpeed);
         Invoke(nameof(TryDamage), attacks[currentAttackIndex].damageDelay * currentAttackSpeed);
+        OnAnimationStart();
+        Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);
     }
 
     IEnumerator Cooldown() {
@@ -104,6 +99,21 @@ public class TargetWeapon : Weapon
         }
     }
 
+    private void OnAnimationStart() {
+        if (particle != null) {
+            particle.gameObject.SetActive(true);
+            var emission = particle.emission;
+            emission.enabled = true;
+        }
+    }
+
+    private void OnAnimationEnd() {
+        if (particle != null) {
+            var emission = particle.emission;
+            emission.enabled = false;
+        }
+    }
+
     List<Collider> alreadyHit = new List<Collider>();
 
     private void TryDamage() {
@@ -114,7 +124,6 @@ public class TargetWeapon : Weapon
             foreach(Collider collider in colliders) {
                 if(!alreadyHit.Contains(collider) && 1 << collider.gameObject.layer == enemyLayer.value) {
                     float angle = Vector3.Angle(parent.forward, collider.transform.position - parent.position);
-                    Debug.Log(angle);
                     if (Mathf.Abs(angle) <= attacks[currentAttackIndex].maxAngleDifference) {
                         collider.gameObject.GetComponent<IWidget>()?.TakeDamage(currentAttackDamage);
                         alreadyHit.Add(collider);
