@@ -512,3 +512,81 @@ MonoBehaviour:
       min: 0
       max: 0
     randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 3456768597155298673, guid: 0b28d04bc9a122543ae0f12a59c00b20, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.141
+      lacunarity: 5
+      seed: 10
+      offset: {x: 0, y: 0}
+    noiseMin: 0.13
+    noiseMax: 0.593
+    blockRadius: 50
+    elevation: 0
+    minThreshold: 0.4
+    maxThreshold: 1
+    lessenTowardsEdges: 0
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 1645123201969997353, guid: 292bfa542cd61114883916af45c0c4f3, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.141
+      lacunarity: 5
+      seed: 10
+      offset: {x: 0, y: 0}
+    noiseMin: 0.13
+    noiseMax: 0.593
+    blockRadius: 50
+    elevation: 0
+    minThreshold: 0.4
+    maxThreshold: 2
+    lessenTowardsEdges: 0
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 6900704511881687559, guid: cf9be061d575df6418c98c2c5ebde13d, type: 3}
+    useNoise: 1
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.141
+      lacunarity: 5
+      seed: 10
+      offset: {x: 0, y: 0}
+    noiseMin: 0.13
+    noiseMax: 0.593
+    blockRadius: 40
+    elevation: 0
+    minThreshold: 0
+    maxThreshold: 0.3
+    lessenTowardsEdges: 0
+    lessenScale: 0.457
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 0
+      max: 0
+    randomizeYRotation: 1
