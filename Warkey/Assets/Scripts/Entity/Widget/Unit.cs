@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using Photon.Pun;
 
 public class Unit : MonoBehaviour,IWidget
 {
@@ -19,16 +20,19 @@ public class Unit : MonoBehaviour,IWidget
     public event System.Action<float> onDamageTaken;
 
     private float staminaRegenCooldown = 1f;
+
+    PhotonView PV;
     
 
     protected void Start() {
         if (unitData) {
+            PV = GetComponent<PhotonView>();
             health = new FiniteField(unitData.health, unitData.healthRegen, unitData.healthCooldown);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen, unitData.staminaCooldown);
 
             health.PropertyChanged += Health_PropertyChanged;
             stamina.PropertyChanged += Stamina_PropertyChanged;
-
+           
             InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
         }
     }
@@ -50,15 +54,25 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public void Destroy() {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public virtual void TakeDamage(float damage) {
+        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        if (!PV.IsMine) return;
+  
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
-        if (health.Current <= 0) {
+        if (health.Current <= 0)
+        {
             Die();
         }
+        Debug.Log(damage);
     }
 
     public void Heal(float heal) {

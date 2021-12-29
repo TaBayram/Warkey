@@ -37,19 +37,11 @@ public class LobyManager : MonoBehaviourPunCallbacks
 
     private void LobyManager_onPlayerHeroReceived(PlayerTracker obj) {
         spawnedPlayers.Add(obj.Hero);
-        foreach (GameObject gobject in spawnedNPCs) {
-            dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
-            dialogueManagerComponents.players = spawnedPlayers;
-        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) {
         GameTracker.Instance.AddPlayer(newPlayer);
 
-        foreach (GameObject gobject in spawnedNPCs) {
-            dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
-            dialogueManagerComponents.players = spawnedPlayers;
-        }
     }    
 
     public void SpawnPlayerHero() {
@@ -60,8 +52,18 @@ public class LobyManager : MonoBehaviourPunCallbacks
             spawnedPlayers.Add(player.Hero);
         }
 
+        if (player.Player.IsMasterClient){
+            foreach (GameObject gobject in spawnedNPCs)
+            {
+                dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
+                dialogueManagerComponents.player = player.Hero;
+               
+            }
+        }
+
         //SEND DATA TO ALL PLAYERS TO BIND HERO
     }
+ 
 
     public void CreateNPCs() {
         int npcSpawnAmount = Random.Range(2, 4);
@@ -77,7 +79,7 @@ public class LobyManager : MonoBehaviourPunCallbacks
         
         foreach (GameObject gobject in spawnedNPCs) {
             dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
-            dialogueManagerComponents.players = spawnedPlayers;
+            
             dialogueManagerComponents.dialogueUI = dialogueMenu;
             dialogueManagerComponents.npcDialogueBox = dialogueMenuComponents.npcDialogueText;
             dialogueManagerComponents.npcName = dialogueMenuComponents.npcNameText;
