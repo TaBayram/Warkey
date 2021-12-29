@@ -33,6 +33,7 @@ public class LobyManager : MonoBehaviourPunCallbacks
         foreach (Player player in PhotonNetwork.PlayerList) {
             GameTracker.Instance.AddPlayer(player);
         }
+
     }
 
     private void LobyManager_onPlayerHeroReceived(PlayerTracker obj) {

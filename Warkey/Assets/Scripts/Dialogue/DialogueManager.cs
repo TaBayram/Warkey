@@ -27,7 +27,6 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] Animator animator;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -158,7 +157,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void ChangeScene() {
-        SceneManager.LoadScene("WorldScene");
+        LoadScene.SceneIndex = LoadScene.Scenes.World;
+        SceneManager.LoadScene((int)LoadScene.Scenes.World);
     }
 
 

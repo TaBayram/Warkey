@@ -387,7 +387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da3301b5c7e1308449874921bb4502f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: a94d382b37c0f2b40ad5298a2afcc020, type: 2}
+  isHero: 0
+  unitData: {fileID: 11400000, guid: 658348ded556c6d4697f911db530af45, type: 2}
   disabler: {fileID: 6296193162208242201}
   widgetAudio: {fileID: 2269527320993172786}
   state: 1

@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour,IWidget
 {
     public const float regenInterval = 0.10f;
 
+    [SerializeField] protected bool isHero;
     [SerializeField] protected UnitData unitData;
     [SerializeField] protected Disabler disabler;
     [SerializeField] protected WidgetAudio widgetAudio;

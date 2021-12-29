@@ -1049,11 +1049,11 @@ PrefabInstance:
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: pathSettings
       value: 
-      objectReference: {fileID: 11400000, guid: bd3cee5fd0e154c498e89a95e7cc09a0, type: 2}
+      objectReference: {fileID: 11400000, guid: 4fafaf54a5a60e2479379fec81290e1e, type: 2}
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: groundSettings
       value: 
-      objectReference: {fileID: 11400000, guid: 62d561f484c70944b9583bac89e13af2, type: 2}
+      objectReference: {fileID: 11400000, guid: fc29ae384c1c2764b957515abd88c669, type: 2}
     - target: {fileID: 6477479063983045962, guid: b8c6d6e29c9636e468771a12ed90a36e, type: 3}
       propertyPath: heightMapSettings
       value: 

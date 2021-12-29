@@ -56,7 +56,7 @@ public class PlayerMovementThird : Movement
                 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             }
             bool wantToSprint = Input.GetKey(KeyCode.LeftShift);
-            bool sprint = wantToSprint && entity.UseStamina(movementData.sprintStaminaCost);
+            bool sprint = wantToSprint && entity.UseStamina(movementData.sprintStaminaCost*Time.deltaTime);
 
             Move(moveDirection.normalized, sprint);
         }

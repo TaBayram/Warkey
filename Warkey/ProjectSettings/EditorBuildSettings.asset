@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinterScene.unity
     guid: f5b27fbd53460004d96ef337fc5c0d55
+  - enabled: 1
+    path: Assets/Scenes/Menu/PersistentScene.unity
+    guid: 2c489e22764dd36428295a97120ee6c2
   m_configObjects: {}

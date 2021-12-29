@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class MissionEndManager : MonoBehaviour
 {
@@ -23,8 +25,10 @@ public class MissionEndManager : MonoBehaviour
     }
 
     private void CheckMissionEnd() {
-        if(playersInside.Count == GameTracker.Instance.GetPlayerTrackers().Count) {
+        if(PhotonNetwork.IsMasterClient && playersInside.Count == GameTracker.Instance.GetPlayerTrackers().Count) {
             Debug.Log("End");
+            LoadScene.SceneIndex = LoadScene.Scenes.Camp;
+            SceneManager.LoadScene("PersistentScene");
         }
     }
 }

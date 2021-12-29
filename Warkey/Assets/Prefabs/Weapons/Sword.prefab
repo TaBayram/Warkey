@@ -226,7 +226,7 @@ MonoBehaviour:
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: -203655887218126122, guid: 7520581fd68c6954fbf737495f153dc5, type: 3}
   audioSource: {fileID: 5865703988633012473}
-  particle: {fileID: 0}
+  particle: {fileID: 7702604543404089153}
 --- !u!1001 &2054944304743999151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390,6 +390,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1691052257644920335}
     m_Modifications:
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1607006539789234518, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -451,5 +459,10 @@ PrefabInstance:
 --- !u!4 &7702604543404089154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1607006539789234518, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+  m_PrefabInstance: {fileID: 8982462350421716500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7702604543404089153 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
   m_PrefabInstance: {fileID: 8982462350421716500}
   m_PrefabAsset: {fileID: 0}
