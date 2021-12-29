@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     public AudioSource audioSource;
 
-    public List<GameObject> players;
+    public GameObject player;
     public GameObject dialogueUI;
 
     public Text npcName;
@@ -37,16 +37,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void Update() {
+        if (player == null) return;
         if (!audioSource.isPlaying) {
             animator.SetInteger("talkState", 0);
         }
-    }
-
-    void OnMouseOver()
-    {
-        foreach (GameObject player in players)
-        {
-            distance = Vector3.Distance(player.transform.position, this.transform.position);
+        
+            if (!PhotonNetwork.IsMasterClient) return;
+            distance =(player.transform.position- this.transform.position).magnitude;
             if (distance <= 2.5f)
             {
                 if (Input.GetKeyDown(KeyCode.E) && isTalking == false)
@@ -84,7 +81,8 @@ public class DialogueManager : MonoBehaviour
                 //}
                 if (hasIndexChanged)
                 {
-                    if(npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes != null && npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length > 0) {
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes != null && npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length > 0)
+                    {
                         int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
                         playerResponse.text = npc.playerDialogMessages[playerMessageIndex].dialogMessage.message;
                     }
@@ -94,11 +92,13 @@ public class DialogueManager : MonoBehaviour
                 {
                     int playerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes[currentPlayerMessageIndex];
                     ShowNPCMessage(npc.playerDialogMessages[playerMessageIndex].npcDialogIndex);
-                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isExitMessage) {
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isExitMessage)
+                    {
                         EndDialogue();
                         return;
                     }
-                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter) {
+                    if (npc.nPCDialogMessages[currentNPCMessageIndex].isQuestAccepter)
+                    {
                         StartQuest();
                         return;
                     }
@@ -109,7 +109,12 @@ public class DialogueManager : MonoBehaviour
             {
                 EndDialogue();
             }
-        }
+        
+    }
+
+    void OnMouseOver()
+    {
+        
     }
 
 

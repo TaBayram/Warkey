@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIEntity : Entity
@@ -30,6 +31,9 @@ public class AIEntity : Entity
     private bool playerLostSight;
     private bool playerIsAttackable;
 
+    PhotonView PV;
+
+
     private float AttackRange { get { if (weaponController != null) return weaponController.AttackRange; else return aggresiveAISettings.attackRange; } }
     public bool IsDead { get => isDead; set { isDead = value; } }
 
@@ -46,6 +50,7 @@ public class AIEntity : Entity
     }
 
     private void Awake() {
+        PV = GetComponent<PhotonView>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         origin = transform.position;
 
@@ -65,6 +70,7 @@ public class AIEntity : Entity
         base.Start();
     }
     protected override void Update() {
+        if (!PV.IsMine) return;
         if (IsDead || this.transform == null) return;
         if (!IsOnNavMesh()) {
             NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 100f, NavMesh.AllAreas);
@@ -85,7 +91,7 @@ public class AIEntity : Entity
 
     private void SetBehaviour() {
         if(weaponController.state == Weapon.State.attacking || state == State.Knocked) {
-            return;
+            return; 
         }
 
         switch (CurrentState) {

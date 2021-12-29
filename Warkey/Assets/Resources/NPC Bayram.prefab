@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npc: {fileID: 11400000, guid: fa84f6cdb92f0a4438f26d8a30500a3a, type: 2}
   audioSource: {fileID: 2216209799177048812}
-  players: []
+  player: {fileID: 0}
   dialogueUI: {fileID: 0}
   npcName: {fileID: 0}
   npcDialogueBox: {fileID: 0}
@@ -91,7 +91,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 676008784818875776}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -25,6 +25,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     private MissionEndManager missionEndManager;
     private GameObject startPosition;
 
+    PhotonView PV;
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
     }
@@ -53,9 +54,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         obj.transform.position = GetPositionFromPathData(pathData.end);
         box.size = new Vector3(20f, 100f, 20f);
 
+        
 
         if (PhotonNetwork.IsMasterClient) {
             InvokeRepeating(nameof(Spawn), 60, 30);
+            return;
             CreateOnPath(pathData, true);
             CreateOnEnd();
         }
