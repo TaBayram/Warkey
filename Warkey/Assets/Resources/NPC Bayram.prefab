@@ -55,6 +55,9 @@ MonoBehaviour:
   npcName: {fileID: 0}
   npcDialogueBox: {fileID: 0}
   playerResponse: {fileID: 0}
+  playerResponseUpper: {fileID: 0}
+  playerResponseLower: {fileID: 0}
+  InteractWithE: {fileID: 0}
   animator: {fileID: 2598651235958209716}
 --- !u!136 &1037764275734772147
 CapsuleCollider:
