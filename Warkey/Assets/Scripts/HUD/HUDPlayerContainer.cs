@@ -11,12 +11,13 @@ public class HUDPlayerContainer : MonoBehaviour
     private Unit unit;
     [SerializeField] private WeaponUI weaponUI;
     private Inventory inventory;
-    [SerializeField] private InventoryUI inventoryUI;
+    //[SerializeField] private InventoryUI inventoryUI;
 
     private void Awake()
     {
     }
     private void Start() {
+<<<<<<< HEAD
         inventory = new Inventory();
         inventoryUI.SetInventory(inventory);
         /*
@@ -24,12 +25,31 @@ public class HUDPlayerContainer : MonoBehaviour
         ItemWorld.SpawnHealthPotion(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
         ItemWorld.SpawnStaminaPotion(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });*/
 
+=======
+      
+>>>>>>> MoEl-Branch
     }
 
 
     public void BindUnit(Unit unit) {
         this.unit = unit;
         unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
+    }
+
+    public void SubscribeInventory(Inventory inventory)
+    {
+        inventory.onItemAdded += Inventory_onItemAdded;
+        inventory.onItemRemoved += Inventory_onItemRemoved;
+    }
+
+    private void Inventory_onItemRemoved(ItemPicked obj)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void Inventory_onItemAdded(ItemPicked obj)
+    {
+        throw new System.NotImplementedException();
     }
 
     private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -56,11 +76,19 @@ public class HUDPlayerContainer : MonoBehaviour
         staminaBar.SetMaxValue(field.Max);
         staminaBar.SetValue(field.Current);
     }
-
     
     public void updateWeapon(Weapon weapon)
     {
         weaponUI.UpdateInfo(weapon.icon);
+    }
+
+
+    public void ConsumeHealth()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //inventory.RemoveItem();
+        }
     }
     
 }

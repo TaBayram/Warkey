@@ -19,9 +19,13 @@ TagManager:
   - Destructible
   - SoftEnviroment
   - HardEnviroment
+<<<<<<< HEAD
   - Dead
   - Ragdoll
   - 
+=======
+  - Item
+>>>>>>> MoEl-Branch
   - 
   - Aim
   - PostProcess

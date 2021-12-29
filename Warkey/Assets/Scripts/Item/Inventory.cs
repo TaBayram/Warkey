@@ -1,26 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory
 {
 
-	private List<Item> itemList;
+	private List<ItemPicked> itemList;
+
+	public event System.Action<ItemPicked> onItemAdded;
+	public event System.Action<ItemPicked> onItemRemoved;
 	public Inventory()
     {
-		itemList = new List<Item>();
-		AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-		AddItem(new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
-		AddItem(new Item { itemType = Item.ItemType.Bread, amount = 1 });
-
+		itemList = new List<ItemPicked>();
 	}
-	public void AddItem(Item item)
+	public void AddItem(ItemPicked item)
     {
 		itemList.Add(item);
+		onItemAdded?.Invoke(item);
     }
 
-	public List<Item> GetItemList()
+	public void RemoveItem(ItemPicked item)
     {
-		return itemList;
+		itemList.Remove(item);
+		onItemRemoved?.Invoke(item);
+	}
+
+	public List<ItemPicked> GetItemList()
+    {
+		return new List<ItemPicked>(itemList);
+    }
+
+	public bool Contains(ItemPicked item)
+    {
+		if (itemList.Contains(item))
+			return true;
+		return false;
+    }
+
+	public int TypeCount(IItem.type type)
+    {
+		int count = 0;
+		for(int i = 0; i < itemList.Count; i++)
+        {
+			if (itemList[i].Type == type)
+				count++;
+        }
+
+		return count;
     }
 }
