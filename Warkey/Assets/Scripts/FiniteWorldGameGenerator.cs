@@ -102,7 +102,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         }
     }
 
-    private void Spawn(bool isI = false) {
+    private void Spawn() {
+        SpawnI(false);
+    }
+
+    private void SpawnI(bool isI = false) {
         float random = Random.Range(0f, 1f);
         EntitySettings entitySettings = new EntitySettings();
         bool canSpawn = false;
@@ -122,7 +126,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
         if (!isI) {
             for(int i = 0; i < count % 5; i++) {
-                Spawn(true);
+                SpawnI(true);
             }
         }
     }

@@ -919,6 +919,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8045053198340499858, guid: 0049cce3d5bae534cb51981c67392206, type: 3}
+      propertyPath: OwnershipTransfer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8103406538818213292, guid: 0049cce3d5bae534cb51981c67392206, type: 3}
       propertyPath: m_RootOrder
       value: 6
