@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3658708336751569086}
   - component: {fileID: 276933422983488269}
   - component: {fileID: 2244428315429029739}
-  - component: {fileID: 7888323071592622051}
   m_Layer: 0
   m_Name: InteractTip
   m_TagString: Untagged
@@ -173,22 +172,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 276933422983488269}
   m_maskType: 0
---- !u!114 &7888323071592622051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125350201340807268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6189fd3c44b446f409d2888de8e84fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewThreshold: 15
-  handleVisibility: 0
-  targetCamera: {fileID: 0}
-  targetObject: {fileID: 1125350201340807268}
 --- !u!1 &3849744031446833251
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +184,7 @@ GameObject:
   - component: {fileID: 3849744031446833278}
   - component: {fileID: 1037764275734772147}
   - component: {fileID: -5314572838531292132}
+  - component: {fileID: 8231951347372574694}
   m_Layer: 0
   m_Name: NPC Bayram
   m_TagString: Untagged
@@ -286,6 +270,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8231951347372574694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849744031446833251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6189fd3c44b446f409d2888de8e84fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewThreshold: 15
+  handleVisibility: 0
+  targetCamera: {fileID: 0}
+  targetObject: {fileID: 1125350201340807268}
 --- !u!1 &5417496563242652372
 GameObject:
   m_ObjectHideFlags: 0
