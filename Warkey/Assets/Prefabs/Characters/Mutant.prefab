@@ -360,7 +360,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 252d91f61e256974fa0f92e607559ee2, type: 2}
   disabler: {fileID: 6296193162208242201}
   widgetAudio: {fileID: 2269527320993172786}
-  state: 1
   animator: {fileID: 2977318669569570022}
   ragdollManager: {fileID: 3208236918722676532}
 --- !u!114 &1327399390864704522
@@ -654,6 +653,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3748830483342082971, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
       propertyPath: unit
+      value: 
+      objectReference: {fileID: 3278420720226861635}
+    - target: {fileID: 3748830483342082971, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: preplacedUnit
       value: 
       objectReference: {fileID: 3278420720226861635}
     - target: {fileID: 4310741141905604305, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}

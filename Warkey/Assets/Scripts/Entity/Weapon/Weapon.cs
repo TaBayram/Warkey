@@ -87,7 +87,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
     private void OnDestroy() {
-        Destroy(aimTransform);
+        Destroy(aimTransform.gameObject);
     }
 }
 

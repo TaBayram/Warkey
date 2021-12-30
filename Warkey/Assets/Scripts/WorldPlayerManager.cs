@@ -19,7 +19,7 @@ public class WorldPlayerManager : MonoBehaviour
     }
 
     public GameObject[] CreatePlayerHeroes() {
-        GameObject[] heroes = new GameObject[GameTracker.Instance.GetPlayerTrackers().Count];
+        GameObject[] heroes = new GameObject[1];
 
         foreach(PlayerTracker player in GameTracker.Instance.GetPlayerTrackers()) {
             if (player.IsLocal) {

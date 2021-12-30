@@ -59,7 +59,7 @@ MonoBehaviour:
   playerResponse: {fileID: 0}
   playerResponseUpper: {fileID: 0}
   playerResponseLower: {fileID: 0}
-  InteractWithE: {fileID: 3849744031446833251}
+  InteractWithE: {fileID: 3969964871334159522}
   animator: {fileID: 466733089457458041}
 --- !u!114 &-5314572838531292132
 MonoBehaviour:

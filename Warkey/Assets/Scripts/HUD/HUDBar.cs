@@ -14,10 +14,19 @@ public class HUDBar : MonoBehaviour
 
     private float currentMaxValue = 0;
     private float currentValue = 0;
-     
 
+    [SerializeField] Unit preplacedUnit;
     private void Start() {
+        if (preplacedUnit != null) {
+            preplacedUnit.FinitePropertyChanged += Unit_FinitePropertyChanged;
+        }
+    }
 
+    private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        if (e.PropertyName == "health") {
+            SetMaxValue(((FiniteField)sender).Max);
+            SetValue(((FiniteField)sender).Current);
+        }
     }
 
     public void SetMaxValue(float value)

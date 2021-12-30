@@ -94,6 +94,6 @@ public class PlayerMovementThird : Movement
     }
 
     private void OnDestroy() {
-        Destroy(playerCamera);
+        Destroy(playerCamera.gameObject);
     }
 }
