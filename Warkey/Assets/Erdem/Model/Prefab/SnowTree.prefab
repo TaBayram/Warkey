@@ -177,6 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7090689602906751235}
   - component: {fileID: 2611295076426364530}
+  - component: {fileID: 3470204988288523860}
   m_Layer: 11
   m_Name: SnowTree
   m_TagString: Untagged
@@ -232,6 +233,22 @@ LODGroup:
     - renderer: {fileID: 614823430300072711}
     - renderer: {fileID: 8141623850396225853}
   m_Enabled: 1
+--- !u!208 &3470204988288523860
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578678617977150393}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.505, y: 1.415, z: 1.305}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.24, z: -0.26}
+  m_TimeToStationary: 0.5
 --- !u!1 &8005413380149228311
 GameObject:
   m_ObjectHideFlags: 0
