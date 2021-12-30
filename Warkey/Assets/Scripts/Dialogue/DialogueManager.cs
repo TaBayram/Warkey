@@ -163,8 +163,12 @@ public class DialogueManager : MonoBehaviour
 
     private void ChangeScene() {
         PhotonNetwork.CurrentRoom.IsOpen = false;
+
         LoadScene.SceneIndex = LoadScene.Scenes.World;
-        SceneManager.LoadScene((int)LoadScene.Scenes.World);
+        if(Random.Range(0,2) == 0)
+            SceneManager.LoadScene((int)LoadScene.Scenes.World);
+        else
+            SceneManager.LoadScene((int)LoadScene.Scenes.Winter);
     }
 
     private void UpdatePlayerResponse() {

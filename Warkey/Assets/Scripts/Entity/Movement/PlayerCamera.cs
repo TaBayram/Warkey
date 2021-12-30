@@ -21,9 +21,9 @@ public class PlayerCamera : MonoBehaviour
         hasBinded = true;
     }
 
-    private void Update() {
+    /*private void Update() {
         if (hasBinded && ( targetTransform == null || targetTransform.gameObject == null)) {
             Destroy(this.gameObject);
         }
-    }
+    }*/
 }

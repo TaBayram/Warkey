@@ -25,6 +25,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     private MissionEndManager missionEndManager;
     private GameObject startPosition;
 
+
     PhotonView PV;
 
     private List<GameObject> enemies;
@@ -52,15 +53,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             finiteWorldGenerator.BindViewer(player.transform);
         }
 
-        var obj = new GameObject("End");
-        var box = obj.AddComponent<BoxCollider>();
-        obj.transform.position = GetPositionFromPathData(pathData.end);
-        box.size = new Vector3(20f, 100f, 20f);
-
+        var end = Instantiate(worldEntitySettings.MissionEndAreaPrefab, GetPositionFromPathData(pathData.end), Quaternion.identity);
         
 
         if (PhotonNetwork.IsMasterClient) {
-            InvokeRepeating(nameof(Spawn), 30, 30);
+            InvokeRepeating(nameof(Spawn), 30, 20);
             return;
             CreateOnPath(pathData, true);
             CreateOnEnd();
@@ -77,7 +74,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                 EntitySettings entitySettings = new EntitySettings();
                 bool canSpawn = false;
                 foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                    if (entity.canStaticSpawn && entity.spawnChance > random) {
+                    if (entity.canStaticSpawn && entity.spawnChance < random) {
                         entitySettings = entity;
                         canSpawn = true;
                     }
@@ -94,7 +91,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             EntitySettings entitySettings = new EntitySettings();
             bool canSpawn = false;
             foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                if (entity.canStaticSpawn && entity.spawnChance > random) {
+                if (entity.canStaticSpawn && entity.spawnChance < random) {
                     entitySettings = entity;
                     canSpawn = true;
                 }
@@ -105,12 +102,12 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         }
     }
 
-    private void Spawn() {
+    private void Spawn(bool isI = false) {
         float random = Random.Range(0f, 1f);
         EntitySettings entitySettings = new EntitySettings();
         bool canSpawn = false;
         foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-            if(entity.canDynamicSpawn && entity.spawnChance > random) {
+            if(entity.canDynamicSpawn && entity.spawnChance < random) {
                 entitySettings = entity;
                 canSpawn = true;
             }
@@ -121,7 +118,16 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             Vector3 position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
             GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
         }
+
+
+        if (!isI) {
+            for(int i = 0; i < count % 5; i++) {
+                Spawn(true);
+            }
+        }
     }
+
+    int count = 0;
 
     private GameObject InstantiateRoomObject(string name, Vector3 position) {
         GameObject enemy = PhotonNetwork.InstantiateRoomObject(name, position, Quaternion.identity);

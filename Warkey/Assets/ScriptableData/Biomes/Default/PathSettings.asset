@@ -15,16 +15,16 @@ MonoBehaviour:
   autoUpdate: 1
   useMesh: 0
   seed: 0
-  maxIteration: 0
-  maxSubIteration: 21875
+  maxIteration: 500
+  maxSubIteration: 1000
   distance:
     min: 3
     max: 6
-  maxSteepChange: 0.015
+  maxSteepChange: 0.1
   height:
-    min: 0.3
-    max: 1
-  negativeStrength: 0.15
+    min: 0
+    max: 2
+  negativeStrength: 0.3
   branchSettings:
   - branchChance: 0.005
     branchIteration: 500

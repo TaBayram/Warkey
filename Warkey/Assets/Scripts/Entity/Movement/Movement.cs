@@ -126,6 +126,14 @@ public abstract class Movement : MonoBehaviour
         else {
             velocity.y += Gravity.GRAVITYSCALED * movementData.weight * Time.deltaTime;
         }
+        if(transform.position.y < -1000) {
+            if (Physics.Raycast(transform.position, Vector3.up, out RaycastHit raycastHit, 5000f, 1 << LayerMask.NameToLayer("Ground"))) {
+                characterController.enabled = false;
+                transform.position = raycastHit.point + Vector3.up*10f;
+                characterController.enabled = true;
+            }
+        }
+
         MoveCharacter(velocity * Time.deltaTime);
     }
 

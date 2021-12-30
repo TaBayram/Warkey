@@ -14,7 +14,8 @@ public class WorldPlayerManager : MonoBehaviour
 
     public void BindPlayerToHUD(GameObject obj) {
         hUDPlayerContainer.BindUnit(obj.GetComponent<Unit>());
-        hUDPlayerContainer.SubscribeInventory(obj.GetComponentInChildren<ItemPicker>().Inventory);
+        if(obj.GetComponentInChildren<ItemPicker>() != null)
+            hUDPlayerContainer.SubscribeInventory(obj.GetComponentInChildren<ItemPicker>().Inventory);
 
     }
 
