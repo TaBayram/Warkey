@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6249926447247643067}
   - component: {fileID: 6802407028845463463}
   - component: {fileID: 1858126660340331850}
-  m_Layer: 0
+  - component: {fileID: 5459639478381044350}
+  m_Layer: 11
   m_Name: Small Rock 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,3 +119,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6249926447247643067}
   m_Enabled: 1
+--- !u!208 &5459639478381044350
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410240931052885714}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.56, y: 0.254, z: 0.56}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.015000001, y: 0.01, z: -0.015000001}
+  m_TimeToStationary: 0.5

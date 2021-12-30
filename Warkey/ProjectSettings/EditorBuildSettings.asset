@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/MainMenu.unity
     guid: 10133223f60c7e84fafa22d04845e85d
   - enabled: 1
-    path: Assets/Scenes/WorldScene.unity
+    path: Assets/Scenes/ForestScene.unity
     guid: 6eb7731f4d3887149857f2ee99027e9b
+  - enabled: 1
+    path: Assets/Scenes/WinterScene.unity
+    guid: f5b27fbd53460004d96ef337fc5c0d55
+  - enabled: 1
+    path: Assets/Scenes/Menu/PersistentScene.unity
+    guid: 2c489e22764dd36428295a97120ee6c2
   m_configObjects: {}

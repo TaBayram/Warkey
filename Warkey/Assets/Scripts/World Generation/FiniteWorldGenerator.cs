@@ -50,10 +50,22 @@ public class FiniteWorldGenerator : MonoBehaviour
 
     public event System.Action onWorldReady;
 
+    private void SetMap() {
+        WorldSettings settings;
+        if (GameTracker.Instance.WorldSettingsHolder != null)
+            settings = GameTracker.Instance.WorldSettingsHolder.worldSettings;
+        else
+            settings = new WorldSettings(0,new XY(1,1), "WorldScene");
+
+        groundSettings.poissonDiscSettings.seed = settings.seed;
+        heightMapSettings.noiseSettings.seed = settings.seed;
+        pathSettings.seed = settings.seed;
+
+        chunkSize = settings.worldSize;
+    }
+    
     private void Awake() {
-        groundSettings.poissonDiscSettings.seed = seed;
-        heightMapSettings.noiseSettings.seed = seed;
-        pathSettings.seed = seed;
+        SetMap();
     }
 
     private void Start() {
@@ -67,6 +79,8 @@ public class FiniteWorldGenerator : MonoBehaviour
         if (heightMapSettings.useFallOff) {
             fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount * chunkSize.x), (int)(meshSettings.VerticesPerLineCount * chunkSize.y));
         }
+
+        if(viewer == null) BindViewer(transform);
         GeneratePath();
         LoadAll();
         UpdateVisibleChunks();

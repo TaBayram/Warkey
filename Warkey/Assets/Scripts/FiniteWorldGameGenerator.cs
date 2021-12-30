@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FiniteWorldGameGenerator : MonoBehaviour
 {
@@ -24,8 +25,12 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     private MissionEndManager missionEndManager;
     private GameObject startPosition;
 
+    PhotonView PV;
+
+    private List<GameObject> enemies;
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
+        enemies =new List<GameObject>();
     }
 
     private void FiniteWorldGenerator_onWorldReady() {
@@ -52,10 +57,17 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         obj.transform.position = GetPositionFromPathData(pathData.end);
         box.size = new Vector3(20f, 100f, 20f);
 
+        
 
-        InvokeRepeating(nameof(Spawn), 10, 5);
-        CreateOnPath(pathData, true);
-        CreateOnEnd();
+        if (PhotonNetwork.IsMasterClient) {
+            InvokeRepeating(nameof(Spawn), 60, 30);
+            return;
+            CreateOnPath(pathData, true);
+            CreateOnEnd();
+            
+            
+            
+        }
     }
 
     private void CreateOnPath(PathData pathData, bool isMainBranch) {
@@ -68,13 +80,16 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                 EntitySettings entitySettings = new EntitySettings();
                 bool canSpawn = false;
                 foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                    if (entity.canStaticSpawn && entity.spawnChance < random) {
+                    if (entity.canStaticSpawn && entity.spawnChance > random) {
                         entitySettings = entity;
                         canSpawn = true;
                     }
                 }
                 if (!canSpawn) continue;
-                GameObject enemy = Instantiate(entitySettings.prefab, GetPositionFromPathData(item) + Vector3.up*2f, Quaternion.identity, this.transform);
+                if (enemies.Count < 3) return;
+                GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, GetPositionFromPathData(item) + Vector3.up*2f, Quaternion.identity);
+                enemy.transform.parent = this.transform;
+                enemies.Add(enemy);
             }
         }
     }
@@ -91,7 +106,10 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                 }
             }
             if (!canSpawn) continue;
-            GameObject enemy = Instantiate(entitySettings.prefab, FindPosition(GetPositionFromPathData(pathData.end), 5f, 10) + Vector3.up * 2f, Quaternion.identity, this.transform);
+            if (enemies.Count > 3) return;
+            GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, FindPosition(GetPositionFromPathData(pathData.end), 5f, 10) + Vector3.up * 2f, Quaternion.identity);
+            enemy.transform.parent = this.transform;
+            enemies.Add(enemy);
 
         }
     }
@@ -109,8 +127,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         if (!canSpawn) return;
 
         foreach (GameObject player in players) {
-            var enemy = Instantiate(entitySettings.prefab);
-            enemy.transform.position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
+            Vector3 position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
+            GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, position, Quaternion.identity);
+            enemy.transform.parent = this.transform;
         }
     }
 

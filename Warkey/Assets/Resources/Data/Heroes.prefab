@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb27b0a53848f14a810a2e6d15b65fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7646756939249653756}
   heroes:
   - uniqueName: Paladin
     prefab: {fileID: 2496866731616768025, guid: ebfbf427c540fcc4f8723d556bbf35a4, type: 3}
+  - uniqueName: Paladin
+    prefab: {fileID: 2496866731616768025, guid: fdbe3967de646674a953d6a4f980f8c6, type: 3}

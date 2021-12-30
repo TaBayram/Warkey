@@ -12,7 +12,9 @@ public class Entity : MonoBehaviour
 
     public Vector3 velocity;
 
-    private void Start() {
+    public event System.Action<Entity,IWidget.State> onUnitStateChange;
+
+    protected virtual void Start() {
         if(movement != null) {
             movement.onStateChange += Movement_onStateChange;
             movement.onVelocityChange += Movement_onVelocityChange;
@@ -20,10 +22,25 @@ public class Entity : MonoBehaviour
         if(weaponController != null) {
             weaponController.onStateChange += WeaponController_onStateChange;
         }
+        if(unit != null) {
+            unit.onStateChange += Unit_onStateChange;
+        }
     }
 
-    private void Update() {
+    protected virtual void Update() {
     }
+
+
+    private void Unit_onStateChange(IWidget.State obj) {
+        onUnitStateChange?.Invoke(this, obj);
+        if (unit.IsHero) {
+
+        }
+        else {
+
+        }
+    }
+
 
     protected void WeaponController_onStateChange(Weapon.State obj) {
         animationController?.StateChange(obj);
@@ -72,6 +89,10 @@ public class Entity : MonoBehaviour
             default: 
                 return 1;
         }
+    }
+
+    public bool CanMove() {
+        return true;
     }
 
     public bool CanAttack() {

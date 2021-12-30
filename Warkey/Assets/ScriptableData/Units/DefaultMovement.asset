@@ -16,6 +16,6 @@ MonoBehaviour:
   weight: 1
   walkSpeed: 5
   sprintSpeed: 12
-  sprintStaminaCost: 1
+  sprintStaminaCost: 0.25
   jumpHeight: 5
   jumpForwardScale: 1

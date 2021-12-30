@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8254362231606893529}
   - component: {fileID: 1971648467021271499}
   - component: {fileID: 4268928598536112604}
+  - component: {fileID: 1930822373778297659}
   m_Layer: 0
   m_Name: Small Rock 2
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3240088950274781315, guid: e2e276a85fbb9dd4d81082c1eb20521f, type: 3}
+--- !u!208 &1930822373778297659
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6797097412233683701}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.47, y: 0.18300001, z: 0.47}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.010000001, y: -0.06, z: 0.020000001}
+  m_TimeToStationary: 0.5

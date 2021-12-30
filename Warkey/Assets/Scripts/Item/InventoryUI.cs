@@ -7,38 +7,39 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     private Inventory inventory;
-    private Transform InventorySlotContainer;
-    private Transform ItemSlot;
-    private Transform ItemSlot2;
-    private Transform ItemSlot3;
+    [SerializeField] private Sprite empty;
+    [SerializeField] private Transform[] slots;
 
     private void Start()
     {
-        InventorySlotContainer = transform.Find("InventorySlotContainer");
-        ItemSlot = InventorySlotContainer.Find("ItemSlot");
-        ItemSlot2 = InventorySlotContainer.Find("ItemSlot2");
-        ItemSlot3 = InventorySlotContainer.Find("ItemSlot3");
     }
-    public void SetInventory(Inventory inventory)
-    {
+
+    public void SubscribeInventory(Inventory inventory) {
         this.inventory = inventory;
+        inventory.onItemAdded += Inventory_onItemAdded;
+        inventory.onItemRemoved += Inventory_onItemRemoved;
         RefreshInventoryItems();
     }
 
-    private void RefreshInventoryItems()
+    private void Inventory_onItemRemoved(ItemPicked obj) {
+        RefreshInventoryItems();
+    }
+
+    private void Inventory_onItemAdded(ItemPicked obj) {
+        RefreshInventoryItems();
+    }
+
+
+    public void RefreshInventoryItems()
     {
-        int x = 0;
-        float y = -2.5f;
-        float itemSlotCellsize = 30f;
-        
-        foreach (Item item in inventory.GetItemList())
+        foreach (Transform slot in slots) {
+            Image image = slot.GetComponent<Image>();
+            image.sprite = empty;
+        }
+        foreach (ItemPicked item in inventory.GetItemList())
         {
-            RectTransform itemSlotRectTransform = Instantiate(ItemSlot, InventorySlotContainer).GetComponent<RectTransform>();
-            itemSlotRectTransform.gameObject.SetActive(true);
-            itemSlotRectTransform.anchoredPosition = new Vector2(x* itemSlotCellsize, itemSlotRectTransform.gameObject.transform.position.y*y);
-            x += 5;
-            Image image = itemSlotRectTransform.Find("ItemIcon").GetComponent<Image>();
-            image.sprite = item.GetSprite();
+            Image image = slots[(int)item.Type].GetComponent<Image>();
+            image.sprite = item.Sprite;
         }
     }
 }

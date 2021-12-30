@@ -9,6 +9,9 @@ public class DialogueMenu : MonoBehaviour
     public Text npcNameText;
     public Text npcDialogueText;
     public Text playerDialogueText;
+    public Text playerDialogueTextUpper;
+    public Text playerDialogueTextLower;
+
 
     // Start is called before the first frame update
     void Start()

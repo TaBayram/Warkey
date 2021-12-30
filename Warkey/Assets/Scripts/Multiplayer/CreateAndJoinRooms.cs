@@ -17,6 +17,15 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void Enable() {
         panel.SetActive(true);
+
+        string room = PlayerPrefs.GetString("Room");
+        string nickname = PlayerPrefs.GetString("Nickname");
+        if(room != "") {
+            createInput.text = room;
+        }
+        if(nickname != "") {
+            nicknameInput.text = nickname;
+        }
     }
 
     public void CreateRoom()
@@ -49,10 +58,13 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             errorText.text = "Nickname is too short!";
             return false;
         }
+
+        PlayerPrefs.SetString("Nickname", nickname);
         return true;
     }
 
     public override void OnCreatedRoom() {
+        PlayerPrefs.SetString("Room", createInput.text.Trim());
         GameTracker.Instance.AddPlayer(PhotonNetwork.LocalPlayer);
     }
 

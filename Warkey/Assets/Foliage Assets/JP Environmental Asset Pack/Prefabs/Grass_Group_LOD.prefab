@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6431115982075860250}
   - component: {fileID: 2530009792611790615}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grass_Group_LOD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,10 @@ PrefabInstance:
     - target: {fileID: 3150059154184020866, guid: 98a359d63c95b74479b90b53b0631766, type: 3}
       propertyPath: m_Name
       value: Grass Patch Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150059154184020866, guid: 98a359d63c95b74479b90b53b0631766, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5413301366297878243, guid: 98a359d63c95b74479b90b53b0631766, type: 3}
       propertyPath: m_CastShadows

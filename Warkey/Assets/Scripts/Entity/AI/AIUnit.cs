@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class AIUnit : Unit
 {
@@ -15,6 +16,8 @@ public class AIUnit : Unit
 
         ai = GetComponent<AIEntity>();
         animator = GetComponentInChildren<Animator>();
+
+        photonView = GetComponent<PhotonView>();
     }
 
     public new void Destroy() {
@@ -24,7 +27,7 @@ public class AIUnit : Unit
     public new void Die() { 
         SetLayerRecursively(gameObject,LayerMask.NameToLayer("Dead"));
         widgetAudio?.PlayAudio(WidgetAudio.Name.death);
-        state = IWidget.State.dead;
+        State = IWidget.State.dead;
         ai.IsDead = true;
         Invoke("Destroy", 5);
         disabler?.DisableComponents(0);
@@ -33,11 +36,20 @@ public class AIUnit : Unit
     }
 
     public override void TakeDamage(float damage) {
-        if (state == IWidget.State.dead) return;
+
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        Debug.Log(damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        if (State == IWidget.State.dead) return;
         animator.SetTrigger("hit");
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
-        if (health.Current <= 0) {
+        if (health.Current <= 0)
+        {
             Die();
         }
     }

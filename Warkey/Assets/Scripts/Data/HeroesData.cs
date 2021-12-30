@@ -52,6 +52,11 @@ public class HeroesData : MonoBehaviour
         return null;
     }
 
+    public GameObject GetHeroByIndex(int index) {
+        index %= heroes.Length;
+        return heroes[index].prefab;
+    }
+
     [System.Serializable]
     public struct Hero
     {

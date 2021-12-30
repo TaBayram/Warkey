@@ -23,12 +23,12 @@ public class MeleeWeapon : Weapon
     private float currentAttackDamage;
     private Coroutine coroutine;
 
+    [SerializeField] private ParticleSystem particle;
 
 
     public override State CurrentState {
         get => state;
         set {
-            
             if(state == State.attacking && value == State.idle && coroutine != null) {
                 StopCoroutine(coroutine);
                 currentAttackIndex = 0;
@@ -37,13 +37,6 @@ public class MeleeWeapon : Weapon
             OnStateChange();
         }
     }
-
-    private void LateUpdate() {
-        if(CurrentState == State.defending) {
-            OnRotateRequest(0.015f*Time.deltaTime);
-        }
-    }
-
     public override void Attack(Vector3 vector) {
         if (state == State.idle) {
             CurrentState = State.attacking;
@@ -63,6 +56,8 @@ public class MeleeWeapon : Weapon
         currentAttackSpeed = attackSpeed;
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
         OnRequest("attackSpeed", 1/attackSpeed);
+        OnAnimationStart();
+        Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);
     }
 
     IEnumerator Cooldown() {
@@ -100,6 +95,21 @@ public class MeleeWeapon : Weapon
         else {
             CurrentState = State.idle;
             currentAttackIndex = 0;
+        }
+    }
+
+    private void OnAnimationStart() {
+        if(particle != null) {
+            particle.gameObject.SetActive(true);
+            var emission = particle.emission;
+            emission.enabled = true;
+        }
+    }
+
+    private void OnAnimationEnd() {
+        if (particle != null) {
+            var emission = particle.emission;
+            emission.enabled = false;
         }
     }
 

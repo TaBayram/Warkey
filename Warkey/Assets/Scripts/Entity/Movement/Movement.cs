@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,11 +27,21 @@ public abstract class Movement : MonoBehaviour
     public event System.Action<Vector3> onVelocityChange;
 
     protected float movementMultiplier = 1f;
+    protected float movementSpeedBonus = 0f;
     
     public Vector3 Velocity { get => characterController.velocity; }
 
     protected virtual void Start() {
         entity = GetComponent<Entity>();
+    }
+    public void IncreaseSpeed(float amount, float v) {
+        StartCoroutine(IncreaseSpeedBuff(amount, v));
+    }
+
+    public IEnumerator IncreaseSpeedBuff(float amount, float v) {
+        movementSpeedBonus += amount;
+        yield return new WaitForSeconds(v);
+        movementSpeedBonus -= amount;
     }
 
     protected virtual void Update() {
@@ -72,7 +83,7 @@ public abstract class Movement : MonoBehaviour
 
         Vector3 movement = Vector3.zero;
         if (!isJumping) {
-            movement = direction * Time.deltaTime * movementMultiplier * ((sprint) ? movementData.sprintSpeed : movementData.walkSpeed);
+            movement = direction * Time.deltaTime * movementMultiplier * (((sprint) ? movementData.sprintSpeed : movementData.walkSpeed) + movementSpeedBonus );
             MoveCharacter(movement);
         }
         return movement;

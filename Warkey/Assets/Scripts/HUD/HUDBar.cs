@@ -12,48 +12,41 @@ public class HUDBar : MonoBehaviour
     public float smoothing = 5f;
     private float targetValue;
 
-    public Unit unit;
+    private float currentMaxValue = 0;
+    private float currentValue = 0;
+     
 
     private void Start() {
-        if (unit != null) {
-            unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
-        }
+
     }
 
-    private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-        if (e.PropertyName == "health") {
-            SetMaxValue(((FiniteField)sender).Max);
-            SetValue(((FiniteField)sender).Current);
-        }
-    }
-
-
-    public void SetMaxValue(float health)
+    public void SetMaxValue(float value)
     {
-        slider.maxValue = health;
-        
+        if(currentMaxValue != value) {
+            slider.maxValue = value;
+            currentMaxValue = value;
+        }        
     }
-    public void SetValue(float health)
+    public void SetValue(float value)
     {
-        if (Mathf.Abs(slider.value - health)> valueThreshold)
+        if (value != currentValue && Mathf.Abs(currentValue - value) > valueThreshold)
         {
-            targetValue = health;
+            targetValue = value;
         }
        
     }
 
     private void Update()
     {
-        
-        if(targetValue < slider.value)
-        {
-            slider.value = Mathf.Lerp(slider.value, targetValue, smoothing * Time.deltaTime);
+        float difference = Mathf.Abs(currentValue - targetValue);
+        if (difference > smoothing) {
+            slider.value = Mathf.Lerp(slider.value,targetValue,smoothing*Time.deltaTime);
             fill.color = gradient.Evaluate(slider.normalizedValue);
+            currentValue = slider.value;
         }
-        else if(targetValue > slider.value)
-        {
-            slider.value = Mathf.Lerp(targetValue, slider.value, smoothing * Time.deltaTime);
-            fill.color = gradient.Evaluate(slider.normalizedValue);
+        else if(difference != 0) {
+            slider.value = targetValue;
+            currentMaxValue = slider.value;
         }
 
 

@@ -22,6 +22,9 @@ public class GameTracker
 
     private List<PlayerTracker> playerTrackers = new List<PlayerTracker>();
 
+    public NetworkManager NetworkManager;
+    public WorldSettingsHolder WorldSettingsHolder;
+
 
     public PlayerTracker AddPlayer(Player player) {
         PlayerTracker exists = GetPlayerTracker(player);
@@ -48,7 +51,9 @@ public class GameTracker
         return null;
     }
 
-
+    public PlayerTracker GetLocalPlayerTracker() {
+        return GetPlayerTracker(PhotonNetwork.LocalPlayer);
+    }
 
     public List<PlayerTracker> GetPlayerTrackers() {
         return new List<PlayerTracker>(this.playerTrackers);

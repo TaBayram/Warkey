@@ -32,6 +32,7 @@ public class PlayerMovementThird : Movement
     protected override void Update(){
         base.Update();
         if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
+        if (!entity.CanMove()) return;
         movementMultiplier = entity.MovementScaler();
         if (movementMultiplier == 0) {
             if(state != State.idle) {
@@ -70,20 +71,24 @@ public class PlayerMovementThird : Movement
     public void RotateToTarget(float duration = 0) {
         if (playerCamera == null) return;
         float rotationalTarget = playerCamera.CameraTransform.eulerAngles.y;
-        StartCoroutine(Rotate(rotationalTarget, duration == 0 ? false : true, duration));
+        coroutineCount++;
+        StartCoroutine(Rotate(rotationalTarget, duration == 0 ? false : true, duration, coroutineCount));
     }
 
+    private const float maxDuration = 2;
+    private int coroutineCount = 0;
 
-    private IEnumerator Rotate(float rotationalTarget, bool hasDuration, float duration) {
+    private IEnumerator Rotate(float rotationalTarget, bool hasDuration, float duration, int index) {
         isRotating = true;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationalTarget, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
         yield return new WaitForSeconds(0.005f);
         duration -= 0.005f;
-        if (Mathf.Abs(rotationalTarget - angle) > 0.1f && (!hasDuration || duration > 0) ) {
-            StartCoroutine(Rotate(rotationalTarget, hasDuration, duration));
+        if (Mathf.Abs(rotationalTarget - angle) > 0.1f && (!hasDuration || duration > 0) && (duration < -maxDuration) && (index == coroutineCount) ) {
+            StartCoroutine(Rotate(rotationalTarget, hasDuration, duration,index));
         }
         else {
+            coroutineCount--;
             isRotating = false;
         }
     }

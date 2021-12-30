@@ -2,34 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class HUDPlayerContainer : MonoBehaviour
 {
 
-    public HUDBar healthBar;
-    public HUDBar staminaBar;
-    private Unit unit;
+    [SerializeField] private HUDBar healthBar;
+    [SerializeField] private HUDBar staminaBar;
+    [SerializeField] private HUDBar experienceBar;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private WeaponUI weaponUI;
-    private Inventory inventory;
     [SerializeField] private InventoryUI inventoryUI;
 
-    private void Awake()
-    {
-    }
+
+    [SerializeField] private GameObject onlyForTest;
+
     private void Start() {
-        inventory = new Inventory();
-        inventoryUI.SetInventory(inventory);
-        /*
-        ItemWorld.SpawnBread(new Vector3(10, 0.5f), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-        ItemWorld.SpawnHealthPotion(new Vector3(15, 0.5f), new Item { itemType = Item.ItemType.StaminaPotion, amount = 1 });
-        ItemWorld.SpawnStaminaPotion(new Vector3(20, 0.5f), new Item { itemType = Item.ItemType.Bread, amount = 1 });*/
+        if (onlyForTest) {
+            BindUnit(onlyForTest.GetComponent<Unit>());
+            SubscribeInventory(onlyForTest.GetComponentInChildren<ItemPicker>().Inventory);
+        }
+
+        experienceBar.SetMaxValue(PlayerTracker.levelExperienceCost);
+        GameTracker.Instance.GetLocalPlayerTracker().onLevelUp += HUDPlayerContainer_onLevelUp;
+        GameTracker.Instance.GetLocalPlayerTracker().onExperienceChange += HUDPlayerContainer_onExperienceChange;
+
 
     }
 
+    private void HUDPlayerContainer_onExperienceChange(PlayerTracker obj) {
+        experienceBar.SetValue(obj.Experience);
+    }
+
+    private void HUDPlayerContainer_onLevelUp(PlayerTracker obj) {
+        levelText.text = ""+ obj.Level;
+    }
 
     public void BindUnit(Unit unit) {
-        this.unit = unit;
         unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
+    }
+
+    public void SubscribeInventory(Inventory inventory)
+    {
+        inventoryUI.SubscribeInventory(inventory);
     }
 
     private void Unit_FinitePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -56,11 +71,10 @@ public class HUDPlayerContainer : MonoBehaviour
         staminaBar.SetMaxValue(field.Max);
         staminaBar.SetValue(field.Current);
     }
-
     
     public void updateWeapon(Weapon weapon)
     {
         weaponUI.UpdateInfo(weapon.icon);
     }
-    
+
 }

@@ -8,7 +8,7 @@ public class RagdollManager : MonoBehaviour
     public GameObject replace;
 
     public void CreateRagdoll() {
-        Instantiate(ragdollPrefab, transform.position, transform.rotation, transform);
         Destroy(replace);
+        Instantiate(ragdollPrefab, transform.position, transform.rotation, transform);
     }
 }
