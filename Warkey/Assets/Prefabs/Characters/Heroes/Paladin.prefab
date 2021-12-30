@@ -172,7 +172,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: a94d382b37c0f2b40ad5298a2afcc020, type: 2}
   disabler: {fileID: 0}
   widgetAudio: {fileID: 0}
-  state: 1
 --- !u!114 &4100661796457472914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,7 +450,7 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 16384
-  inventoryUI: {fileID: 0}
+  entity: {fileID: 0}
 --- !u!136 &3791787581694352281
 CapsuleCollider:
   m_ObjectHideFlags: 0
