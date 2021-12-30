@@ -22,6 +22,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.CurrentRoom.IsOpen = true;
+
         FindObjectOfType<NetworkManager>().onPlayerHeroReceived += LobyManager_onPlayerHeroReceived;
 
         dialogueMenuComponents = dialogueMenu.GetComponent<DialogueMenu>();
@@ -97,4 +99,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             dialogueManagerComponents.playerResponseUpper = dialogueMenuComponents.playerDialogueTextUpper;
         }
     }
+
 }

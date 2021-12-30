@@ -776,7 +776,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 3
+    SynchronizeType: 1
+    Name: moveState
+  - Type: 3
+    SynchronizeType: 1
+    Name: attackState
+  - Type: 1
+    SynchronizeType: 1
+    Name: attackSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: isJumping
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackOne
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackTwo
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

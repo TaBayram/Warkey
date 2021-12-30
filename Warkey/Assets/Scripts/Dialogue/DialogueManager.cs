@@ -154,15 +154,15 @@ public class DialogueManager : MonoBehaviour
 
 
     private void StartQuest() {
+        EndDialogue();
         GameTracker.Instance.WorldSettingsHolder.SetWorldSettings();
         GameTracker.Instance.WorldSettingsHolder.SendWorldSettings();
 
-
         Invoke(nameof(ChangeScene), 2);
-        
     }
 
     private void ChangeScene() {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         LoadScene.SceneIndex = LoadScene.Scenes.World;
         SceneManager.LoadScene((int)LoadScene.Scenes.World);
     }

@@ -24,6 +24,7 @@ public class GameTracker
 
     public NetworkManager NetworkManager;
     public WorldSettingsHolder WorldSettingsHolder;
+    public bool isSceneChanging;
 
 
     public PlayerTracker AddPlayer(Player player) {

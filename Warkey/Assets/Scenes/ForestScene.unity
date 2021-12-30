@@ -996,7 +996,7 @@ PrefabInstance:
     - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: meshSettings
       value: 
-      objectReference: {fileID: 11400000, guid: c28628b547159214191dc76a4f05c70c, type: 2}
+      objectReference: {fileID: 11400000, guid: 86510e1aa34bf7d4991fa4cdebab77f9, type: 2}
     - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: pathSettings
       value: 
@@ -1008,7 +1008,7 @@ PrefabInstance:
     - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: heightMapSettings
       value: 
-      objectReference: {fileID: 11400000, guid: 1ae711547dce4a64a8086aa54484ef0a, type: 2}
+      objectReference: {fileID: 11400000, guid: acdfe03c10adc884fb9b65f520b24a0f, type: 2}
     - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: LODSettings.LODInfos.Array.size
       value: 3
