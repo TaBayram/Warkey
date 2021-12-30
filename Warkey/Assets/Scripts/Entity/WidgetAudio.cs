@@ -24,5 +24,7 @@ public class WidgetAudio : MonoBehaviour
     public enum Name
     {
         death = 0,
+        gotHit = 1,
+        attacks = 2
     }
 }

@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
             if (!isTalking) return;
 
             bool hasIndexChanged = false;
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
 
                 currentPlayerMessageIndex++; hasIndexChanged = true;
@@ -72,7 +72,7 @@ public class DialogueManager : MonoBehaviour
                     currentPlayerMessageIndex = npc.nPCDialogMessages[currentNPCMessageIndex].playerDialogIndexes.Length - 1;
                 }
             }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
                 currentPlayerMessageIndex--; hasIndexChanged = true;
                 if (currentPlayerMessageIndex < 0)

@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 7b2f874e018dc4d489eb3b86622f65bc, type: 3}
-  type: 0
+  type: 2
   amount: 20
 --- !u!54 &6842124774837447623
 Rigidbody:

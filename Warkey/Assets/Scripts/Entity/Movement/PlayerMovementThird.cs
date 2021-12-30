@@ -32,6 +32,7 @@ public class PlayerMovementThird : Movement
     protected override void Update(){
         base.Update();
         if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
+        if (!entity.CanMove()) return;
         movementMultiplier = entity.MovementScaler();
         if (movementMultiplier == 0) {
             if(state != State.idle) {
@@ -56,7 +57,7 @@ public class PlayerMovementThird : Movement
                 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             }
             bool wantToSprint = Input.GetKey(KeyCode.LeftShift);
-            bool sprint = wantToSprint && entity.UseStamina(movementData.sprintStaminaCost*Time.deltaTime);
+            bool sprint = wantToSprint && entity.UseStamina(movementData.sprintStaminaCost);
 
             Move(moveDirection.normalized, sprint);
         }

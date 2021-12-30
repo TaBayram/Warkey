@@ -7,6 +7,7 @@ public class ItemObject : MonoBehaviour, IItem
     [SerializeField] private Sprite sprite;
     [SerializeField] private IItem.type type;
     [SerializeField] private float amount;
+    [SerializeField] private float time;
 
     private bool isPicked;
 
@@ -17,6 +18,6 @@ public class ItemObject : MonoBehaviour, IItem
     {
         Destroy(gameObject);
         isPicked = true;
-        return new ItemPicked(sprite,Type,amount);
+        return new ItemPicked(sprite,Type,amount,time);
     }
 }

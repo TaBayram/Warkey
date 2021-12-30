@@ -11,15 +11,10 @@ public class ItemPicker : MonoBehaviour
     private Inventory inventory = new Inventory();
     public Inventory Inventory { get => inventory; set => inventory = value; }
 
-    [SerializeField] private InventoryUI inventoryUI;
-
-
-
-
+    [SerializeField] Entity entity;
 
     private void Start()
     {
-        inventoryUI.SetInventory(inventory);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,9 +88,18 @@ public class ItemPicker : MonoBehaviour
             {
                 inventory.AddItem(closestItem.GetComponent<ItemObject>().PickUp());
                 closestItem = null;
-                inventoryUI.RefreshInventoryItems();
-                Debug.Log(inventory.GetItemList().Count);
             }
+        }
+
+        if (entity == null) return;
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            inventory.UseItem(0,entity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            inventory.UseItem(1, entity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            inventory.UseItem(2, entity);
         }
     }
 

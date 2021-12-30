@@ -958,6 +958,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 2764082894556362637}
   smoothing: 5
+  unit: {fileID: 0}
 --- !u!1 &5967995483226628865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1458,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 7969199135858859897}
   smoothing: 5
+  unit: {fileID: 0}
 --- !u!1 &7969199135197374197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1822,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 7969199134967734399}
   smoothing: 5
+  unit: {fileID: 0}
 --- !u!1 &7969199136492590727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,7 +1870,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7969199135003955438}
   staminaBar: {fileID: 1114002124589073126}
+  experienceBar: {fileID: 6459705043422274968}
+  levelText: {fileID: 8284907503582897249}
   weaponUI: {fileID: 3811763025573248028}
+  inventoryUI: {fileID: 6994919481877877293}
 --- !u!1 &7969199136890289781
 GameObject:
   m_ObjectHideFlags: 0

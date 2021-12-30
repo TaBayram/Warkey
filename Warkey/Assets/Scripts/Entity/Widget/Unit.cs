@@ -15,19 +15,25 @@ public class Unit : MonoBehaviour,IWidget
     protected FiniteField health;
     protected FiniteField stamina;
 
-    public IWidget.State state = IWidget.State.alive;
+    private IWidget.State state = IWidget.State.alive;
 
     public event PropertyChangedEventHandler FinitePropertyChanged;
     public event System.Action<float> onDamageTaken;
+    public event System.Action<IWidget.State> onStateChange;
 
     private float staminaRegenCooldown = 1f;
 
-    PhotonView PV;
-    
+    protected PhotonView photonView;
+
+    public IWidget.State State { get => state; set { state = value; onStateChange?.Invoke(value); } }
+
+    public bool IsHero { get => isHero; }
+    public FiniteField Health { get => health; }
+    public FiniteField Stamina { get => stamina; }
 
     protected void Start() {
         if (unitData) {
-            PV = GetComponent<PhotonView>();
+            photonView = GetComponent<PhotonView>();
             health = new FiniteField(unitData.health, unitData.healthRegen, unitData.healthCooldown);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen, unitData.staminaCooldown);
 
@@ -49,9 +55,15 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public void Die() {
-        state = IWidget.State.dead;
-        disabler?.DisableComponents(0);
-        disabler?.RemoveComponents(0);
+        State = IWidget.State.dead;
+        if (isHero) {
+
+        }
+        else {
+            disabler?.DisableComponents(0);
+            disabler?.RemoveComponents(0);
+            Invoke(nameof(Destroy),3);
+        }
     }
 
     public void Destroy() {
@@ -59,14 +71,13 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public virtual void TakeDamage(float damage) {
-        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
         Debug.Log(damage);
     }
 
     [PunRPC]
     void RPC_TakeDamage(float damage)
     {
-
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
         if (health.Current <= 0)
@@ -78,6 +89,10 @@ public class Unit : MonoBehaviour,IWidget
 
     public void Heal(float heal) {
         health.Current += heal;
+    }
+
+    public void RegainStamina(float value) {
+        stamina.Current += value;
     }
 
     public bool UseStamina(float value,float minV = 0) {

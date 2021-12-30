@@ -49,7 +49,7 @@ public class PlayerStorage
     public struct PlayerStorageData
     {
         public float experience;
-        public float level;
+        public int level;
         public int gold;
         public string playedHero;
         public int heroIndex;

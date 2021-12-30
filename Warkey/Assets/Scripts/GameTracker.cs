@@ -51,6 +51,9 @@ public class GameTracker
         return null;
     }
 
+    public PlayerTracker GetLocalPlayerTracker() {
+        return GetPlayerTracker(PhotonNetwork.LocalPlayer);
+    }
 
     public List<PlayerTracker> GetPlayerTrackers() {
         return new List<PlayerTracker>(this.playerTrackers);

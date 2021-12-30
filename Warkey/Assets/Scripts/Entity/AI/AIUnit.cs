@@ -11,15 +11,13 @@ public class AIUnit : Unit
 
     public new event System.Action<float> onDamageTaken;
 
-    PhotonView PV;
-
     private new void Start() {
         base.Start();
 
         ai = GetComponent<AIEntity>();
         animator = GetComponentInChildren<Animator>();
 
-        PV = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
     }
 
     public new void Destroy() {
@@ -29,7 +27,7 @@ public class AIUnit : Unit
     public new void Die() { 
         SetLayerRecursively(gameObject,LayerMask.NameToLayer("Dead"));
         widgetAudio?.PlayAudio(WidgetAudio.Name.death);
-        state = IWidget.State.dead;
+        State = IWidget.State.dead;
         ai.IsDead = true;
         Invoke("Destroy", 5);
         disabler?.DisableComponents(0);
@@ -39,14 +37,14 @@ public class AIUnit : Unit
 
     public override void TakeDamage(float damage) {
 
-        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
         Debug.Log(damage);
     }
 
     [PunRPC]
     void RPC_TakeDamage(float damage)
     {
-        if (state == IWidget.State.dead) return;
+        if (State == IWidget.State.dead) return;
         animator.SetTrigger("hit");
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
