@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4498120873331010439}
   - component: {fileID: 6842124774837447623}
   - component: {fileID: 559789825088246586}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: Bread
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,6 +104,10 @@ PrefabInstance:
     - target: {fileID: 7107005242449270547, guid: 427ba6eb60723ab4688b5e2685e7093d, type: 3}
       propertyPath: m_Name
       value: bread
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107005242449270547, guid: 427ba6eb60723ab4688b5e2685e7093d, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7632184310903557545, guid: 427ba6eb60723ab4688b5e2685e7093d, type: 3}
       propertyPath: m_RootOrder

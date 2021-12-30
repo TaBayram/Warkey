@@ -12,18 +12,20 @@ public class WorldPlayerManager : MonoBehaviour
         
     }
 
-    public void BindPlayerUnit(Unit unit) {
-        hUDPlayerContainer.BindUnit(unit);
+    public void BindPlayerToHUD(GameObject obj) {
+        hUDPlayerContainer.BindUnit(obj.GetComponent<Unit>());
+        hUDPlayerContainer.SubscribeInventory(obj.GetComponentInChildren<ItemPicker>().Inventory);
+
     }
 
     public GameObject[] CreatePlayerHeroes() {
-        GameObject[] heroes = new GameObject[playerCount];
+        GameObject[] heroes = new GameObject[GameTracker.Instance.GetPlayerTrackers().Count];
 
         foreach(PlayerTracker player in GameTracker.Instance.GetPlayerTrackers()) {
             if (player.IsLocal) {
                 player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, transform.position, Quaternion.identity);
                 player.Hero.transform.parent = this.transform;
-                BindPlayerUnit(player.Hero.GetComponent<Unit>());
+                BindPlayerToHUD(player.Hero);
                 heroes[0] = player.Hero;
             }
         }

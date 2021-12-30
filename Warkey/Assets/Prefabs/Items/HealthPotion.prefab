@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4498120873331010439}
   - component: {fileID: 6842124774837447623}
   - component: {fileID: 559789825088246586}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: HealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,11 +103,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5074157057328066762, guid: 04db8e30c493647418e15a5d7c103e9b, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6904180638610246434, guid: 04db8e30c493647418e15a5d7c103e9b, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7031751819206235698, guid: 04db8e30c493647418e15a5d7c103e9b, type: 3}
       propertyPath: m_Name
@@ -115,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7031751819206235698, guid: 04db8e30c493647418e15a5d7c103e9b, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7700625031227690120, guid: 04db8e30c493647418e15a5d7c103e9b, type: 3}
       propertyPath: m_RootOrder

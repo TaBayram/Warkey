@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class LobyManager : MonoBehaviourPunCallbacks
+public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject[] npcPrefabs;
     public GameObject dialogueMenu;
@@ -85,6 +85,8 @@ public class LobyManager : MonoBehaviourPunCallbacks
             dialogueManagerComponents.npcDialogueBox = dialogueMenuComponents.npcDialogueText;
             dialogueManagerComponents.npcName = dialogueMenuComponents.npcNameText;
             dialogueManagerComponents.playerResponse = dialogueMenuComponents.playerDialogueText;
+            dialogueManagerComponents.playerResponseLower = dialogueMenuComponents.playerDialogueTextLower;
+            dialogueManagerComponents.playerResponseUpper = dialogueMenuComponents.playerDialogueTextUpper;
         }
     }
 }

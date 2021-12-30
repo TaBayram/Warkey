@@ -8,17 +8,9 @@ public class WorldSettingsHolder : MonoBehaviour
     [SerializeField] private PhotonView photonView;
     public WorldSettings worldSettings;
 
-    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(worldSettings);
-        }
-        else {
-            worldSettings = (WorldSettings)stream.ReceiveNext();
-        }
-    }*/
     private void Start() {
         GameTracker.Instance.WorldSettingsHolder = this;
-        worldSettings.worldSize = new XY(2, 2);
+        worldSettings.worldSize = new XY(1, 1);
     }
 
     public void SetWorldSettings() {
@@ -49,4 +41,10 @@ public struct WorldSettings
     public int seed;
     public XY worldSize;
     public string biome;
+
+    public WorldSettings(int seed, XY worldSize, string biome) {
+        this.seed = seed;
+        this.worldSize = worldSize;
+        this.biome = biome;
+    }
 }

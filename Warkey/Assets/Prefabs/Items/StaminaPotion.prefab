@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4498120873331010439}
   - component: {fileID: 6842124774837447623}
   - component: {fileID: 559789825088246586}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: StaminaPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +101,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3671305896783790317}
     m_Modifications:
+    - target: {fileID: 4816327947849588524, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587813529908585668, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 8636082054253828230, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -148,6 +156,10 @@ PrefabInstance:
     - target: {fileID: 8976332062652662332, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
       propertyPath: m_Name
       value: StaminaPotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976332062652662332, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a26fcb66720e61c46b215ea97f261108, type: 3}
