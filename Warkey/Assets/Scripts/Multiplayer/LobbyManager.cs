@@ -69,7 +69,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
                 dialogueManagerComponents.player = player.Hero;
-               
             }
         }
     }

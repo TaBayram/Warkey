@@ -25,7 +25,7 @@ public class PlayerStorage
             loaded.level = 1;
             loaded.playedHero = HeroesData.Instance.Heroes[0].uniqueName;
             loaded.gold = 0;
-            loaded.heroIndex = 0;
+            loaded.heroIndex = UnityEngine.Random.Range(0,1);
         }
         else {
             loaded = (PlayerStorageData)obj;
