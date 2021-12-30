@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 8558859261118996212}
   - component: {fileID: 8558859261104458324}
   - component: {fileID: 8558859261123961268}
+  - component: {fileID: 7255857343527912145}
   m_Layer: 11
   m_Name: Broadleaf_Mobile
   m_TagString: Untagged
@@ -274,6 +275,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!208 &7255857343527912145
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558859261118563028}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.865, y: 0.92, z: 0.79}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.45, z: -0.12}
+  m_TimeToStationary: 0.5
 --- !u!1 &8558859261118563030
 GameObject:
   m_ObjectHideFlags: 0

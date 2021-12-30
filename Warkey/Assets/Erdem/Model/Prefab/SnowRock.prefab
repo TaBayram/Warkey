@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8678611235472336363}
   - component: {fileID: 3029649259687416786}
   - component: {fileID: 7393895344190717628}
+  - component: {fileID: 8381345744826304647}
   m_Layer: 11
   m_Name: SnowRock
   m_TagString: Untagged
@@ -120,6 +121,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6927490987169519481, guid: e25d80e21f4dd2546adc223e02543f3c, type: 3}
+--- !u!208 &8381345744826304647
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7165335445619164222}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.636, y: 1.325, z: 1.636}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.024, y: 1.141, z: -0.18200001}
+  m_TimeToStationary: 0.5
 --- !u!1 &7998667627526572725
 GameObject:
   m_ObjectHideFlags: 0
