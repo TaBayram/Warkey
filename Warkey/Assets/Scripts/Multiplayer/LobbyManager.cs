@@ -85,7 +85,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Vector3 position = availableLocations[randomIndex].position;
             availableLocations.RemoveAt(randomIndex);
             randomIndex = Random.Range(0, npcPrefabs.Length);
-            spawnedNPCs.Add(PhotonNetwork.InstantiateRoomObject(npcPrefabs[randomIndex].name, position, Quaternion.identity));
+            spawnedNPCs.Add(PhotonNetwork.Instantiate(npcPrefabs[randomIndex].name, position, Quaternion.identity));
         }
         
         foreach (GameObject gobject in spawnedNPCs) {

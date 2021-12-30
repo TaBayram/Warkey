@@ -123,7 +123,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
         }
 
-
+        count++;
         if (!isI) {
             for(int i = 0; i < count % 5; i++) {
                 SpawnI(true);
