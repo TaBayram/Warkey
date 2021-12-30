@@ -26,8 +26,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     private GameObject startPosition;
 
     PhotonView PV;
+
+    private List<GameObject> enemies;
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
+        enemies =new List<GameObject>();
     }
 
     private void FiniteWorldGenerator_onWorldReady() {
@@ -61,6 +64,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             return;
             CreateOnPath(pathData, true);
             CreateOnEnd();
+            
+            
+            
         }
     }
 
@@ -80,8 +86,10 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                     }
                 }
                 if (!canSpawn) continue;
+                if (enemies.Count < 3) return;
                 GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, GetPositionFromPathData(item) + Vector3.up*2f, Quaternion.identity);
                 enemy.transform.parent = this.transform;
+                enemies.Add(enemy);
             }
         }
     }
@@ -98,8 +106,10 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                 }
             }
             if (!canSpawn) continue;
+            if (enemies.Count > 3) return;
             GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, FindPosition(GetPositionFromPathData(pathData.end), 5f, 10) + Vector3.up * 2f, Quaternion.identity);
             enemy.transform.parent = this.transform;
+            enemies.Add(enemy);
 
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class AIUnit : Unit
 {
@@ -10,11 +11,15 @@ public class AIUnit : Unit
 
     public new event System.Action<float> onDamageTaken;
 
+    PhotonView PV;
+
     private new void Start() {
         base.Start();
 
         ai = GetComponent<AIEntity>();
         animator = GetComponentInChildren<Animator>();
+
+        PV = GetComponent<PhotonView>();
     }
 
     public new void Destroy() {
@@ -33,11 +38,20 @@ public class AIUnit : Unit
     }
 
     public override void TakeDamage(float damage) {
+
+        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        Debug.Log(damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
         if (state == IWidget.State.dead) return;
         animator.SetTrigger("hit");
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
-        if (health.Current <= 0) {
+        if (health.Current <= 0)
+        {
             Die();
         }
     }

@@ -60,13 +60,13 @@ public class Unit : MonoBehaviour,IWidget
 
     public virtual void TakeDamage(float damage) {
         PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        Debug.Log(damage);
     }
 
     [PunRPC]
     void RPC_TakeDamage(float damage)
     {
-        if (!PV.IsMine) return;
-  
+
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
         if (health.Current <= 0)
