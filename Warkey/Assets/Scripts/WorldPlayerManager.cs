@@ -23,7 +23,7 @@ public class WorldPlayerManager : MonoBehaviour
 
         foreach(PlayerTracker player in GameTracker.Instance.GetPlayerTrackers()) {
             if (player.IsLocal) {
-                player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, transform.position, Quaternion.identity);
+                player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, transform.position, Quaternion.identity);
                 player.Hero.transform.parent = this.transform;
                 BindPlayerToHUD(player.Hero);
                 heroes[0] = player.Hero;

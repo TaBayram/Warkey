@@ -17,6 +17,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [HideInInspector] public List<GameObject> spawnedPlayers = new List<GameObject>();    
     [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
 
+    private int index;
+
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -33,7 +35,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         foreach (Player player in PhotonNetwork.PlayerList) {
             GameTracker.Instance.AddPlayer(player);
         }
+        index = GameTracker.Instance.GetPlayerTrackers().Count -1;
+    }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Y)) {
+            PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
+            player.ChangeHeroByIndex(player.PrefabIndex + 1);
+            PhotonNetwork.Destroy(player.Hero);
+            Invoke(nameof(SpawnPlayerHero), 1);
+        }
     }
 
     private void LobyManager_onPlayerHeroReceived(PlayerTracker obj) {
@@ -48,7 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
         if(player != null) {
-            player.Hero = PhotonNetwork.Instantiate(player.PrefabHero.name, playerSpawnLocations[GameTracker.Instance.GetPlayerTrackers().Count-1].position, Quaternion.identity);
+            player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, playerSpawnLocations[index].position, Quaternion.identity);
             FindObjectOfType<NetworkManager>().SendHero(player.Hero.GetComponent<PhotonView>().ViewID);
             spawnedPlayers.Add(player.Hero);
         }
@@ -61,8 +72,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                
             }
         }
-
-        //SEND DATA TO ALL PLAYERS TO BIND HERO
     }
  
 

@@ -23,10 +23,10 @@ public class HUDBillboard : MonoBehaviour
             targetCamera = Camera.main.transform;
         }
         if (targetCamera == null) return;
-        else transform.LookAt(transform.position + targetCamera.forward);
+        else targetObject.transform.LookAt(targetObject.transform.position + targetCamera.forward);
 
         if (handleVisibility) {
-            if ((targetCamera.position - transform.position).sqrMagnitude > viewThreshold * viewThreshold) {
+            if ((targetCamera.position - targetObject.transform.position).sqrMagnitude > viewThreshold * viewThreshold) {
                 targetObject.SetActive(false);
             }
             else {

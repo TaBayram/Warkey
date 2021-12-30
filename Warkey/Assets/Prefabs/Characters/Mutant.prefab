@@ -258,10 +258,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 1.9
+  m_Radius: 0.8
+  m_Height: 4.5
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &2272787223927059381
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -672,6 +672,10 @@ PrefabInstance:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6902500629699893059, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 3093831840825432181}
     - target: {fileID: 7894780377552861743, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
       propertyPath: m_SizeDelta.x
       value: 104

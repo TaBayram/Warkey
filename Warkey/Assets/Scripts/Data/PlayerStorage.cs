@@ -25,6 +25,7 @@ public class PlayerStorage
             loaded.level = 1;
             loaded.playedHero = HeroesData.Instance.Heroes[0].uniqueName;
             loaded.gold = 0;
+            loaded.heroIndex = 0;
         }
         else {
             loaded = (PlayerStorageData)obj;
@@ -51,5 +52,6 @@ public class PlayerStorage
         public float level;
         public int gold;
         public string playedHero;
+        public int heroIndex;
     }
 }

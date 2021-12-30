@@ -11,6 +11,7 @@ public class GameHi : MonoBehaviour
     void Start()
     {
         text.text = PhotonNetwork.CurrentRoom.Name;
+        gameObject.SetActive(true);
     }
 
     

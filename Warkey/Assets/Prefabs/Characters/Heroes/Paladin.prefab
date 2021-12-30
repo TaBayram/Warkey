@@ -190,7 +190,7 @@ MonoBehaviour:
     m_Bits: 256
   rightHand: {fileID: 8030685382622270595}
   leftHand: {fileID: 7262580285353013288}
-  startingWeapon: {fileID: 2599546502704719843, guid: 9787e1c7f3861394085960e792aa3110, type: 3}
+  startingWeapon: {fileID: 2599546502704719843, guid: a249ed3ef5f8d454bb02a6a2ef1fdda0, type: 3}
   state: 0
 --- !u!114 &2464713899535096047
 MonoBehaviour:
