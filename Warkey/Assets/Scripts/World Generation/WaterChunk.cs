@@ -14,7 +14,12 @@ public class WaterChunk : SubChunk
         meshFilter = subObject.AddComponent<MeshFilter>();
         meshRenderer.material = material;
         subObject.layer = LayerMask.NameToLayer("Water");
-        
+
+
+        var planeCollider = subObject.AddComponent<BoxCollider>();
+        planeCollider.size = new Vector3(parent.MeshSettings.VerticesPerLineCount, 1, parent.MeshSettings.VerticesPerLineCount);
+        planeCollider.isTrigger = true;
+
 
         SetObject();
         subObject.transform.position = subObject.transform.position + Vector3.up * meshSettings.height;

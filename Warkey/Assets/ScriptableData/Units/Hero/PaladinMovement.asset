@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6eeb2225544f3140ae53177e141a5d0, type: 3}
-  m_Name: UnitHero
+  m_Script: {fileID: 11500000, guid: af1f95f7ef9e18346a2c29b3e87482af, type: 3}
+  m_Name: PaladinMovement
   m_EditorClassIdentifier: 
-  unitName: Paladin
-  health: 100
-  healthRegen: 0.5
-  healthCooldown: 0
-  stamina: 100
-  staminaRegen: 10
-  staminaCooldown: 2
+  canMove: 0
+  weight: 1
+  walkSpeed: 5
+  sprintSpeed: 12
+  sprintStaminaCost: 0.25
+  jumpHeight: 5
+  jumpForwardScale: 1

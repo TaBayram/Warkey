@@ -12,6 +12,7 @@ public class RangedWeapon : Weapon
 	[SerializeField] private float attackDamage = 20;
 	[SerializeField] private float launchSpeed = 35;
 	[SerializeField] private float launchDelay = 0.2f;
+	[SerializeField] private float attackCooldown = 0.5f;
 
 	[SerializeField] private bool IsUnlimited;
 	[SerializeField] private int mainPool = 20;
@@ -47,9 +48,10 @@ public class RangedWeapon : Weapon
 
 	private void StartAttacking(Vector3 entityVelocity) {
 		if (Time.time > cooldown) {
-			cooldown = Time.time + attackSpeed;
+			cooldown = Time.time + attackCooldown*attackSpeed;
 			StartCoroutine(Shoot(entityVelocity));
 			CurrentState = State.attacking;
+			OnRequest("attackSpeed", 1 / attackSpeed);
 		}
 	}
 

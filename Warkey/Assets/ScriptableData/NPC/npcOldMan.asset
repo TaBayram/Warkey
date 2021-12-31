@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
   m_Name: npcOldMan
   m_EditorClassIdentifier: 
+  npcName: Ordome
   nPCDialogMessages:
   - dialogMessage:
       message: My Lord

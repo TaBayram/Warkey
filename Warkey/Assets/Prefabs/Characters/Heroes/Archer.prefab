@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 8668747900945568749}
-  movementData: {fileID: 11400000, guid: 8010255807d97274abf38925316f4d82, type: 2}
+  movementData: {fileID: 11400000, guid: f0e891a285b63ef4f84f1efe4664ff81, type: 2}
   groundDistance: 0.8
   groundCheck: {fileID: 5920553207815190894}
   groundMask:
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHero: 1
-  unitData: {fileID: 11400000, guid: a94d382b37c0f2b40ad5298a2afcc020, type: 2}
+  unitData: {fileID: 11400000, guid: e9dfb38dc24e7fd4aa2607694ac2ca4a, type: 2}
   disabler: {fileID: 0}
   widgetAudio: {fileID: 0}
 --- !u!114 &4100661796457472914

@@ -44,6 +44,8 @@ public class SpawnableObjectData
 
 
     public void CreateObjects(bool visible = false) {
+        if (settings.isNetworkObject && !PhotonNetwork.IsMasterClient) return;
+
         enviromentHolder = new GameObject("Spawnable Holder");
         enviromentHolder.transform.parent = parent;
         enviromentHolder.transform.position = parent.position;
@@ -75,6 +77,17 @@ public class SpawnableObjectData
 
     public void Visible(bool visible) {
         enviromentHolder.SetActive(visible);
+    }
+
+    public void ChangeVisiblity(int lodIndex) {
+        if (settings.handleVisibility) {
+            if(settings.visibilityLODIndex < lodIndex) {
+                enviromentHolder.SetActive(false);
+            }
+            else {
+                enviromentHolder.SetActive(true);
+            }
+        }
     }
 
     public void DestroyObjects() {

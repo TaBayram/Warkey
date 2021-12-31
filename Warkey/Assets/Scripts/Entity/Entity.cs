@@ -48,9 +48,11 @@ public class Entity : MonoBehaviour
         if (movement == null) return;
         if(obj == Weapon.State.defending) {
             movement.isRotating = true;
+            unit.IsBlocking = true;
         }
         else {
             movement.isRotating = false;
+            unit.IsBlocking = false;
         }
     }
 

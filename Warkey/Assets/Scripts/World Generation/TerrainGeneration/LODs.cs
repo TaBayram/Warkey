@@ -47,7 +47,7 @@ public class LODMesh
         this.lodIndex = lodIndex;
     }
 
-    public void OnMeshDataRecieved(object meshData) {
+    public void OnMeshDataReceived(object meshData) {
         hasMesh = true;
         this.mesh = ((MeshData)meshData).CreateMesh();
         updateCallback(lodIndex);
@@ -64,13 +64,13 @@ public class LODMesh
         hasRequestedMesh = true;
         switch (meshType) {
             case MeshType.terrain:
-                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod), OnMeshDataRecieved);
+                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod), OnMeshDataReceived);
                 break;
             case MeshType.water:
-                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values01, meshSettings, lod, meshSettings.minValue, meshSettings.maxValue, true, meshSettings.height), OnMeshDataRecieved);
+                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values01, meshSettings, lod, meshSettings.minValue, meshSettings.maxValue, true, meshSettings.height), OnMeshDataReceived);
                 break;
             case MeshType.path:
-                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod, 0, float.MaxValue, false), OnMeshDataRecieved);
+                ThreadDataRequest.RequestData(() => MeshGenerator.GenerateTerrainMesh(heightMap.values, meshSettings, lod, 0, float.MaxValue, false), OnMeshDataReceived);
                 break;
         }
     }

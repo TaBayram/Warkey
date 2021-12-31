@@ -11,7 +11,8 @@ public class PreparePool : MonoBehaviour
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
         if (pool != null && Prefabs != null) {
             foreach (GameObject obj in Prefabs) {
-                pool.ResourceCache.Add(obj.name, obj);
+                if(!pool.ResourceCache.ContainsKey(obj.name))
+                    pool.ResourceCache.Add(obj.name, obj);
             }
         }
     }

@@ -25,12 +25,14 @@ public class PlayerTracker
     public float Experience { get => experience; }
     public int Level { get => level; }
     public int Gold { get => gold; }
-    public GameObject Hero { get => hero; set => hero = value; }
+    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); } }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
     public Player Player { get => player; set => player = value; }
     public int PrefabIndex { get => prefabIndex; }
     public GameObject HeroPrefab { get => heroPrefab; }
+
+    public event System.Action<GameObject> onHeroChanged;
 
     public PlayerTracker(Player player) {
         this.player = player;
@@ -62,11 +64,15 @@ public class PlayerTracker
             int levelAmount = (int)(xp / levelExperienceCost);
             AddLevel(levelAmount);
         }
+
+        playerStorage.Save(playerStorageData);
     }
 
     public void AddLevel(int level) {
         level += level;
         onLevelUp?.Invoke(this);
+
+        playerStorage.Save(playerStorageData);
     }
 
     public void LoadPlayer() {
@@ -75,6 +81,17 @@ public class PlayerTracker
         level = playerStorageData.level;
         gold = playerStorageData.gold;
         prefabIndex = playerStorageData.heroIndex;
+
+        playerStorageData.level = 1;
+        playerStorageData.experience = 0;
+
+        playerStorage.Save(playerStorageData);
+        playerStorageData = playerStorage.Load();
+        experience = playerStorageData.experience;
+        level = playerStorageData.level;
+        gold = playerStorageData.gold;
+        prefabIndex = playerStorageData.heroIndex;
+
 
         heroPrefab = HeroesData.Instance.GetHeroByIndex(playerStorageData.heroIndex);
     }
