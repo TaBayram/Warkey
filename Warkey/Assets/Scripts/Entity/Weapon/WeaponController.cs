@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
 	private Weapon equippedWeapon;
 	private bool isDefending;
 
-	public float AttackRange { get => equippedWeapon.AttackRange; }
+	public float AttackRange { get { if (equippedWeapon != null) return equippedWeapon.AttackRange; else return 2; } }
 
 	void Start() {
 		entity = GetComponent<Entity>();

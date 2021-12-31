@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour,IWidget
     [SerializeField] protected WidgetAudio widgetAudio;
     protected FiniteField health;
     protected FiniteField stamina;
+    protected float armor;
 
     private IWidget.State state = IWidget.State.alive;
 
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour,IWidget
     public bool IsHero { get => isHero; }
     public FiniteField Health { get => health; }
     public FiniteField Stamina { get => stamina; }
+    public float Armor { get => armor; set => armor = value; }
 
     protected void Start() {
         if (unitData) {
@@ -39,6 +41,8 @@ public class Unit : MonoBehaviour,IWidget
 
             health.PropertyChanged += Health_PropertyChanged;
             stamina.PropertyChanged += Stamina_PropertyChanged;
+
+            Armor = unitData.armor;
            
             InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
         }
@@ -71,6 +75,8 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public virtual void TakeDamage(float damage) {
+        damage = damage * (1 - Armor / 100);
+
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
         Debug.Log(damage);
     }

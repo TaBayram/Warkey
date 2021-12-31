@@ -132,6 +132,11 @@ public abstract class Movement : MonoBehaviour
                 transform.position = raycastHit.point + Vector3.up*10f;
                 characterController.enabled = true;
             }
+            else{
+                characterController.enabled = false;
+                transform.position = new Vector3(transform.position.x, 100, transform.position.z);
+                characterController.enabled = true;
+            }
         }
 
         MoveCharacter(velocity * Time.deltaTime);

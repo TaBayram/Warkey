@@ -93,9 +93,9 @@ MonoBehaviour:
   projectile: {fileID: 3489410033416826239, guid: 35674c53922113a40bc361f037c5972c, type: 3}
   attackAnimation: {fileID: -203655887218126122, guid: b5dc57c6b205b4641ba481435193a3ec, type: 3}
   aimAnimation: {fileID: 1038152519482517614, guid: f85e0d7496655f949881f4f57a3f78fa, type: 3}
-  attackSpeed: 1
-  attackDamage: 20
-  launchSpeed: 15
+  attackSpeed: 0.5
+  attackDamage: 50
+  launchSpeed: 25
   launchDelay: 0.2
   IsUnlimited: 0
   mainPool: 20

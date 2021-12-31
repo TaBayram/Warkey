@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject[] npcPrefabs;
     public GameObject dialogueMenu;
     DialogueMenu dialogueMenuComponents;
-    DialogueManager dialogueManagerComponents;
+    DialogueManager manager;
 
     [SerializeField] private List<Transform> playerSpawnLocations;
     [SerializeField] private List<Transform> npcSpawnLocations;
@@ -17,6 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [HideInInspector] public List<GameObject> spawnedPlayers = new List<GameObject>();    
     [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
 
+    private bool isSceneChanging = false;
     private int index;
 
     private void Start()
@@ -41,7 +43,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Y)) {
+        if (Input.GetKeyDown(KeyCode.Y) && !isSceneChanging) {
             PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
             player.ChangeHeroByIndex(player.PrefabIndex + 1);
             PhotonNetwork.Destroy(player.Hero);
@@ -69,8 +71,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (player.Player.IsMasterClient){
             foreach (GameObject gobject in spawnedNPCs)
             {
-                dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
-                dialogueManagerComponents.player = player.Hero;
+                manager = gobject.GetComponent<DialogueManager>();
+                manager.player = player.Hero;
             }
         }
     }
@@ -89,15 +91,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         
         foreach (GameObject gobject in spawnedNPCs) {
-            dialogueManagerComponents = gobject.GetComponent<DialogueManager>();
+            manager = gobject.GetComponent<DialogueManager>();
             
-            dialogueManagerComponents.dialogueUI = dialogueMenu;
-            dialogueManagerComponents.npcDialogueBox = dialogueMenuComponents.npcDialogueText;
-            dialogueManagerComponents.npcName = dialogueMenuComponents.npcNameText;
-            dialogueManagerComponents.playerResponse = dialogueMenuComponents.playerDialogueText;
-            dialogueManagerComponents.playerResponseLower = dialogueMenuComponents.playerDialogueTextLower;
-            dialogueManagerComponents.playerResponseUpper = dialogueMenuComponents.playerDialogueTextUpper;
+            manager.dialogueUI = dialogueMenu;
+            manager.npcDialogueBox = dialogueMenuComponents.npcDialogueText;
+            manager.npcName = dialogueMenuComponents.npcNameText;
+            manager.playerResponse = dialogueMenuComponents.playerDialogueText;
+            manager.playerResponseLower = dialogueMenuComponents.playerDialogueTextLower;
+            manager.playerResponseUpper = dialogueMenuComponents.playerDialogueTextUpper;
+            manager.onQuestAccepted += DialogueManagerComponents_onQuestAccepted;
         }
     }
 
+    private void DialogueManagerComponents_onQuestAccepted() {
+        GameTracker.Instance.WorldSettingsHolder.SetWorldSettings();
+        GameTracker.Instance.WorldSettingsHolder.SendWorldSettings();
+        isSceneChanging = true;
+        foreach (GameObject gobject in spawnedNPCs) {
+            manager = gobject.GetComponent<DialogueManager>();
+            manager.enabled = false;
+        }
+
+        Invoke(nameof(ChangeScene), 2);
+    }
+
+    private void ChangeScene() {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+
+        LoadScene.SceneIndex = LoadScene.Scenes.World;
+        if (Random.Range(0, 2) == 0)
+            SceneManager.LoadScene((int)LoadScene.Scenes.World);
+        else
+            SceneManager.LoadScene((int)LoadScene.Scenes.Winter);
+    }
 }

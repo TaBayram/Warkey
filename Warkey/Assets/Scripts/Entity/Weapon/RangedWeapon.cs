@@ -42,9 +42,7 @@ public class RangedWeapon : Weapon
 
 	public override void Attack(Vector3 entityVelocity) {
 		if (CurrentState == State.defending)
-			StartAttacking(entityVelocity);
-		else
-			CurrentState = State.defending;
+			StartAttacking(entityVelocity);			
 	}
 
 	private void StartAttacking(Vector3 entityVelocity) {

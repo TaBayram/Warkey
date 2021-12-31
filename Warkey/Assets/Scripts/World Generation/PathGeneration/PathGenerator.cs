@@ -232,14 +232,14 @@ public static class PathGenerator
         }
 
         bool IsOnCorner(Vector2 vector) {
-            const int dist = 50;
+            const int dist = 20;
             return (pathData.start-vector).magnitude > 25 && (vector.x >= length.x - dist || vector.x <= dist || vector.y >= length.y - dist || vector.y <= dist);
         }
 
         //direction (1,1) bot right, (-1,1) bot left, (1,-1) top right, (-1,-1) top left
         //Bot Left (0,240)
         Vector2 GetCorner(Vector2 vector) {
-            const int distance = 100;
+            const int distance = 20;
             Vector2 corner = Vector2.negativeInfinity;
             if ((vector.x <= distance || vector.x > length.x - distance))
                 corner.x = (Mathf.Abs(length.x - vector.x) > vector.x) ? 1 : 0;

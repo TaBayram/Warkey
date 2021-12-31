@@ -16,6 +16,7 @@ public class Chunk
     MeshSettings meshSettings;
     GroundSettings groundSettings;
     PathSettings pathSettings;
+    SpawnableSettings spawnableSettings;
 
     int currentLOD;
     int previousLOD = -1;
@@ -47,7 +48,10 @@ public class Chunk
     bool isHeightMapReceived = false;
     bool hasSetEnviromentObjects = false;
     bool hasRequestedEnviroment = false;
+    bool hasRequestedSpawnables = false;
+    bool hasSetSpawnables = false;
     List<EnviromentObjectData> enviromentObjectDatas = new List<EnviromentObjectData>();
+    List<SpawnableObjectData> spawnableObjectDatas = new List<SpawnableObjectData>();
 
     float maxViewDistance;
 
@@ -57,14 +61,16 @@ public class Chunk
     public PathSettings PathSettings { get => pathSettings; }
     protected Vector2 ViewerPosition { get { return new Vector2(viewer.position.x, viewer.position.z); } }
     public AdjacentChunks AdjacentChunks { get => adjacentChunks; }
+    public SpawnableSettings SpawnableSettings { get => spawnableSettings; }
 
-    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap, PhysicMaterial physicMaterial) {
+    public Chunk(Vector2 coord,Vector2 chunkMatrix, HeightMapSettings heightMapSettings, MeshSettings meshSettings, GroundSettings groundSettings,SpawnableSettings spawnableSettings ,PathSettings pathSettings ,LODSettings lODSettings, Transform parent, Transform viewer, Material material, Material waterMaterial, Material pathMaterial,float[,] pathmap, PhysicMaterial physicMaterial) {
         this.coordinate = coord;
         this.chunkMatrix = chunkMatrix;
         this.LODSettings = lODSettings;
         this.heightMapSettings = heightMapSettings;
         this.meshSettings = meshSettings;
         this.groundSettings = groundSettings;
+        this.spawnableSettings = spawnableSettings;
         this.pathSettings = pathSettings;
         this.viewer = viewer;
 
@@ -111,6 +117,8 @@ public class Chunk
         onHeightMapSet(this.heightMap);
         if (loadAll) {
             onLoadSubChunks(0, true);
+            /*RequestEnviromentObjectDatas();
+            RequestSpawnableObjectDatas();*/
         }
         UpdateChunk();
     }
@@ -133,8 +141,25 @@ public class Chunk
         UpdateChunk();
     }
 
+    private void RequestSpawnableObjectDatas() {
+        if (hasRequestedSpawnables) return;
+        spawnableSettings.poissonDiscSettings.sampleRegionSize = new Vector2(this.heightMap.values.GetLength(0), this.heightMap.values.GetLength(1));
+        Transform transform = chunkObject.transform;
+        ThreadDataRequest.RequestData(() => SpawnableObjectGenerator.GenerateSpawnableDatas(heightMap, spawnableSettings, transform, coordinate), OnSpawnableObjectDataListReceived);
+        hasRequestedSpawnables = true;
+    }
+
+    private void OnSpawnableObjectDataListReceived(object enviromentObjects) {
+        this.hasRequestedSpawnables = true;
+        this.spawnableObjectDatas = (List<SpawnableObjectData>)enviromentObjects;
+        foreach (SpawnableObjectData objectData in spawnableObjectDatas)
+            objectData.CreateObjects(true);
+
+        UpdateChunk();
+    }
+
     public void UpdateChunk() {
-        if (!isHeightMapReceived) return;
+        if (!isHeightMapReceived || viewer == null) return;
         float viewerDistanceFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(ViewerPosition));
         bool wasVisible = IsVisible();
         bool visible = viewerDistanceFromNearestEdge <= maxViewDistance;
@@ -161,9 +186,23 @@ public class Chunk
                             objectData.Visible(true);
                     }
                 }
+
+                if (!hasRequestedSpawnables) {
+                    RequestSpawnableObjectDatas();
+                }
+                else {
+                    foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
+                        if (objectData.isObjectsLoaded)
+                            objectData.Visible(true);
+                    }
+                }
             }
             else {
                 foreach (EnviromentObjectData objectData in enviromentObjectDatas) {
+                    if (objectData.isObjectsLoaded)
+                        objectData.Visible(false);
+                }
+                foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
                     if (objectData.isObjectsLoaded)
                         objectData.Visible(false);
                 }

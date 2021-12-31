@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ItemObject : MonoBehaviour, IItem
 {
@@ -16,7 +17,7 @@ public class ItemObject : MonoBehaviour, IItem
 
     public ItemPicked PickUp()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
         isPicked = true;
         return new ItemPicked(sprite,Type,amount,time);
     }

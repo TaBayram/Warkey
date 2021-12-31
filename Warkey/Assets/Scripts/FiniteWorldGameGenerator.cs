@@ -7,11 +7,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 {
     public const float spawnProtectionDistance = 100*10;
 
-    public WorldPlayerManager gameEntities;
+    public WorldPlayerManager playerManager;
     public FiniteWorldGenerator finiteWorldGenerator;
     public WorldEntitySettings worldEntitySettings;
     private PathData pathData;
-    
+    [SerializeField] private GameObject defaultCamera;
 
     [HideInInspector] public HeightMap heightMap;
     [HideInInspector] public GameObject[] players;
@@ -31,30 +31,38 @@ public class FiniteWorldGameGenerator : MonoBehaviour
     private List<GameObject> enemies;
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
-        enemies =new List<GameObject>();
+        enemies = new List<GameObject>();
     }
 
-    private void FiniteWorldGenerator_onWorldReady() {
+    public Transform GenerateStartPosition() {
         pathData = finiteWorldGenerator.pathData;
         heightMap = finiteWorldGenerator.heightMap;
         chunkMatrix = finiteWorldGenerator.chunkSize;
         chunkSize = new XY(finiteWorldGenerator.meshSettings.VerticesPerLineCount);
 
         startPosition = new GameObject("StartPosition");
-        startPosition.transform.position = new Vector3(pathData.start.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0), heightMap.values[(int)pathData.start.x, (int)pathData.start.y] + 5, -pathData.start.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
+        startPosition.transform.position = GetPositionFromPathData(pathData.start) + Vector3.up*20;
+        startPosition.transform.parent = this.transform.parent;
+        defaultCamera.transform.position = new Vector3(startPosition.transform.position.x, defaultCamera.transform.position.y, startPosition.transform.position.z);
+        return startPosition.transform;
+    }
 
-        players =  gameEntities.CreatePlayerHeroes();
+    private void FiniteWorldGenerator_onWorldReady() {
+        
+
+        playerManager.revivingPlace = startPosition.transform;
+        players =  playerManager.CreatePlayerHeroes();
 
         foreach (GameObject player in players) {
             player.GetComponent<CharacterController>().enabled = false;
-            player.transform.position = (startPosition.transform.position) + Vector3.up*5;
+            player.transform.position = (startPosition.transform.position);
             player.GetComponent<CharacterController>().enabled = true;
 
             finiteWorldGenerator.BindViewer(player.transform);
         }
 
         var end = Instantiate(worldEntitySettings.MissionEndAreaPrefab, GetPositionFromPathData(pathData.end), Quaternion.identity);
-        
+        end.transform.parent = this.transform.parent;
 
         if (PhotonNetwork.IsMasterClient) {
             InvokeRepeating(nameof(Spawn), 30, 20);
@@ -160,8 +168,8 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
 
     private Vector3 GetPositionFromPathData(Vector2 vector2) {
-        int x = (int)(vector2.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0));
-        int z = (int)(-vector2.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
+        int x = (int)(vector2.x - pathData.sizeX / 2f + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0));
+        int z = (int)(-vector2.y + pathData.sizeY / 2f + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
         return new Vector3(x, heightMap.values[(int)vector2.x, (int)vector2.y], z);
     }
 }

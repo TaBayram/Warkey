@@ -28,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     [HideInInspector] public Text playerResponseLower;
 
     public GameObject InteractWithE;
+    public event System.Action onQuestAccepted;
 
     [SerializeField] Animator animator;
 
@@ -61,6 +62,7 @@ public class DialogueManager : MonoBehaviour
                 EndDialogue();
             }
             if (!isTalking) return;
+            transform.LookAt(player.transform);
 
             bool hasIndexChanged = false;
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
@@ -155,21 +157,9 @@ public class DialogueManager : MonoBehaviour
 
     private void StartQuest() {
         EndDialogue();
-        GameTracker.Instance.WorldSettingsHolder.SetWorldSettings();
-        GameTracker.Instance.WorldSettingsHolder.SendWorldSettings();
-
-        Invoke(nameof(ChangeScene), 2);
+        onQuestAccepted?.Invoke();
     }
-
-    private void ChangeScene() {
-        PhotonNetwork.CurrentRoom.IsOpen = false;
-
-        LoadScene.SceneIndex = LoadScene.Scenes.World;
-        if(Random.Range(0,2) == 0)
-            SceneManager.LoadScene((int)LoadScene.Scenes.World);
-        else
-            SceneManager.LoadScene((int)LoadScene.Scenes.Winter);
-    }
+        
 
     private void UpdatePlayerResponse() {
 
