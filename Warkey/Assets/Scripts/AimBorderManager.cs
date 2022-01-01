@@ -7,11 +7,11 @@ public class AimBorderManager : MonoBehaviour
     [SerializeField] ColliderInfo[] colliders;
 
     private void Awake() {
-        WeaponController weaponController = GetComponentInParent<WeaponController>();
+        /*WeaponController weaponController = GetComponentInParent<WeaponController>();
         if (weaponController) {
             weaponController.onWeaponChange += WeaponController_onWeaponChange;
         }
-        
+        */
     }
 
     private void WeaponController_onWeaponChange(Weapon weapon) {
