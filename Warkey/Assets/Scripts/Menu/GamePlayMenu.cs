@@ -42,14 +42,14 @@ public class GamePlayMenu : MonoBehaviour
     public void Resume()
     {
         inGameMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
     private void Pause()
     {
         inGameMenuUI.SetActive(true);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         GameIsPaused = true;
     }
 
