@@ -58,13 +58,13 @@ public class PlayerTracker
     }
 
     public void AddExperience(float xp) {
-        this.experience = (this.experience+xp) % levelExperienceCost;
-        onExperienceChange?.Invoke(this);
-        if(xp >= levelExperienceCost) {
-            int levelAmount = (int)(xp / levelExperienceCost);
+        this.experience += xp;
+        if(this.experience >= levelExperienceCost) {
+            int levelAmount = (int)(this.experience / levelExperienceCost);
             AddLevel(levelAmount);
         }
-
+        this.experience %= levelExperienceCost;
+        onExperienceChange?.Invoke(this);
         playerStorage.Save(playerStorageData);
     }
 
@@ -81,17 +81,6 @@ public class PlayerTracker
         level = playerStorageData.level;
         gold = playerStorageData.gold;
         prefabIndex = playerStorageData.heroIndex;
-
-        playerStorageData.level = 1;
-        playerStorageData.experience = 0;
-
-        playerStorage.Save(playerStorageData);
-        playerStorageData = playerStorage.Load();
-        experience = playerStorageData.experience;
-        level = playerStorageData.level;
-        gold = playerStorageData.gold;
-        prefabIndex = playerStorageData.heroIndex;
-
 
         heroPrefab = HeroesData.Instance.GetHeroByIndex(playerStorageData.heroIndex);
     }

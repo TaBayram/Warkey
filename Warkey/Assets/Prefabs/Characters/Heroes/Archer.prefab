@@ -36,9 +36,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2955234629483015392}
-  - {fileID: 5920553207815190894}
   - {fileID: 5762514718551831468}
+  - {fileID: 5920553207815190894}
+  - {fileID: 2955234629483015392}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -270,7 +270,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1756833861072487, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1756833861072487, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
       propertyPath: m_LocalPosition.x
@@ -320,10 +320,18 @@ PrefabInstance:
       propertyPath: photonView
       value: 
       objectReference: {fileID: 2464713899535096047}
+    - target: {fileID: 6651105718981493930, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8185691615958693498, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
       propertyPath: photonView
       value: 
       objectReference: {fileID: 2464713899535096047}
+    - target: {fileID: 8708971559520427402, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
+      propertyPath: bornClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e5c700a57a718a24ba907c32cdd45558, type: 3}
     - target: {fileID: 9132493206066121570, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
       propertyPath: entity
       value: 
@@ -363,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a0deee4b800b6de4dbb3905f85f508af, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a0deee4b800b6de4dbb3905f85f508af, type: 3}
       propertyPath: m_LocalPosition.x

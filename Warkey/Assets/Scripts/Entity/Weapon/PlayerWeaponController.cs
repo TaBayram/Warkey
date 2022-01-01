@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerWeaponController : WeaponController
 {
 	void Update() {
+		if (GameState.CurrentState == GameState.State.settings) return;
 		if (!entity.CanAttack()) return;
 		if (!GetComponent<PhotonView>().IsMine && PhotonNetwork.IsConnected) return;
 		// Weapon input

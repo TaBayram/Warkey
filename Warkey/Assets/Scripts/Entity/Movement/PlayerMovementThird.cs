@@ -28,9 +28,11 @@ public class PlayerMovementThird : Movement
     protected override void Start() {
         base.Start();
         
+        
     }
     protected override void Update(){
         base.Update();
+        if (GameState.CurrentState == GameState.State.settings) return;
         if (!GetComponent<PhotonView>().IsMine  && PhotonNetwork.IsConnected) return;
         if (!entity.CanMove()) return;
         movementMultiplier = entity.MovementScaler();
