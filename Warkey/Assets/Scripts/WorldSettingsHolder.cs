@@ -15,8 +15,8 @@ public class WorldSettingsHolder : MonoBehaviour
 
     public void SetWorldSettings() {
         worldSettings.seed = Random.Range(int.MinValue, int.MaxValue);
-        //worldSettings.worldSize = new XY(Random.Range(2, 4), Random.Range(2, 4));
-        worldSettings.worldSize = new XY(1, 1);
+        worldSettings.worldSize = new XY(Random.Range(3, 3), Random.Range(3, 3));
+        //worldSettings.worldSize = new XY(1, 1);
         worldSettings.biome = "Forest";
     }
 

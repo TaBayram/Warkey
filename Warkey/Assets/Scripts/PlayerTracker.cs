@@ -25,12 +25,14 @@ public class PlayerTracker
     public float Experience { get => experience; }
     public int Level { get => level; }
     public int Gold { get => gold; }
-    public GameObject Hero { get => hero; set => hero = value; }
+    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); GameTracker.Instance.NetworkManager?.SendHero(hero.GetComponent<PhotonView>().ViewID); } }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
     public Player Player { get => player; set => player = value; }
     public int PrefabIndex { get => prefabIndex; }
     public GameObject HeroPrefab { get => heroPrefab; }
+
+    public event System.Action<GameObject> onHeroChanged;
 
     public PlayerTracker(Player player) {
         this.player = player;
@@ -56,17 +58,24 @@ public class PlayerTracker
     }
 
     public void AddExperience(float xp) {
-        this.experience = (this.experience+xp) % levelExperienceCost;
-        onExperienceChange?.Invoke(this);
-        if(xp >= levelExperienceCost) {
-            int levelAmount = (int)(xp / levelExperienceCost);
+        this.experience += xp;
+        if(this.experience >= levelExperienceCost) {
+            int levelAmount = (int)(this.experience / levelExperienceCost);
             AddLevel(levelAmount);
         }
+        this.experience %= levelExperienceCost;
+        onExperienceChange?.Invoke(this);
+
+        playerStorageData.experience = this.experience;
+        playerStorage.Save(playerStorageData);
     }
 
     public void AddLevel(int level) {
-        level += level;
+        this.level += level;
         onLevelUp?.Invoke(this);
+
+        playerStorageData.level = this.level;
+        playerStorage.Save(playerStorageData);
     }
 
     public void LoadPlayer() {

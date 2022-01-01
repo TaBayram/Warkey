@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
   m_audioClip: {fileID: 8300000, guid: c818594189dec104a99e009f7273cdb0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.159
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -88,7 +88,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
+  audioSource: {fileID: 5865703988633012473}
   icon: {fileID: 0}
   isMainHandRight: 1
   animations: []
@@ -212,7 +213,6 @@ MonoBehaviour:
     knockbackMultiplier: 5
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: -203655887218126122, guid: 7520581fd68c6954fbf737495f153dc5, type: 3}
-  audioSource: {fileID: 5865703988633012473}
   particle: {fileID: 7702604543404089153}
 --- !u!135 &8532591720314913252
 SphereCollider:
@@ -253,6 +253,30 @@ PrefabInstance:
     - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.8679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.7061677
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197776634378936339, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0.24973297
       objectReference: {fileID: 0}
     - target: {fileID: 3378375472732966078, guid: bef5a9d8418e98248a79c79786e328fa, type: 3}
       propertyPath: m_RootOrder
@@ -405,6 +429,30 @@ PrefabInstance:
     - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
       propertyPath: EmissionModule.rateOverDistance.scalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.59101427
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607006539789234517, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0.11863652
       objectReference: {fileID: 0}
     - target: {fileID: 1607006539789234518, guid: a0f48c79fca3ed64ba994a3169e480da, type: 3}
       propertyPath: m_RootOrder

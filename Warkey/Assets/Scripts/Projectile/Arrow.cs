@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Arrow : Projectile
 {
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private GameObject model;
+
+    private bool hasHit = false;
     private void Start() {
     }
 
@@ -11,16 +16,19 @@ public class Arrow : Projectile
         Ray ray = new Ray(transform.position, transform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, moveDistance, layerMask, QueryTriggerInteraction.Collide)) {
+            hasHit = true;
+            audioSource?.Play();
             OnHitObject(hit);
         }
     }
 
     public override void Die() {
+        model.SetActive(false);
         Destroy();
     }
 
     public override void Destroy() {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject,2);
     }
 
     public override void OnHitObject(RaycastHit raycastHit) {
@@ -36,6 +44,8 @@ public class Arrow : Projectile
     private float travelled = 0;
 
     private void Update() {
+        if (hasHit) return;
+
         float moveDistance = speed * Time.deltaTime;
         travelled += moveDistance;
 

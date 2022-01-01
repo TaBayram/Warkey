@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class RangedWeapon : Weapon
 {
@@ -12,6 +13,7 @@ public class RangedWeapon : Weapon
 	[SerializeField] private float attackDamage = 20;
 	[SerializeField] private float launchSpeed = 35;
 	[SerializeField] private float launchDelay = 0.2f;
+	[SerializeField] private float attackCooldown = 0.5f;
 
 	[SerializeField] private bool IsUnlimited;
 	[SerializeField] private int mainPool = 20;
@@ -42,23 +44,24 @@ public class RangedWeapon : Weapon
 
 	public override void Attack(Vector3 entityVelocity) {
 		if (CurrentState == State.defending)
-			StartAttacking(entityVelocity);
-		else
-			CurrentState = State.defending;
+			StartAttacking(entityVelocity);			
 	}
 
 	private void StartAttacking(Vector3 entityVelocity) {
 		if (Time.time > cooldown) {
-			cooldown = Time.time + attackSpeed;
+			OnAttack();
+			audioSource?.Play();
+			cooldown = Time.time + attackCooldown*attackSpeed;
 			StartCoroutine(Shoot(entityVelocity));
 			CurrentState = State.attacking;
+			OnRequest("attackSpeed", 1 / attackSpeed);
 		}
 	}
 
 	private IEnumerator Shoot(Vector3 entityVelocity) {
 		yield return new WaitForSeconds(launchDelay);
 		Vector3 aimDir = (mouseWorldPosition - muzzle.position).normalized;
-		Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<Projectile>();
+		Projectile newProjectile = PhotonNetwork.Instantiate(projectile.name, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<Projectile>();
 		newProjectile.speed = (launchSpeed);
 		newProjectile.damage = attackDamage;
 		newProjectile.straighten = true;

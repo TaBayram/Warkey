@@ -12,6 +12,7 @@ public class NPC : ScriptableObject
     //[TextArea(3, 15)]
     //public string[] playerDialogue;
 
+    public string npcName;
     public NPCDialogMessage[] nPCDialogMessages;
     public PlayerDialogMessage[] playerDialogMessages;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -38,4 +39,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+    internal void SendExperience(int v) {
+        this.photonView.RPC(nameof(AddExperience), RpcTarget.All, v);
+    }
+
+    [PunRPC]
+    public void AddExperience(int xp) {
+        GameTracker.Instance.GetLocalPlayerTracker().AddExperience(xp);
+    }
 }

@@ -66,7 +66,7 @@ public class AIEntity : Entity
     }
 
     protected override void Start() {
-        CurrentState = State.Patrol;
+        CurrentState = State.Wander;
         base.Start();
     }
     protected override void Update() {
@@ -203,6 +203,8 @@ public class AIEntity : Entity
     }
 
     public void GetKnockedBack(Vector3 force) {
+        if (!PV.IsMine) return;
+
         navMeshAgent.enabled = false;
         var rigid = GetComponent<Rigidbody>();
         rigid.isKinematic = false;

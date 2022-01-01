@@ -13,6 +13,7 @@ public class FiniteWorldGenerator : MonoBehaviour
     public HeightMapSettings heightMapSettings;
     public TextureSettings textureData;
     public GroundSettings groundSettings;
+    public SpawnableSettings spawnableSettings;
     public PathSettings pathSettings;
 
     public Material mapMaterial;
@@ -49,6 +50,7 @@ public class FiniteWorldGenerator : MonoBehaviour
     private bool isWorldReady = false;
 
     public event System.Action onWorldReady;
+    public FiniteWorldGameGenerator FiniteWorldGameGenerator;
 
     private void SetMap() {
         WorldSettings settings;
@@ -80,17 +82,19 @@ public class FiniteWorldGenerator : MonoBehaviour
             fallOffMap = FallOffGenerator.GenerateFalloffMap((int)(meshSettings.VerticesPerLineCount * chunkSize.x), (int)(meshSettings.VerticesPerLineCount * chunkSize.y));
         }
 
-        if(viewer == null) BindViewer(transform);
+
         GeneratePath();
+        viewer = FiniteWorldGameGenerator.GenerateStartPosition();
         LoadAll();
         UpdateVisibleChunks();
     }
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord], groundMaterial);
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize.ToVector(), heightMapSettings, meshSettings, groundSettings, spawnableSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial, pathDictionary[viewedChunkCoord], groundMaterial);
         chunkDictionary.Add(viewedChunkCoord, chunk);
         allChunks.Add(chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         chunk.onChunkLoaded += onChunkLoaded;
+        onWorldReady += chunk.onWorldReady;
         chunk.Load(fallOffMap,true);
         
         onChunkCreated?.Invoke(chunk);
@@ -104,6 +108,7 @@ public class FiniteWorldGenerator : MonoBehaviour
         }
     }
 
+
     private void GeneratePath() {
         float sizeX = meshSettings.VerticesPerLineCount * chunkSize.x;
         float sizeY = meshSettings.VerticesPerLineCount * chunkSize.y;
@@ -115,18 +120,13 @@ public class FiniteWorldGenerator : MonoBehaviour
         int xModifier = (chunkSize.x % 2 == 0) ? 1 : 0;
         int yModifier = (chunkSize.y % 2 == 0) ? 1 : 0;
         int y = 0;
-        /*Debug.Log("maxX " + maxX + " maxY " + maxY);
-        Debug.Log("xModifier " + xModifier + " yModifier " + yModifier);
-        Debug.Log(pathData.pathMap.GetLength(0) + " " + pathData.pathMap.GetLength(1));*/
+
         for (int coordY = -maxY + yModifier + 1; coordY < maxY; coordY++) {
             int x = 0;
             for (int coordX = -maxX + xModifier + 1; coordX < maxX; coordX++) {
-                // Debug.Log("coordX " + coordX + " coordY " + coordY);
                 Vector2 viewedChunkCoord = new Vector2(coordX, coordY);
-                //Debug.Log("x " + x + " y " + y);
                 int arrayOffsetX = (int)((x)) * (int)(meshSettings.VerticesPerLineCount);
                 int arrayOffsetY = (int)((chunkSize.y - 1 - y)) * (int)(meshSettings.VerticesPerLineCount);
-                //Debug.Log("arrayOffsetX " + arrayOffsetX + " arrayOffsetY " + arrayOffsetY);
 
                 float[,] heightMap2 = new float[meshSettings.VerticesPerLineCount, meshSettings.VerticesPerLineCount];
 
@@ -135,6 +135,7 @@ public class FiniteWorldGenerator : MonoBehaviour
                         heightMap2[xp, yp] = pathData.pathMap[arrayOffsetX + xp, arrayOffsetY + yp];
                     }
                 }
+
                 pathDictionary.Add(viewedChunkCoord, heightMap2);
 
                 x++;
@@ -159,18 +160,24 @@ public class FiniteWorldGenerator : MonoBehaviour
             }
         }
 
-        Invoke(nameof(OnAllLoaded), 10);
+        Invoke(nameof(OnAllLoaded), 30);
     }
 
     private void OnAllLoaded() {
         if (!isWorldReady) {
             isWorldReady = true;
             navMeshSurface.BuildNavMesh();
-            onWorldReady();
+            onWorldReady.Invoke();
+            
         }
     }
 
+    private void BuildNavMesh() {
+        navMeshSurface.BuildNavMesh();
+    }
+
     private void Update() {
+        if (viewer == null) return;
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
         
         if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate) {

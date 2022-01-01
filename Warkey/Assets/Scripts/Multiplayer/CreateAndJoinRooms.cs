@@ -72,6 +72,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("CampScene");
         PhotonNetwork.LocalPlayer.NickName = nicknameInput.text;
+        GameTracker.Instance.AddPlayer(PhotonNetwork.LocalPlayer);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) {

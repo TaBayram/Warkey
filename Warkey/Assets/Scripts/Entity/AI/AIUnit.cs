@@ -38,7 +38,6 @@ public class AIUnit : Unit
     public override void TakeDamage(float damage) {
 
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
-        Debug.Log(damage);
     }
 
     [PunRPC]
@@ -51,6 +50,9 @@ public class AIUnit : Unit
         if (health.Current <= 0)
         {
             Die();
+        }
+        else {
+            widgetAudio?.PlayAudio(WidgetAudio.Name.gotHit);
         }
     }
 

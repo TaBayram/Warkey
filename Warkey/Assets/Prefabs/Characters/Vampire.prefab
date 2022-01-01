@@ -89,7 +89,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -141,7 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b132ef56a29af764baa85750ebf5a214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathClip: {fileID: 8300000, guid: d566f4732ed019d4ba78f7ac25823398, type: 3}
+  bornClip: {fileID: 8300000, guid: 45c128dc3985c174aa17a8183c384d06, type: 3}
+  deathClip: {fileID: 8300000, guid: 6dffc2da625177a4f8310edc925d443f, type: 3}
+  attackClip: {fileID: 8300000, guid: 5946470c4bd21c1458a21baac86612c0, type: 3}
+  hitClip: {fileID: 8300000, guid: ef4ac69665943c347a1085452ac692f8, type: 3}
 --- !u!1 &6395457280782637065
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +394,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 658348ded556c6d4697f911db530af45, type: 2}
   disabler: {fileID: 6296193162208242201}
   widgetAudio: {fileID: 2269527320993172786}
-  state: 1
   animator: {fileID: 5883122919738370603}
   ragdollManager: {fileID: 3208236918722676532}
 --- !u!114 &1327399390864704522
@@ -406,6 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153aa35c06b18c14980ea966303ee45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  widgetAudio: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -1054,6 +1057,10 @@ PrefabInstance:
       propertyPath: unit
       value: 
       objectReference: {fileID: 3278420720226861635}
+    - target: {fileID: 3748830483342082971, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
+      propertyPath: preplacedUnit
+      value: 
+      objectReference: {fileID: 3278420720226861635}
     - target: {fileID: 4310741141905604305, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.118774414
@@ -1067,13 +1074,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3093831840825432181}
     - target: {fileID: 6902500629699893059, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
-      propertyPath: targetCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6902500629699893059, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
       propertyPath: targetObject
       value: 
-      objectReference: {fileID: 786126843989434287}
+      objectReference: {fileID: 3093831840825432181}
     - target: {fileID: 7894780377552861743, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
       propertyPath: m_SizeDelta.x
       value: 52
@@ -1092,11 +1095,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
---- !u!1 &786126843989434287 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6504488760068989287, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}
-  m_PrefabInstance: {fileID: 5813148915671596744}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4698913441161523355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1268203938544406099, guid: 4bd6de4cb5742e04a9b8cb33419b0edb, type: 3}

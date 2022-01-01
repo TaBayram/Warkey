@@ -7,11 +7,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 {
     public const float spawnProtectionDistance = 100*10;
 
-    public WorldPlayerManager gameEntities;
+    public WorldPlayerManager playerManager;
     public FiniteWorldGenerator finiteWorldGenerator;
     public WorldEntitySettings worldEntitySettings;
     private PathData pathData;
-    
+    [SerializeField] private GameObject defaultCamera;
 
     [HideInInspector] public HeightMap heightMap;
     [HideInInspector] public GameObject[] players;
@@ -24,25 +24,34 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
     private MissionEndManager missionEndManager;
     private GameObject startPosition;
+    private GameObject endPosition;
+
 
     PhotonView PV;
 
     private List<GameObject> enemies;
     private void Start() {
         finiteWorldGenerator.onWorldReady += FiniteWorldGenerator_onWorldReady;
-        enemies =new List<GameObject>();
+        enemies = new List<GameObject>();
     }
 
-    private void FiniteWorldGenerator_onWorldReady() {
+    public Transform GenerateStartPosition() {
         pathData = finiteWorldGenerator.pathData;
         heightMap = finiteWorldGenerator.heightMap;
         chunkMatrix = finiteWorldGenerator.chunkSize;
         chunkSize = new XY(finiteWorldGenerator.meshSettings.VerticesPerLineCount);
 
-        startPosition = new GameObject("StartPosition");
-        startPosition.transform.position = new Vector3(pathData.start.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0), heightMap.values[(int)pathData.start.x, (int)pathData.start.y] + 5, -pathData.start.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
+        startPosition = Instantiate(worldEntitySettings.MissionStartAreaPrefab, GetPositionFromPathData(pathData.start), Quaternion.identity);
+        startPosition.transform.parent = this.transform.parent;
+        defaultCamera.transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z);
+        return startPosition.transform;
+    }
 
-        players =  gameEntities.CreatePlayerHeroes();
+    private void FiniteWorldGenerator_onWorldReady() {
+        SetStartHeight();
+
+        playerManager.revivingPlace = startPosition.transform;
+        players =  playerManager.CreatePlayerHeroes();
 
         foreach (GameObject player in players) {
             player.GetComponent<CharacterController>().enabled = false;
@@ -52,21 +61,14 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             finiteWorldGenerator.BindViewer(player.transform);
         }
 
-        var obj = new GameObject("End");
-        var box = obj.AddComponent<BoxCollider>();
-        obj.transform.position = GetPositionFromPathData(pathData.end);
-        box.size = new Vector3(20f, 100f, 20f);
-
-        
+        endPosition = Instantiate(worldEntitySettings.MissionEndAreaPrefab, GetPositionFromPathData(pathData.end), Quaternion.identity);
+        endPosition.transform.parent = this.transform.parent;
 
         if (PhotonNetwork.IsMasterClient) {
-            InvokeRepeating(nameof(Spawn), 60, 30);
+            InvokeRepeating(nameof(Spawn), 30, 30);
             return;
-            CreateOnPath(pathData, true);
             CreateOnEnd();
-            
-            
-            
+            CreateOnPath(pathData, true);
         }
     }
 
@@ -76,61 +78,72 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         
         foreach (Vector2 item in pathData.points) {
             if((item-pathData.start).sqrMagnitude > spawnProtectionDistance && Random.Range(0f, 1f) < ((isMainBranch)?0.15f:0.05f)) {
-                float random = Random.Range(0f, 1f);
                 EntitySettings entitySettings = new EntitySettings();
-                bool canSpawn = false;
-                foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                    if (entity.canStaticSpawn && entity.spawnChance > random) {
-                        entitySettings = entity;
-                        canSpawn = true;
-                    }
-                }
-                if (!canSpawn) continue;
-                if (enemies.Count < 3) return;
-                GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, GetPositionFromPathData(item) + Vector3.up*2f, Quaternion.identity);
-                enemy.transform.parent = this.transform;
-                enemies.Add(enemy);
+                if (!GetPrefab(out entitySettings, true, false)) return;
+                GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, GetPositionFromPathData(item) + Vector3.up * 2f);
             }
         }
     }
 
     private void CreateOnEnd() {
         for(int i = 0; i < 10; i++) {
-            float random = Random.Range(0f, 1f);
             EntitySettings entitySettings = new EntitySettings();
-            bool canSpawn = false;
-            foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                if (entity.canStaticSpawn && entity.spawnChance < random) {
-                    entitySettings = entity;
-                    canSpawn = true;
-                }
-            }
-            if (!canSpawn) continue;
-            if (enemies.Count > 3) return;
-            GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, FindPosition(GetPositionFromPathData(pathData.end), 5f, 10) + Vector3.up * 2f, Quaternion.identity);
-            enemy.transform.parent = this.transform;
-            enemies.Add(enemy);
+            if (!GetPrefab(out entitySettings, true, false)) return;
+            GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, FindPosition(GetPositionFromPathData(pathData.end), 5f, 10) + Vector3.up * 2f);
 
         }
     }
 
     private void Spawn() {
-        float random = Random.Range(0f, 1f);
+        SpawnI(false);
+    }
+
+    private void SpawnIteration() {
+        SpawnI(true);
+    }
+
+    private void SpawnI(bool isIteration = false) {
         EntitySettings entitySettings = new EntitySettings();
-        bool canSpawn = false;
-        foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-            if(entity.canDynamicSpawn && entity.spawnChance < random) {
-                entitySettings = entity;
-                canSpawn = true;
+        if (!GetPrefab(out entitySettings,false,true)) return;
+
+        var players = GameTracker.Instance.GetPlayerTrackers();
+        var player = players[Random.Range(0, players.Count)];
+        Vector3 position = FindPosition(player.Hero.transform.position, entitySettings.spawnDistance, 10);
+        GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
+        
+
+        
+        if (!isIteration) {
+            count++;
+            for (int i = 0; i < count / 5; i++) {
+                Invoke(nameof(SpawnIteration), .5f);
             }
         }
-        if (!canSpawn) return;
+    }
 
-        foreach (GameObject player in players) {
-            Vector3 position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
-            GameObject enemy = PhotonNetwork.InstantiateRoomObject(entitySettings.prefab.name, position, Quaternion.identity);
-            enemy.transform.parent = this.transform;
+    int count = 0;
+
+    private bool GetPrefab(out EntitySettings entitySettings, bool isStatic, bool isDynamic) {
+        float random = Random.Range(0f, 1f);
+        entitySettings = new EntitySettings();
+        bool canSpawn = false;
+        foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
+            if ((isStatic && !entity.canStaticSpawn)) continue;
+            if ((isDynamic && !entity.canDynamicSpawn)) continue;
+            if (entity.spawnChance >= random) {
+                entitySettings = entity;
+                canSpawn = true;
+                break;
+            }
         }
+        return canSpawn;
+    }
+
+    private GameObject InstantiateRoomObject(string name, Vector3 position) {
+        GameObject enemy = PhotonNetwork.InstantiateRoomObject(name, position, Quaternion.identity);
+        enemy.transform.parent = this.transform;
+        enemies.Add(enemy);
+        return enemy;
     }
 
     private Vector3 FindPosition(Vector3 position,float distance ,int iteration) {
@@ -153,8 +166,16 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
 
     private Vector3 GetPositionFromPathData(Vector2 vector2) {
-        int x = (int)(vector2.x - pathData.sizeX / 2 + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0));
-        int z = (int)(-vector2.y + pathData.sizeY / 2 + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
+        int x = (int)(vector2.x - pathData.sizeX / 2f + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0));
+        int z = (int)(-vector2.y + pathData.sizeY / 2f + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
         return new Vector3(x, heightMap.values[(int)vector2.x, (int)vector2.y], z);
+    }
+
+    private void SetStartHeight() {
+        int iteration = 0;
+        while (!Physics.Raycast(startPosition.transform.position + Vector3.down*20, Vector3.down, out RaycastHit raycastHit, 1000f, 1 << LayerMask.NameToLayer("Ground")) && iteration < 100) {
+            startPosition.transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y + 2, startPosition.transform.position.z);
+            iteration++;
+        }
     }
 }

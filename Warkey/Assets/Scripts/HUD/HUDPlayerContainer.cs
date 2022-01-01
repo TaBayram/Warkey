@@ -17,6 +17,8 @@ public class HUDPlayerContainer : MonoBehaviour
 
     [SerializeField] private GameObject onlyForTest;
 
+    private bool hasBinded = false;
+
     private void Start() {
         if (onlyForTest) {
             BindUnit(onlyForTest.GetComponent<Unit>());
@@ -24,10 +26,24 @@ public class HUDPlayerContainer : MonoBehaviour
         }
 
         experienceBar.SetMaxValue(PlayerTracker.levelExperienceCost);
-        GameTracker.Instance.GetLocalPlayerTracker().onLevelUp += HUDPlayerContainer_onLevelUp;
-        GameTracker.Instance.GetLocalPlayerTracker().onExperienceChange += HUDPlayerContainer_onExperienceChange;
+        BindListeners();
+    }
 
+    private void BindListeners() {
+        if (hasBinded) return;
+        var localPlayer = GameTracker.Instance.GetLocalPlayerTracker();
+        if (localPlayer == null) Invoke(nameof(BindListeners), 2);
+        localPlayer.onLevelUp += HUDPlayerContainer_onLevelUp;
+        localPlayer.onExperienceChange += HUDPlayerContainer_onExperienceChange;
+        localPlayer.onHeroChanged += LocalPlayer_onHeroChanged;
 
+        levelText.text = "" + localPlayer.Level;
+        experienceBar.SetValue(localPlayer.Experience);
+    }
+
+    private void LocalPlayer_onHeroChanged(GameObject obj) {
+        BindUnit(obj.GetComponent<Unit>());
+        SubscribeInventory(obj.GetComponentInChildren<ItemPicker>().Inventory);
     }
 
     private void HUDPlayerContainer_onExperienceChange(PlayerTracker obj) {
@@ -40,6 +56,8 @@ public class HUDPlayerContainer : MonoBehaviour
 
     public void BindUnit(Unit unit) {
         unit.FinitePropertyChanged += Unit_FinitePropertyChanged;
+        SetHealth(unit.Health);
+        SetStamina(unit.Stamina);
     }
 
     public void SubscribeInventory(Inventory inventory)
@@ -75,6 +93,13 @@ public class HUDPlayerContainer : MonoBehaviour
     public void updateWeapon(Weapon weapon)
     {
         weaponUI.UpdateInfo(weapon.icon);
+    }
+
+    private void OnDestroy() {
+        var localPlayer = GameTracker.Instance.GetLocalPlayerTracker();
+        localPlayer.onLevelUp -= HUDPlayerContainer_onLevelUp;
+        localPlayer.onExperienceChange -= HUDPlayerContainer_onExperienceChange;
+        localPlayer.onHeroChanged -= LocalPlayer_onHeroChanged;
     }
 
 }

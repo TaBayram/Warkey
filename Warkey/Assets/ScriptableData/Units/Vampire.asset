@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Vampire
   m_EditorClassIdentifier: 
   unitName: Default
-  health: 80
-  healthRegen: 5
-  healthCooldown: 0
+  health: 150
+  healthRegen: 2
+  healthCooldown: 1
   stamina: 100
   staminaRegen: 10
   staminaCooldown: 2
+  armor: 0
+  canDrown: 0

@@ -28,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     [HideInInspector] public Text playerResponseLower;
 
     public GameObject InteractWithE;
+    public event System.Action onQuestAccepted;
 
     [SerializeField] Animator animator;
 
@@ -61,6 +62,7 @@ public class DialogueManager : MonoBehaviour
                 EndDialogue();
             }
             if (!isTalking) return;
+            transform.LookAt(player.transform);
 
             bool hasIndexChanged = false;
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
@@ -127,7 +129,7 @@ public class DialogueManager : MonoBehaviour
         isTalking = true;
         currentPlayerMessageIndex = 1;
         dialogueUI.SetActive(true);
-        npcName.text = npc.name;
+        npcName.text = npc.npcName;
         ShowNPCMessage(0);
 
 
@@ -154,18 +156,10 @@ public class DialogueManager : MonoBehaviour
 
 
     private void StartQuest() {
-        GameTracker.Instance.WorldSettingsHolder.SetWorldSettings();
-        GameTracker.Instance.WorldSettingsHolder.SendWorldSettings();
-
-
-        Invoke(nameof(ChangeScene), 2);
+        EndDialogue();
+        onQuestAccepted?.Invoke();
+    }
         
-    }
-
-    private void ChangeScene() {
-        LoadScene.SceneIndex = LoadScene.Scenes.World;
-        SceneManager.LoadScene((int)LoadScene.Scenes.World);
-    }
 
     private void UpdatePlayerResponse() {
 

@@ -14,6 +14,8 @@ public class Unit : MonoBehaviour,IWidget
     [SerializeField] protected WidgetAudio widgetAudio;
     protected FiniteField health;
     protected FiniteField stamina;
+    protected float armor;
+    private bool isBlocking;
 
     private IWidget.State state = IWidget.State.alive;
 
@@ -22,6 +24,7 @@ public class Unit : MonoBehaviour,IWidget
     public event System.Action<IWidget.State> onStateChange;
 
     private float staminaRegenCooldown = 1f;
+    private float healthRegenCooldown = 1f;
 
     protected PhotonView photonView;
 
@@ -30,18 +33,25 @@ public class Unit : MonoBehaviour,IWidget
     public bool IsHero { get => isHero; }
     public FiniteField Health { get => health; }
     public FiniteField Stamina { get => stamina; }
+    public float Armor { get => armor; set => armor = value; }
+    public bool IsBlocking { get => isBlocking; set => isBlocking = value; }
 
-    protected void Start() {
+    protected void Awake() {
         if (unitData) {
-            photonView = GetComponent<PhotonView>();
             health = new FiniteField(unitData.health, unitData.healthRegen, unitData.healthCooldown);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen, unitData.staminaCooldown);
 
             health.PropertyChanged += Health_PropertyChanged;
             stamina.PropertyChanged += Stamina_PropertyChanged;
-           
-            InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
+
+            Armor = unitData.armor;
         }
+    }
+
+    protected void Start() {
+        photonView = GetComponent<PhotonView>();
+        InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
+        Invoke(nameof(Born), .25f);
     }
 
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -52,6 +62,9 @@ public class Unit : MonoBehaviour,IWidget
     }
     protected void OnPropertyChanged(string name,FiniteField field) {
         FinitePropertyChanged?.Invoke(field, new PropertyChangedEventArgs(name));
+    }
+    public void Born() {
+        widgetAudio?.PlayAudio(WidgetAudio.Name.born);
     }
 
     public void Die() {
@@ -71,8 +84,10 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public virtual void TakeDamage(float damage) {
+        if (IsBlocking && UseStamina(damage)) return;
+        damage = damage * (1 - Armor / 100);
+        if (damage == 0) return;
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
-        Debug.Log(damage);
     }
 
     [PunRPC]
@@ -80,11 +95,11 @@ public class Unit : MonoBehaviour,IWidget
     {
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
+        healthRegenCooldown = health.Cooldown;
         if (health.Current <= 0)
         {
             Die();
         }
-        Debug.Log(damage);
     }
 
     public void Heal(float heal) {
@@ -108,12 +123,28 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     void Update() {
-
+        if(unitData.canDrown && Physics.Raycast(transform.position, Vector3.up, out RaycastHit raycastHit, 50f, 1 << LayerMask.NameToLayer("Water"))) {
+            if(raycastHit.distance > 2) {
+                if (Time.time > drownCooldown) {
+                    drownCooldown = Time.time + 1f;
+                    if (!UseStamina(5)) {
+                        TakeDamage(5);
+                    }
+                }
+            }
+        }
     }
+
+    float drownCooldown;
 
 
     void RegenerateFields() {
-        health.Current += health.Regen*regenInterval;
+        if (healthRegenCooldown <= 0)
+            health.Current += health.Regen * regenInterval;
+        else
+            healthRegenCooldown -= regenInterval;
+
+        
         if (staminaRegenCooldown <= 0)
             stamina.Current += stamina.Regen * regenInterval;
         else

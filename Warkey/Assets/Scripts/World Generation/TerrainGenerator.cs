@@ -13,6 +13,7 @@ public class TerrainGenerator : MonoBehaviour
     public HeightMapSettings heightMapSettings;
     public TextureSettings textureData;
     public GroundSettings groundSettings;
+    public SpawnableSettings spawnableSettings;
     public PathSettings pathSettings;
 
     public bool loadAtStart;
@@ -60,7 +61,7 @@ public class TerrainGenerator : MonoBehaviour
     }
 
     private Chunk CreateChunk(Vector2 viewedChunkCoord) {
-        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial,null,null);
+        Chunk chunk = new Chunk(viewedChunkCoord, chunkSize, heightMapSettings, meshSettings, groundSettings, spawnableSettings, pathSettings, LODSettings, transform, viewer, mapMaterial, waterMaterial, pathMaterial,null,null);
         chunkDictionary.Add(viewedChunkCoord, chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         //chunk.onStateChanged +=    

@@ -105,7 +105,7 @@ MonoBehaviour:
       octaves: 3
       persistance: 0.3
       lacunarity: 2
-      seed: 3
+      seed: 4
       offset: {x: 0, y: 0}
     noiseMin: 0.127
     noiseMax: 0.316
@@ -122,3 +122,29 @@ MonoBehaviour:
       min: 1
       max: 2
     randomizeYRotation: 1
+  - enabled: 1
+    gameObject: {fileID: 2909564598486185049, guid: 89256dbf4fc400848a8fb7266056aca5, type: 3}
+    useNoise: 0
+    noiseSettings:
+      normalizeMode: 0
+      scale: 30
+      octaves: 3
+      persistance: 0.3
+      lacunarity: 2
+      seed: 4
+      offset: {x: 0, y: 0}
+    noiseMin: 0.127
+    noiseMax: 0.316
+    blockRadius: 100
+    elevation: 150
+    minThreshold: 0.38
+    maxThreshold: 2
+    lessenTowardsEdges: 1
+    lessenScale: 0.442
+    jitterScale: 0
+    correctRotation: 0
+    useRandomSize: 0
+    sizeScale:
+      min: 1
+      max: 2
+    randomizeYRotation: 0
