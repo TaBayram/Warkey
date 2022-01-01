@@ -25,6 +25,8 @@ MonoBehaviour:
     - {fileID: 666778168186921404, guid: 0f5ba92914215a143a35db05d5bafa54, type: 3}
     spawnLimit: 20
     isNetworkObject: 1
+    handleVisibility: 0
+    visibilityLODIndex: 0
     useNoise: 0
     noiseSettings:
       normalizeMode: 0
@@ -40,3 +42,25 @@ MonoBehaviour:
     elevation: 1
     minThreshold: 0.25
     maxThreshold: 2
+  - enabled: 1
+    gameObjects:
+    - {fileID: 7958137458794860659, guid: 206baadb900c5ff48ad505c69a938c84, type: 3}
+    spawnLimit: 5
+    isNetworkObject: 1
+    handleVisibility: 1
+    visibilityLODIndex: 1
+    useNoise: 0
+    noiseSettings:
+      normalizeMode: 0
+      scale: 0
+      octaves: 0
+      persistance: 0
+      lacunarity: 0
+      seed: 0
+      offset: {x: 0, y: 0}
+    noiseMin: 0
+    noiseMax: 0
+    blockRadius: 50
+    elevation: 1
+    minThreshold: 0.25
+    maxThreshold: 1.5

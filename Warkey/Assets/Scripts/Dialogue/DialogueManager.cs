@@ -129,7 +129,7 @@ public class DialogueManager : MonoBehaviour
         isTalking = true;
         currentPlayerMessageIndex = 1;
         dialogueUI.SetActive(true);
-        npcName.text = npc.name;
+        npcName.text = npc.npcName;
         ShowNPCMessage(0);
 
 

@@ -55,7 +55,7 @@ public class MeleeWeapon : Weapon
         attackStartTime = Time.time;
         currentAttackSpeed = attackSpeed;
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
-        OnRequest("attackSpeed", 1/attackSpeed);
+        OnRequest("attackSpeed", 1 / attackSpeed);
         OnAnimationStart();
         Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);
     }

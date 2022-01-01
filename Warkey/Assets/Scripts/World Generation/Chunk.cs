@@ -192,8 +192,15 @@ public class Chunk
                 }
                 else {
                     foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
-                        if (objectData.isObjectsLoaded)
-                            objectData.Visible(true);
+                        if (objectData.isObjectsLoaded) {
+                            if (objectData.Settings.handleVisibility) {
+                                objectData.ChangeVisiblity(lodIndex);
+                            }
+                            else {
+                                objectData.Visible(true);
+                            }
+                        }
+                            
                     }
                 }
             }
@@ -203,8 +210,14 @@ public class Chunk
                         objectData.Visible(false);
                 }
                 foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
-                    if (objectData.isObjectsLoaded)
-                        objectData.Visible(false);
+                    if (objectData.isObjectsLoaded) {
+                        if (objectData.Settings.handleVisibility) {
+                            objectData.ChangeVisiblity(lodIndex);
+                        }
+                        else {
+                            objectData.Visible(false);
+                        }
+                    }
                 }
             }
         }

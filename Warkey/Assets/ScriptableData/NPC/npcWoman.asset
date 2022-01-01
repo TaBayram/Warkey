@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
+  m_Name: npcWoman
+  m_EditorClassIdentifier: 
+  npcName: Fayibe
+  nPCDialogMessages:
+  - dialogMessage:
+      message: Hello kind stranger!
+      audio: {fileID: 8300000, guid: 7a9e55bda5c24434e890fe072ce6f4c6, type: 3}
+    playerDialogIndexes: 0000000001000000
+    isExitMessage: 0
+    isQuestAccepter: 0
+  - dialogMessage:
+      message: 'I need some help. They took my son! '
+      audio: {fileID: 8300000, guid: 1bfbec01d7a5c8642a326f1e323449a9, type: 3}
+    playerDialogIndexes: 0200000003000000
+    isExitMessage: 0
+    isQuestAccepter: 0
+  - dialogMessage:
+      message: 'Find my son and kill them all! '
+      audio: {fileID: 8300000, guid: fc90a0985185d4b49bf8bdc2bb9a0cd7, type: 3}
+    playerDialogIndexes: 
+    isExitMessage: 0
+    isQuestAccepter: 1
+  - dialogMessage:
+      message: See you around.
+      audio: {fileID: 8300000, guid: 9b084d5bd09f1774fbc813bbdbfd3789, type: 3}
+    playerDialogIndexes: 00000000
+    isExitMessage: 1
+    isQuestAccepter: 0
+  playerDialogMessages:
+  - dialogMessage:
+      message: Hello
+      audio: {fileID: 0}
+    npcDialogIndex: 1
+  - dialogMessage:
+      message: Bye
+      audio: {fileID: 0}
+    npcDialogIndex: 3
+  - dialogMessage:
+      message: How can I help?
+      audio: {fileID: 0}
+    npcDialogIndex: 2
+  - dialogMessage:
+      message: I can't help
+      audio: {fileID: 0}
+    npcDialogIndex: 3

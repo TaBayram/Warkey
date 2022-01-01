@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour,IWidget
     protected FiniteField health;
     protected FiniteField stamina;
     protected float armor;
+    private bool isBlocking;
 
     private IWidget.State state = IWidget.State.alive;
 
@@ -32,10 +33,10 @@ public class Unit : MonoBehaviour,IWidget
     public FiniteField Health { get => health; }
     public FiniteField Stamina { get => stamina; }
     public float Armor { get => armor; set => armor = value; }
+    public bool IsBlocking { get => isBlocking; set => isBlocking = value; }
 
-    protected void Start() {
+    protected void Awake() {
         if (unitData) {
-            photonView = GetComponent<PhotonView>();
             health = new FiniteField(unitData.health, unitData.healthRegen, unitData.healthCooldown);
             stamina = new FiniteField(unitData.stamina, unitData.staminaRegen, unitData.staminaCooldown);
 
@@ -43,9 +44,13 @@ public class Unit : MonoBehaviour,IWidget
             stamina.PropertyChanged += Stamina_PropertyChanged;
 
             Armor = unitData.armor;
-           
-            InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
         }
+    }
+
+    protected void Start() {
+        photonView = GetComponent<PhotonView>();
+        InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
+        
     }
 
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -75,8 +80,9 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     public virtual void TakeDamage(float damage) {
+        if (IsBlocking && UseStamina(damage)) return;
         damage = damage * (1 - Armor / 100);
-
+        if (damage == 0) return;
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
         Debug.Log(damage);
     }
@@ -114,9 +120,19 @@ public class Unit : MonoBehaviour,IWidget
     }
 
     void Update() {
-
+        if(unitData.canDrown && Physics.Raycast(transform.position, Vector3.up, out RaycastHit raycastHit, 50f, 1 << LayerMask.NameToLayer("Water"))) {
+            if(raycastHit.distance > 2) {
+                if (Time.time > drownCooldown) {
+                    drownCooldown = Time.time + 1f;
+                    if (!UseStamina(5)) {
+                        TakeDamage(5);
+                    }
+                }
+            }
+        }
     }
 
+    float drownCooldown;
 
     void RegenerateFields() {
         health.Current += health.Regen*regenInterval;

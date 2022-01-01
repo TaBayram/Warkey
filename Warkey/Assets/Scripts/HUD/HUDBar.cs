@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HUDBar : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class HUDBar : MonoBehaviour
     public Slider slider;
     public Gradient gradient;
     public Image fill;
+    public TMP_Text text;
     public float smoothing = 5f;
     private float targetValue;
 
     private float currentMaxValue = 0;
     private float currentValue = 0;
+    private string currentText;
+
 
     [SerializeField] Unit preplacedUnit;
     private void Start() {
@@ -55,7 +59,10 @@ public class HUDBar : MonoBehaviour
         }
         else if(difference != 0) {
             slider.value = targetValue;
-            currentMaxValue = slider.value;
+            currentValue = slider.value;
+        }
+        if (text != null && text.text != currentText) {
+            text.text = ((int)currentValue) + " / " + ((int)currentMaxValue);
         }
 
 

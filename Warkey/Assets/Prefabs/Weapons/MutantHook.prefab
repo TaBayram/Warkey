@@ -55,6 +55,9 @@ MonoBehaviour:
     m_Bits: 0
   attackRange: 3
   knockback: 5
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   attackSpeed: 2
   baseDamage: 20
   maxTargetPerAttack: 0
@@ -67,6 +70,7 @@ MonoBehaviour:
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: 0}
   audioSource: {fileID: 3129347296982348116}
+  particle: {fileID: 0}
 --- !u!135 &2253500774782337991
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -78,7 +82,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4514375347224432391
 GameObject:

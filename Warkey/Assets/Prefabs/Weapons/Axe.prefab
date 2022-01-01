@@ -194,7 +194,7 @@ MonoBehaviour:
   maxTargetPerAttack: 0
   attacks:
   - animationClip: {fileID: -203655887218126122, guid: 5de2634dfaddddb44bf8eced338251d3, type: 3}
-    damageActivationDelay: 0.4
+    damageActivationDelay: 0.8
     damageEndTime: 1
     damageMultiplier: 1
     knockbackMultiplier: 3

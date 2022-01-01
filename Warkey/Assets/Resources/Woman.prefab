@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9190607498666540388}
   - component: {fileID: 6933785222038850976}
   m_Layer: 0
-  m_Name: NPC Jeff
+  m_Name: Woman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5962a9c99f1b3da409c717f8f9aa7641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 11400000, guid: 0fd9b1268e989374e893b74ac622c6c3, type: 2}
+  npc: {fileID: 11400000, guid: 111b0ce69d63ec840a3d39c466f13ae7, type: 2}
   audioSource: {fileID: 1207002364834686951}
   player: {fileID: 0}
   dialogueUI: {fileID: 0}

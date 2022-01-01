@@ -348,7 +348,7 @@ MonoBehaviour:
   pathSettings: {fileID: 11400000, guid: 4fafaf54a5a60e2479379fec81290e1e, type: 2}
   mapMaterial: {fileID: 2100000, guid: 6feb9e2a820b3db449e78e30a0426ce5, type: 2}
   waterMaterial: {fileID: 2100000, guid: d72ad1650fcb88944a9cef2fc026afb1, type: 2}
-  pathMaterial: {fileID: 2100000, guid: 4d8241f5faf667f478ae09793ac69523, type: 2}
+  pathMaterial: {fileID: 2100000, guid: 43d3e21dd15c3b847957abee25d004d9, type: 2}
   groundMaterial: {fileID: 13400000, guid: e18e76915b63645449d88f5a0ddebbf9, type: 2}
   chunkSize:
     x: 1

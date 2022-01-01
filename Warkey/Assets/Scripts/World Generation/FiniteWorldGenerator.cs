@@ -103,7 +103,6 @@ public class FiniteWorldGenerator : MonoBehaviour
     private void onChunkLoaded(Chunk chunk) {
         count++;
         if (count == (chunkSize.x * chunkSize.y)) {
-            Debug.Log("loading " + count);
             OnAllLoaded();
         }
     }

@@ -41,14 +41,14 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         chunkSize = new XY(finiteWorldGenerator.meshSettings.VerticesPerLineCount);
 
         startPosition = new GameObject("StartPosition");
-        startPosition.transform.position = GetPositionFromPathData(pathData.start) + Vector3.up*20;
+        startPosition.transform.position = GetPositionFromPathData(pathData.start);
         startPosition.transform.parent = this.transform.parent;
         defaultCamera.transform.position = new Vector3(startPosition.transform.position.x, defaultCamera.transform.position.y, startPosition.transform.position.z);
         return startPosition.transform;
     }
 
     private void FiniteWorldGenerator_onWorldReady() {
-        
+        SetStartHeight();
 
         playerManager.revivingPlace = startPosition.transform;
         players =  playerManager.CreatePlayerHeroes();
@@ -82,7 +82,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
                 EntitySettings entitySettings = new EntitySettings();
                 bool canSpawn = false;
                 foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                    if (entity.canStaticSpawn && entity.spawnChance < random) {
+                    if (entity.canStaticSpawn && entity.spawnChance >= random) {
                         entitySettings = entity;
                         canSpawn = true;
                     }
@@ -99,7 +99,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             EntitySettings entitySettings = new EntitySettings();
             bool canSpawn = false;
             foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-                if (entity.canStaticSpawn && entity.spawnChance < random) {
+                if (entity.canStaticSpawn && entity.spawnChance >= random) {
                     entitySettings = entity;
                     canSpawn = true;
                 }
@@ -114,12 +114,16 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         SpawnI(false);
     }
 
-    private void SpawnI(bool isI = false) {
+    private void SpawnIteration() {
+        SpawnI(true);
+    }
+
+    private void SpawnI(bool isIteration = false) {
         float random = Random.Range(0f, 1f);
         EntitySettings entitySettings = new EntitySettings();
         bool canSpawn = false;
         foreach (EntitySettings entity in worldEntitySettings.entitySettings) {
-            if(entity.canDynamicSpawn && entity.spawnChance < random) {
+            if(entity.canDynamicSpawn && entity.spawnChance >= random) {
                 entitySettings = entity;
                 canSpawn = true;
             }
@@ -131,10 +135,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
         }
 
-        count++;
-        if (!isI) {
-            for(int i = 0; i < count % 5; i++) {
-                SpawnI(true);
+        
+        if (!isIteration) {
+            count++;
+            for (int i = 0; i < count / 5; i++) {
+                Invoke(nameof(SpawnIteration), .5f);
             }
         }
     }
@@ -171,5 +176,13 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         int x = (int)(vector2.x - pathData.sizeX / 2f + ((chunkMatrix.x % 2 == 0) ? chunkSize.x / 2 : 0));
         int z = (int)(-vector2.y + pathData.sizeY / 2f + ((chunkMatrix.y % 2 == 0) ? chunkSize.y / 2 : 0));
         return new Vector3(x, heightMap.values[(int)vector2.x, (int)vector2.y], z);
+    }
+
+    private void SetStartHeight() {
+        int iteration = 0;
+        while (!Physics.Raycast(startPosition.transform.position + Vector3.down*10, Vector3.down, out RaycastHit raycastHit, 1000f, 1 << LayerMask.NameToLayer("Ground")) && iteration < 100) {
+            startPosition.transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y + 2, startPosition.transform.position.z);
+            iteration++;
+        }
     }
 }

@@ -13,4 +13,5 @@ public class UnitData : ScriptableObject
     public float staminaRegen;
     public float staminaCooldown;
     public float armor;
+    public bool canDrown;
 }

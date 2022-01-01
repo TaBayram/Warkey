@@ -26,9 +26,10 @@ public class MissionEndManager : MonoBehaviour
 
     private void CheckMissionEnd() {
         if(PhotonNetwork.IsMasterClient && playersInside.Count == GameTracker.Instance.GetPlayerTrackers().Count) {
-            Debug.Log("End");
+            GameTracker.Instance.NetworkManager.SendExperience(225);
             LoadScene.SceneIndex = LoadScene.Scenes.Camp;
             SceneManager.LoadScene("PersistentScene");
+
         }
     }
 }

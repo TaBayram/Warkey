@@ -232,7 +232,7 @@ public static class PathGenerator
         }
 
         bool IsOnCorner(Vector2 vector) {
-            const int dist = 20;
+            const int dist = 30;
             return (pathData.start-vector).magnitude > 25 && (vector.x >= length.x - dist || vector.x <= dist || vector.y >= length.y - dist || vector.y <= dist);
         }
 

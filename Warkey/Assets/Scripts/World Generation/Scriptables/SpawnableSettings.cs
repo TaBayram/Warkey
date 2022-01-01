@@ -19,6 +19,8 @@ public class ObjectSettings
     public GameObject[] gameObjects;
     public int spawnLimit;
     public bool isNetworkObject;
+    public bool handleVisibility;
+    public int visibilityLODIndex;
     public bool useNoise;
     public NoiseSettings noiseSettings;
     [Range(0, 1)]
