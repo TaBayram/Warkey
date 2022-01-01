@@ -28,12 +28,12 @@ public class GamePlayMenu : MonoBehaviour
             if (GameIsPaused)
             {
                 Resume();
-                GameState.CurrentState = GameState.State.ingame;
+                
             }
             else
             {
                 Pause();
-                GameState.CurrentState = GameState.State.settings;
+                
             }
 
         }
@@ -44,6 +44,7 @@ public class GamePlayMenu : MonoBehaviour
         inGameMenuUI.SetActive(false);
         //Time.timeScale = 1f;
         GameIsPaused = false;
+        GameState.CurrentState = GameState.State.ingame;
     }
 
     private void Pause()
@@ -51,12 +52,16 @@ public class GamePlayMenu : MonoBehaviour
         inGameMenuUI.SetActive(true);
         //Time.timeScale = 0f;
         GameIsPaused = true;
+        GameState.CurrentState = GameState.State.settings;
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit!");
-        SceneManager.LoadScene(0);
+        if(SceneManager.GetActiveScene().buildIndex == 1) {
+            Application.Quit();
+        }
+        else
+            SceneManager.LoadScene(1);
     }
 }
 

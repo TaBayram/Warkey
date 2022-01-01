@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Default
   health: 80
-  healthRegen: 15
+  healthRegen: 10
   healthCooldown: 2
   stamina: 100
   staminaRegen: 10

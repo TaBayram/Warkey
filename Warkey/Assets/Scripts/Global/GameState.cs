@@ -13,5 +13,5 @@ public static class GameState
 
     public static System.Action<State> onStateChange;
 
-    public static State CurrentState { get => currentState; set { currentState = value; onStateChange(value); } }
+    public static State CurrentState { get => currentState; set { currentState = value; onStateChange?.Invoke(value); } }
 }

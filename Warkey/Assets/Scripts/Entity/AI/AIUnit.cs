@@ -38,7 +38,6 @@ public class AIUnit : Unit
     public override void TakeDamage(float damage) {
 
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
-        Debug.Log(damage);
     }
 
     [PunRPC]

@@ -65,13 +65,16 @@ public class PlayerTracker
         }
         this.experience %= levelExperienceCost;
         onExperienceChange?.Invoke(this);
+
+        playerStorageData.experience = this.experience;
         playerStorage.Save(playerStorageData);
     }
 
     public void AddLevel(int level) {
-        level += level;
+        this.level += level;
         onLevelUp?.Invoke(this);
 
+        playerStorageData.level = this.level;
         playerStorage.Save(playerStorageData);
     }
 

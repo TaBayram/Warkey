@@ -18,6 +18,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [HideInInspector] public List<GameObject> spawnedPlayers = new List<GameObject>();    
     [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
 
+    public AudioListener audioListener;
+
     private bool isSceneChanging = false;
     private int index;
 
@@ -44,6 +46,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Y) && !isSceneChanging) {
+            audioListener.enabled = true;
             PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
             player.ChangeHeroByIndex(player.PrefabIndex + 1);
             PhotonNetwork.Destroy(player.Hero);
@@ -62,6 +65,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
         if(player != null) {
+            audioListener.enabled = false;
             player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, playerSpawnLocations[index].position, Quaternion.identity);
             spawnedPlayers.Add(player.Hero);
         }
