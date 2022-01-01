@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour,IWidget
     public event System.Action<IWidget.State> onStateChange;
 
     private float staminaRegenCooldown = 1f;
+    private float healthRegenCooldown = 1f;
 
     protected PhotonView photonView;
 
@@ -92,6 +93,7 @@ public class Unit : MonoBehaviour,IWidget
     {
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
+        healthRegenCooldown = health.Cooldown;
         if (health.Current <= 0)
         {
             Die();
@@ -134,8 +136,14 @@ public class Unit : MonoBehaviour,IWidget
 
     float drownCooldown;
 
+
     void RegenerateFields() {
-        health.Current += health.Regen*regenInterval;
+        if (healthRegenCooldown <= 0)
+            health.Current += health.Regen * regenInterval;
+        else
+            healthRegenCooldown -= regenInterval;
+
+        
         if (staminaRegenCooldown <= 0)
             stamina.Current += stamina.Regen * regenInterval;
         else

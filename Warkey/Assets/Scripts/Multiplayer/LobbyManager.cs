@@ -119,8 +119,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         LoadScene.SceneIndex = LoadScene.Scenes.World;
         if (Random.Range(0, 2) == 0)
-            SceneManager.LoadScene((int)LoadScene.Scenes.World);
+            PhotonNetwork.LoadLevel((int)LoadScene.Scenes.World);
         else
-            SceneManager.LoadScene((int)LoadScene.Scenes.Winter);
+            PhotonNetwork.LoadLevel((int)LoadScene.Scenes.Winter);
     }
 }
