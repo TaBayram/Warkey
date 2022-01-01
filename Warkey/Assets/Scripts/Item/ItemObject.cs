@@ -32,10 +32,17 @@ public class ItemObject : MonoBehaviour, IItem
    
     public ItemPicked PickUp()
     {
-        photonView.RPC(nameof(DestroyItem), RpcTarget.All);
-        isPicked = true;
-        return new ItemPicked(sprite,Type,amount,time);
+        if (photonView.Owner != PhotonNetwork.LocalPlayer)
+        {
+            photonView.RPC(nameof(DestroyItem), RpcTarget.All);         
+        }
+        else
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
 
+        isPicked = true;
+        return new ItemPicked(sprite, Type, amount, time);
     }
 
 

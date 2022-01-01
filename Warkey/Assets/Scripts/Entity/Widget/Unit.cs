@@ -88,7 +88,6 @@ public class Unit : MonoBehaviour,IWidget
         damage = damage * (1 - Armor / 100);
         if (damage == 0) return;
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
-        Debug.Log(damage);
     }
 
     [PunRPC]
@@ -101,7 +100,6 @@ public class Unit : MonoBehaviour,IWidget
         {
             Die();
         }
-        Debug.Log(damage);
     }
 
     public void Heal(float heal) {
