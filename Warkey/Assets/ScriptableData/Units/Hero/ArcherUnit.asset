@@ -15,7 +15,7 @@ MonoBehaviour:
   unitName: Paladin
   health: 75
   healthRegen: 5
-  healthCooldown: 0
+  healthCooldown: 5
   stamina: 100
   staminaRegen: 10
   staminaCooldown: 1
