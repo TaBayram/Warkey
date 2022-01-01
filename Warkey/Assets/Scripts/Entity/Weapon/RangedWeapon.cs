@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class RangedWeapon : Weapon
 {
@@ -60,7 +61,7 @@ public class RangedWeapon : Weapon
 	private IEnumerator Shoot(Vector3 entityVelocity) {
 		yield return new WaitForSeconds(launchDelay);
 		Vector3 aimDir = (mouseWorldPosition - muzzle.position).normalized;
-		Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<Projectile>();
+		Projectile newProjectile = PhotonNetwork.Instantiate(projectile.name, muzzle.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<Projectile>();
 		newProjectile.speed = (launchSpeed);
 		newProjectile.damage = attackDamage;
 		newProjectile.straighten = true;
