@@ -89,7 +89,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -141,7 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b132ef56a29af764baa85750ebf5a214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathClip: {fileID: 8300000, guid: d566f4732ed019d4ba78f7ac25823398, type: 3}
+  bornClip: {fileID: 8300000, guid: 6d7c46c0e38658f48b1dd4f8f6d6eaed, type: 3}
+  deathClip: {fileID: 8300000, guid: 90bc16dd5560949419f69d509e50e700, type: 3}
+  attackClip: {fileID: 8300000, guid: 2b5a381cf72f8e142ac2464b1c614071, type: 3}
+  hitClip: {fileID: 8300000, guid: 6d972958bbff1e740935ad764e6afa4b, type: 3}
 --- !u!1 &7514088342993138541
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153aa35c06b18c14980ea966303ee45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  widgetAudio: {fileID: 2269527320993172786}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -6,13 +6,11 @@ public class TargetWeapon : Weapon
 {
     private const int maxCombo = 3;
     private const float nextAttackInputWaitTime = 0.50f;
-
     [SerializeField] protected float attackSpeed = 1f;
     [SerializeField] protected float baseDamage = 20;
     [SerializeField] protected int maxTargetPerAttack = 0;
     [SerializeField] TargetWeaponAttack[] attacks;
     [SerializeField] AnimationClip defendClip;
-    [SerializeField] AudioSource audioSource;
     
 
     private bool hasPressedForCombo = false;
@@ -50,6 +48,7 @@ public class TargetWeapon : Weapon
     }
 
     private void StartAttack() {
+        
         alreadyHit.Clear();
         coroutine = StartCoroutine(Cooldown());
         attackStartTime = Time.time;
@@ -57,6 +56,7 @@ public class TargetWeapon : Weapon
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
         OnRequest("attackSpeed", 1 / attackSpeed);
         Invoke(nameof(TryDamage), attacks[currentAttackIndex].damageDelay * currentAttackSpeed);
+        OnAttack();
         OnAnimationStart();
         Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);
     }
@@ -140,6 +140,7 @@ public class TargetWeapon : Weapon
             
         }
     }
+
 
     public override void Defend(bool pressed) {
         if (pressed)

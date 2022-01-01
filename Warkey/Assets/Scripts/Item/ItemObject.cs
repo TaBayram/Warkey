@@ -9,16 +9,44 @@ public class ItemObject : MonoBehaviour, IItem
     [SerializeField] private IItem.type type;
     [SerializeField] private float amount;
     [SerializeField] private float time;
+    PhotonView photonView;
 
     private bool isPicked;
 
     public bool IsPicked { get => isPicked; }
     public IItem.type Type { get => type; }
 
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
+
+    [PunRPC]
+    public void DestroyItem()
+    {
+        if (photonView.Owner == PhotonNetwork.LocalPlayer)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+    }
+   
     public ItemPicked PickUp()
     {
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.Owner != PhotonNetwork.LocalPlayer)
+        {
+            photonView.RPC(nameof(DestroyItem), RpcTarget.All);         
+        }
+        else
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+
         isPicked = true;
-        return new ItemPicked(sprite,Type,amount,time);
+        return new ItemPicked(sprite, Type, amount, time);
     }
+
+
+
+    
+
 }

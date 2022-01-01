@@ -52,6 +52,9 @@ public class AIUnit : Unit
         {
             Die();
         }
+        else {
+            widgetAudio?.PlayAudio(WidgetAudio.Name.gotHit);
+        }
     }
 
     void SetLayerRecursively(GameObject obj, int newLayer  ) {

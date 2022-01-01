@@ -89,7 +89,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -141,7 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b132ef56a29af764baa85750ebf5a214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bornClip: {fileID: 0}
   deathClip: {fileID: 8300000, guid: d566f4732ed019d4ba78f7ac25823398, type: 3}
+  attackClip: {fileID: 0}
+  hitClip: {fileID: 0}
 --- !u!1 &7514088342993138541
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +203,6 @@ MonoBehaviour:
   - index: 0
     behaviours: []
     components:
-    - {fileID: 0}
     - {fileID: 8089589246127135789}
 --- !u!1 &7958137458794860659
 GameObject:
@@ -374,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153aa35c06b18c14980ea966303ee45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  widgetAudio: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -393,8 +396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7655f5308bc6d7458e8fb532a3431df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ragdollPrefab: {fileID: 1486491131184644191, guid: f65346071d1ff1c4db2a2a100a651ebb, type: 3}
-  replace: {fileID: 0}
+  ragdollPrefab: {fileID: 4530537263107571506, guid: 831f20327ac8eab4c847dfeeb2188192, type: 3}
+  replace: {fileID: 9176293847969002577}
 --- !u!114 &4314564219512146382
 MonoBehaviour:
   m_ObjectHideFlags: 0

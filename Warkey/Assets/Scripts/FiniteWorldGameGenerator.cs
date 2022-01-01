@@ -43,7 +43,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
         startPosition = Instantiate(worldEntitySettings.MissionStartAreaPrefab, GetPositionFromPathData(pathData.start), Quaternion.identity);
         startPosition.transform.parent = this.transform.parent;
-        defaultCamera.transform.position = new Vector3(startPosition.transform.position.x, defaultCamera.transform.position.y, startPosition.transform.position.z);
+        defaultCamera.transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z);
         return startPosition.transform;
     }
 
@@ -65,9 +65,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         endPosition.transform.parent = this.transform.parent;
 
         if (PhotonNetwork.IsMasterClient) {
-            InvokeRepeating(nameof(Spawn), 30, 20);
-            CreateOnEnd();
+            InvokeRepeating(nameof(Spawn), 30, 30);
             return;
+            CreateOnEnd();
             CreateOnPath(pathData, true);
         }
     }
@@ -106,10 +106,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         EntitySettings entitySettings = new EntitySettings();
         if (!GetPrefab(out entitySettings,false,true)) return;
 
-        foreach (GameObject player in players) {
-            Vector3 position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
-            GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
-        }
+        var players = GameTracker.Instance.GetPlayerTrackers();
+        var player = players[Random.Range(0, players.Count)];
+        Vector3 position = FindPosition(player.Hero.transform.position, entitySettings.spawnDistance, 10);
+        GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
+        
 
         
         if (!isIteration) {
@@ -172,7 +173,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
     private void SetStartHeight() {
         int iteration = 0;
-        while (!Physics.Raycast(startPosition.transform.position + Vector3.down*10, Vector3.down, out RaycastHit raycastHit, 1000f, 1 << LayerMask.NameToLayer("Ground")) && iteration < 100) {
+        while (!Physics.Raycast(startPosition.transform.position + Vector3.down*20, Vector3.down, out RaycastHit raycastHit, 1000f, 1 << LayerMask.NameToLayer("Ground")) && iteration < 100) {
             startPosition.transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y + 2, startPosition.transform.position.z);
             iteration++;
         }

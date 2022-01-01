@@ -6,13 +6,11 @@ public class MeleeWeapon : Weapon
 {
     private const int maxCombo = 3;
     private const float nextAttackInputWaitTime = 0.50f;
-
     [SerializeField] protected float attackSpeed = 1f;
     [SerializeField] protected float baseDamage = 20;
     [SerializeField] protected int maxTargetPerAttack = 0;
     [SerializeField] MeleeWeaponAttack[] attacks;
     [SerializeField] AnimationClip defendClip;
-    [SerializeField] AudioSource audioSource;
     
 
     private bool hasPressedForCombo = false;
@@ -56,6 +54,7 @@ public class MeleeWeapon : Weapon
         currentAttackSpeed = attackSpeed;
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
         OnRequest("attackSpeed", 1 / attackSpeed);
+        OnAttack();
         OnAnimationStart();
         Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);
     }

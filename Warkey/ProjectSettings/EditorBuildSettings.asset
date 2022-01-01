@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
-    guid: 2d21ff28a4d172443a0bf6f3a1d7f697
+    path: Assets/Scenes/LobbyCampScene.unity
+    guid: afa03220cbee0c748b3cdbb24290b5ac
   - enabled: 1
     path: Assets/Scenes/CampScene.unity
     guid: ee2c7eeb25d40e540bdc82c9cc73da64

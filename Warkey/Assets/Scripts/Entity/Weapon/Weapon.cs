@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [HideInInspector] public Transform parent;
+    [SerializeField] protected AudioSource audioSource;
     public Sprite icon;
 
     public bool isMainHandRight;
+    public event System.Action onAttack;
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
     public event System.Action<float,Transform> onRotateRequest;
@@ -48,12 +50,7 @@ public abstract class Weapon : MonoBehaviour
         if (CurrentState == State.defending) {
             Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
             Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit1, 99f, enemyLayer)) {
-                aimTransform.position = raycastHit1.point;
-                mouseWorldPosition = raycastHit1.point;
-                centerPosition = ray.origin;
-            }
-            else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask)) {
                 aimTransform.position = raycastHit.point;
                 mouseWorldPosition = raycastHit.point;
                 centerPosition = ray.origin;
@@ -76,6 +73,10 @@ public abstract class Weapon : MonoBehaviour
 
     public void OnStateChange() {
         onStateChange?.Invoke(state);
+    }
+
+    public void OnAttack() {
+        onAttack?.Invoke();
     }
 
     public void OnRotateRequest(float duration = 0,Transform transform = null) {
