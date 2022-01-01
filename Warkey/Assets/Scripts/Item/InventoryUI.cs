@@ -18,7 +18,8 @@ public class InventoryUI : MonoBehaviour
         this.inventory = inventory;
         inventory.onItemAdded += Inventory_onItemAdded;
         inventory.onItemRemoved += Inventory_onItemRemoved;
-        RefreshInventoryItems();
+
+        Invoke(nameof(RefreshInventoryItems), 1);
     }
 
     private void Inventory_onItemRemoved(ItemPicked obj) {

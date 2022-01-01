@@ -15,49 +15,44 @@ MonoBehaviour:
   npcName: Ordome
   nPCDialogMessages:
   - dialogMessage:
-      message: My Lord
-      audio: {fileID: 8300000, guid: 8ec442a103a70d540986539cd9c3eac0, type: 3}
-    playerDialogIndexes: 000000000100000002000000
+      message: May the god protect you warrior!
+      audio: {fileID: 8300000, guid: 3e17aee32cfb56246aef9902e9e41066, type: 3}
+    playerDialogIndexes: 0000000003000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
-      message: I have a question for u
-      audio: {fileID: 8300000, guid: b2395187a41247d478909bcc72123b90, type: 3}
+      message: 'Yes, the Restless Sonmez has destroyed my house. Now they are coming
+        to this camp! Please help us! '
+      audio: {fileID: 8300000, guid: adef4bea50918b24f9e0437df256b7eb, type: 3}
     playerDialogIndexes: 0100000002000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
-      message: my daughter kidnapped
-      audio: {fileID: 8300000, guid: 4188b712d8c805c45a64e9eca75fe256, type: 3}
-    playerDialogIndexes: 0200000003000000
-    isExitMessage: 0
-    isQuestAccepter: 0
-  - dialogMessage:
-      message: thank u
-      audio: {fileID: 8300000, guid: f6180837cf6b78e4186ab2820c3e1bd5, type: 3}
+      message: Thank you! You must act now.
+      audio: {fileID: 8300000, guid: 2a77447e4e4728b43b904a0a183d7f08, type: 3}
     playerDialogIndexes: 
     isExitMessage: 0
     isQuestAccepter: 1
   - dialogMessage:
-      message: good bye
-      audio: {fileID: 8300000, guid: 7834e243968b73a4a8af1e25af75c8fd, type: 3}
+      message: Okay sir, May the God protect you.
+      audio: {fileID: 8300000, guid: 7685c97360415af4da080375b803e1cc, type: 3}
     playerDialogIndexes: 
     isExitMessage: 1
     isQuestAccepter: 0
   playerDialogMessages:
   - dialogMessage:
-      message: Yes
+      message: You look in trouble, old man.
       audio: {fileID: 0}
     npcDialogIndex: 1
   - dialogMessage:
-      message: What Happened
+      message: Help is on the way.
       audio: {fileID: 0}
     npcDialogIndex: 2
   - dialogMessage:
-      message: Bye
+      message: I can't do it right now.
       audio: {fileID: 0}
-    npcDialogIndex: 4
+    npcDialogIndex: 3
   - dialogMessage:
-      message: Let me help you
+      message: Goodbye
       audio: {fileID: 0}
     npcDialogIndex: 3

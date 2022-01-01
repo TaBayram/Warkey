@@ -8,6 +8,7 @@ public class WorldEntitySettings : ScriptableObject
     public EntitySettings[] entitySettings;
     public EntitySettings[] bossSettings;
     public GameObject MissionEndAreaPrefab;
+    public GameObject MissionStartAreaPrefab;
     public int staticSpawnAmount;
     
     public void SortByChance() {

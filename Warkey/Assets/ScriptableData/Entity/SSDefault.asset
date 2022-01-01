@@ -27,6 +27,7 @@ MonoBehaviour:
     isNetworkObject: 1
     handleVisibility: 0
     visibilityLODIndex: 0
+    needsNavMesh: 0
     useNoise: 0
     noiseSettings:
       normalizeMode: 0
@@ -45,10 +46,12 @@ MonoBehaviour:
   - enabled: 1
     gameObjects:
     - {fileID: 7958137458794860659, guid: 206baadb900c5ff48ad505c69a938c84, type: 3}
+    - {fileID: 7958137458794860659, guid: fae1c724a4de171499990953952336db, type: 3}
     spawnLimit: 5
     isNetworkObject: 1
     handleVisibility: 1
     visibilityLODIndex: 1
+    needsNavMesh: 1
     useNoise: 0
     noiseSettings:
       normalizeMode: 0

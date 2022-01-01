@@ -55,7 +55,7 @@ public class TargetWeapon : Weapon
         attackStartTime = Time.time;
         currentAttackSpeed = attackSpeed;
         currentAttackDamage = baseDamage * attacks[currentAttackIndex].damageMultiplier;
-        OnRequest("attackSpeed", attackSpeed);
+        OnRequest("attackSpeed", 1 / attackSpeed);
         Invoke(nameof(TryDamage), attacks[currentAttackIndex].damageDelay * currentAttackSpeed);
         OnAnimationStart();
         Invoke(nameof(OnAnimationEnd), attacks[currentAttackIndex].animationClip.length * attackSpeed);

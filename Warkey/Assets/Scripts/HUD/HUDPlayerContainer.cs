@@ -24,11 +24,14 @@ public class HUDPlayerContainer : MonoBehaviour
         }
 
         experienceBar.SetMaxValue(PlayerTracker.levelExperienceCost);
-        var localPlayer = GameTracker.Instance.GetLocalPlayerTracker(); 
+        BindListeners();
+    }
+
+    private void BindListeners() {
+        var localPlayer = GameTracker.Instance.GetLocalPlayerTracker();
         localPlayer.onLevelUp += HUDPlayerContainer_onLevelUp;
         localPlayer.onExperienceChange += HUDPlayerContainer_onExperienceChange;
         localPlayer.onHeroChanged += LocalPlayer_onHeroChanged;
-
 
         levelText.text = "" + localPlayer.Level;
         experienceBar.SetValue(localPlayer.Experience);
@@ -86,6 +89,13 @@ public class HUDPlayerContainer : MonoBehaviour
     public void updateWeapon(Weapon weapon)
     {
         weaponUI.UpdateInfo(weapon.icon);
+    }
+
+    private void OnDestroy() {
+        var localPlayer = GameTracker.Instance.GetLocalPlayerTracker();
+        localPlayer.onLevelUp -= HUDPlayerContainer_onLevelUp;
+        localPlayer.onExperienceChange -= HUDPlayerContainer_onExperienceChange;
+        localPlayer.onHeroChanged -= LocalPlayer_onHeroChanged;
     }
 
 }

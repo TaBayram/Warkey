@@ -21,6 +21,7 @@ public class ObjectSettings
     public bool isNetworkObject;
     public bool handleVisibility;
     public int visibilityLODIndex;
+    public bool needsNavMesh;
     public bool useNoise;
     public NoiseSettings noiseSettings;
     [Range(0, 1)]

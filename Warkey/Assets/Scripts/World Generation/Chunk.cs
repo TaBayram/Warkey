@@ -97,6 +97,15 @@ public class Chunk
         maxViewDistance = LODSettings.LODInfos[LODSettings.LODCount - 1].visibleDistanceThreshold;
     }
 
+    internal void onWorldReady() {
+        foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
+            if (objectData.Settings.needsNavMesh)
+                objectData.CreateObjects(true);
+        }
+
+        UpdateChunk();
+    }
+
     private void RegisterActions(SubChunk subChunk) {
         onLoadSubChunks += subChunk.LoadSubChunk;
         onSetVisibleChunk += subChunk.SetVisible;
@@ -152,8 +161,10 @@ public class Chunk
     private void OnSpawnableObjectDataListReceived(object enviromentObjects) {
         this.hasRequestedSpawnables = true;
         this.spawnableObjectDatas = (List<SpawnableObjectData>)enviromentObjects;
-        foreach (SpawnableObjectData objectData in spawnableObjectDatas)
-            objectData.CreateObjects(true);
+        foreach (SpawnableObjectData objectData in spawnableObjectDatas) {
+            if(!objectData.Settings.needsNavMesh)
+                objectData.CreateObjects(true);
+        }
 
         UpdateChunk();
     }

@@ -14,19 +14,6 @@ public class WorldPlayerManager : MonoBehaviour
         
     }
 
-    public void BindPlayerToHUD(GameObject obj) {
-        try {
-            hUDPlayerContainer.BindUnit(obj.GetComponent<Unit>());
-            if (obj.GetComponentInChildren<ItemPicker>() != null)
-                hUDPlayerContainer.SubscribeInventory(obj.GetComponentInChildren<ItemPicker>().Inventory);
-        }
-        catch (Exception _) {
-
-        }
-        
-
-    }
-
     public GameObject[] CreatePlayerHeroes() {
         GameObject[] heroes = new GameObject[1];
 
@@ -34,7 +21,6 @@ public class WorldPlayerManager : MonoBehaviour
             if (player.IsLocal) {
                 player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, transform.position, Quaternion.identity);
                 player.Hero.transform.parent = this.transform;
-                BindPlayerToHUD(player.Hero);
                 heroes[0] = player.Hero;
                 player.Hero.GetComponent<Entity>().onUnitStateChange += WorldPlayerManager_onUnitStateChange;
             }

@@ -94,6 +94,7 @@ public class FiniteWorldGenerator : MonoBehaviour
         allChunks.Add(chunk);
         chunk.onVisibleChanged += OnChunkVisibilityChanged;
         chunk.onChunkLoaded += onChunkLoaded;
+        onWorldReady += chunk.onWorldReady;
         chunk.Load(fallOffMap,true);
         
         onChunkCreated?.Invoke(chunk);
@@ -164,9 +165,10 @@ public class FiniteWorldGenerator : MonoBehaviour
 
     private void OnAllLoaded() {
         if (!isWorldReady) {
-            navMeshSurface.BuildNavMesh();
-            onWorldReady();
             isWorldReady = true;
+            navMeshSurface.BuildNavMesh();
+            onWorldReady.Invoke();
+            
         }
     }
 
