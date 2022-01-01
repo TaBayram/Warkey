@@ -179,7 +179,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8229531785357038033}
-  - {fileID: 3369306611204892923}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -435,7 +435,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9210449349698052208, guid: a0deee4b800b6de4dbb3905f85f508af, type: 3}
   m_PrefabInstance: {fileID: 5220280992379475015}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3369306611204892923
+--- !u!114 &350674573999559996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -459,15 +459,15 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: attackSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: isJumping
   - Type: 9
     SynchronizeType: 1
     Name: AttackOne
   - Type: 9
     SynchronizeType: 1
     Name: AttackTwo
-  - Type: 4
-    SynchronizeType: 1
-    Name: isJumping
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
