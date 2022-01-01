@@ -722,6 +722,10 @@ PrefabInstance:
       propertyPath: navMeshSurface
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5170746359156881649, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5467617250600483141, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: m_Name
       value: WorldManager

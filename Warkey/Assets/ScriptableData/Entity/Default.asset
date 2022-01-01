@@ -30,4 +30,5 @@ MonoBehaviour:
     spawnDistance: 10
   bossSettings: []
   MissionEndAreaPrefab: {fileID: 950307967065024318, guid: aedaee512a738e2468b214fc011b4834, type: 3}
+  MissionStartAreaPrefab: {fileID: 950307967065024318, guid: 69ac1f368f71ee444992816021022194, type: 3}
   staticSpawnAmount: 0
