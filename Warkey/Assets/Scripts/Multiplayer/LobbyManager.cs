@@ -63,7 +63,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
         if(player != null) {
             player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, playerSpawnLocations[index].position, Quaternion.identity);
-            FindObjectOfType<NetworkManager>().SendHero(player.Hero.GetComponent<PhotonView>().ViewID);
             spawnedPlayers.Add(player.Hero);
         }
 
