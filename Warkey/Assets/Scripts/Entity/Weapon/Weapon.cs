@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [HideInInspector] public Transform parent;
+    [SerializeField] protected AudioSource audioSource;
     public Sprite icon;
 
     public bool isMainHandRight;
+    public event System.Action onAttack;
     public event System.Action<State> onStateChange;
     public event System.Action<string, object> onAnimationChangeRequest;
     public event System.Action<float,Transform> onRotateRequest;
@@ -71,6 +73,10 @@ public abstract class Weapon : MonoBehaviour
 
     public void OnStateChange() {
         onStateChange?.Invoke(state);
+    }
+
+    public void OnAttack() {
+        onAttack?.Invoke();
     }
 
     public void OnRotateRequest(float duration = 0,Transform transform = null) {

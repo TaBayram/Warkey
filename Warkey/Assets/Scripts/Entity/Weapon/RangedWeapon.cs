@@ -48,6 +48,8 @@ public class RangedWeapon : Weapon
 
 	private void StartAttacking(Vector3 entityVelocity) {
 		if (Time.time > cooldown) {
+			OnAttack();
+			audioSource?.Play();
 			cooldown = Time.time + attackCooldown*attackSpeed;
 			StartCoroutine(Shoot(entityVelocity));
 			CurrentState = State.attacking;

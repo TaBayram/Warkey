@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour,IWidget
     protected void Start() {
         photonView = GetComponent<PhotonView>();
         InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
-        
+        Invoke(nameof(Born), .25f);
     }
 
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -62,6 +62,9 @@ public class Unit : MonoBehaviour,IWidget
     }
     protected void OnPropertyChanged(string name,FiniteField field) {
         FinitePropertyChanged?.Invoke(field, new PropertyChangedEventArgs(name));
+    }
+    public void Born() {
+        widgetAudio?.PlayAudio(WidgetAudio.Name.born);
     }
 
     public void Die() {
