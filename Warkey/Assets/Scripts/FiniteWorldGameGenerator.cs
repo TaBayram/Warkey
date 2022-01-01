@@ -65,9 +65,9 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         endPosition.transform.parent = this.transform.parent;
 
         if (PhotonNetwork.IsMasterClient) {
-            InvokeRepeating(nameof(Spawn), 30, 20);
-            CreateOnEnd();
+            InvokeRepeating(nameof(Spawn), 30, 30);
             return;
+            CreateOnEnd();
             CreateOnPath(pathData, true);
         }
     }
@@ -106,10 +106,11 @@ public class FiniteWorldGameGenerator : MonoBehaviour
         EntitySettings entitySettings = new EntitySettings();
         if (!GetPrefab(out entitySettings,false,true)) return;
 
-        foreach (GameObject player in players) {
-            Vector3 position = FindPosition(player.transform.position, entitySettings.spawnDistance, 10);
-            GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
-        }
+        var players = GameTracker.Instance.GetPlayerTrackers();
+        var player = players[Random.Range(0, players.Count)];
+        Vector3 position = FindPosition(player.Hero.transform.position, entitySettings.spawnDistance, 10);
+        GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
+        
 
         
         if (!isIteration) {

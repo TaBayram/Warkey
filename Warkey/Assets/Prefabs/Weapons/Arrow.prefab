@@ -88,7 +88,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.509
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   range: 0
   knockback: 0
   audioSource: {fileID: 3729996940929430250}
+  model: {fileID: 7385807539013083511}
 --- !u!114 &7842668258099350421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,9 +208,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 6087894524269620807}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -372,6 +373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6c9d2c1644d9c9458d4ae7bd2c38cae, type: 3}
+--- !u!1 &7385807539013083511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3139208842472227051, guid: f6c9d2c1644d9c9458d4ae7bd2c38cae, type: 3}
+  m_PrefabInstance: {fileID: 5615739268280639900}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7869046938681129933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2367597508242365009, guid: f6c9d2c1644d9c9458d4ae7bd2c38cae, type: 3}

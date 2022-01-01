@@ -44,7 +44,7 @@ public class GameTracker
 
     public PlayerTracker GetPlayerTracker(Player player) {
         foreach(PlayerTracker playerTracker in playerTrackers) {
-            if(playerTracker.Player.ActorNumber == player.ActorNumber) {
+            if(playerTracker.Player == player) {
                 return playerTracker;
             }
         }

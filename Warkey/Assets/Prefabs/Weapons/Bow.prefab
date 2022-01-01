@@ -225,9 +225,9 @@ MonoBehaviour:
   aimAnimation: {fileID: 1038152519482517614, guid: f85e0d7496655f949881f4f57a3f78fa, type: 3}
   attackSpeed: 1
   attackDamage: 50
-  launchSpeed: 25
+  launchSpeed: 40
   launchDelay: 0.2
-  attackCooldown: 0.5
+  attackCooldown: 1
   IsUnlimited: 1
   mainPool: 20
   subPool: 20

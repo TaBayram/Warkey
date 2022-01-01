@@ -708,6 +708,10 @@ PrefabInstance:
       propertyPath: photonView
       value: 
       objectReference: {fileID: 2464713899535096047}
+    - target: {fileID: 8708971559520427402, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
+      propertyPath: bornClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f9ad0e1b8a7be146845bfaf01b0f12e, type: 3}
     - target: {fileID: 9132493206066121570, guid: f7acb72cc6bc0e948811364e76c1cc67, type: 3}
       propertyPath: entity
       value: 

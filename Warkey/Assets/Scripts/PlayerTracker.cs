@@ -25,7 +25,7 @@ public class PlayerTracker
     public float Experience { get => experience; }
     public int Level { get => level; }
     public int Gold { get => gold; }
-    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); } }
+    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); GameTracker.Instance.NetworkManager?.SendHero(hero.GetComponent<PhotonView>().ViewID); } }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
     public Player Player { get => player; set => player = value; }
@@ -58,20 +58,23 @@ public class PlayerTracker
     }
 
     public void AddExperience(float xp) {
-        this.experience = (this.experience+xp) % levelExperienceCost;
-        onExperienceChange?.Invoke(this);
-        if(xp >= levelExperienceCost) {
-            int levelAmount = (int)(xp / levelExperienceCost);
+        this.experience += xp;
+        if(this.experience >= levelExperienceCost) {
+            int levelAmount = (int)(this.experience / levelExperienceCost);
             AddLevel(levelAmount);
         }
+        this.experience %= levelExperienceCost;
+        onExperienceChange?.Invoke(this);
 
+        playerStorageData.experience = this.experience;
         playerStorage.Save(playerStorageData);
     }
 
     public void AddLevel(int level) {
-        level += level;
+        this.level += level;
         onLevelUp?.Invoke(this);
 
+        playerStorageData.level = this.level;
         playerStorage.Save(playerStorageData);
     }
 
@@ -81,17 +84,6 @@ public class PlayerTracker
         level = playerStorageData.level;
         gold = playerStorageData.gold;
         prefabIndex = playerStorageData.heroIndex;
-
-        playerStorageData.level = 1;
-        playerStorageData.experience = 0;
-
-        playerStorage.Save(playerStorageData);
-        playerStorageData = playerStorage.Load();
-        experience = playerStorageData.experience;
-        level = playerStorageData.level;
-        gold = playerStorageData.gold;
-        prefabIndex = playerStorageData.heroIndex;
-
 
         heroPrefab = HeroesData.Instance.GetHeroByIndex(playerStorageData.heroIndex);
     }
