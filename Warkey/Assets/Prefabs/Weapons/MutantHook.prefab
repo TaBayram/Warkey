@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
+  audioSource: {fileID: 3129347296982348116}
   icon: {fileID: 0}
   isMainHandRight: 0
   animations: []
@@ -69,7 +70,6 @@ MonoBehaviour:
     knockbackMultiplier: 1
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: 0}
-  audioSource: {fileID: 3129347296982348116}
   particle: {fileID: 0}
 --- !u!135 &2253500774782337991
 SphereCollider:
@@ -125,7 +125,7 @@ AudioSource:
   m_GameObject: {fileID: 4514375347224432391}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 340ec8a76e0819e45b6f0c33f7669411, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -172,7 +172,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

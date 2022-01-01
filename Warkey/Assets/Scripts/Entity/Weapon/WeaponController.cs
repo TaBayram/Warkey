@@ -9,6 +9,7 @@ public class WeaponController : MonoBehaviour
 {
 	protected Entity entity;
 
+	[SerializeField] private WidgetAudio widgetAudio;
 	[SerializeField] private LayerMask enemyLayer;
     public Transform rightHand;
 	public Transform leftHand;
@@ -48,6 +49,7 @@ public class WeaponController : MonoBehaviour
         equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
         equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest;
         equippedWeapon.onRotateRequest += EquippedWeapon_onRotateRequest;
+        equippedWeapon.onAttack += EquippedWeapon_onAttack; ;
 		equippedWeapon.enemyLayer = enemyLayer;
 		equippedWeapon.parent = transform;
 
@@ -55,6 +57,10 @@ public class WeaponController : MonoBehaviour
 
 		onWeaponChange?.Invoke(weapon);
 	}
+
+    private void EquippedWeapon_onAttack() {
+		widgetAudio?.PlayAudio(WidgetAudio.Name.attacks);
+    }
 
     private void EquippedWeapon_onRotateRequest(float obj,Transform transform) {
 		entity.RotateToCameraTarget(obj, transform);

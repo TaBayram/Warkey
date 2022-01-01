@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Paladin
   health: 100
-  healthRegen: 0.5
-  healthCooldown: 0
+  healthRegen: 1
+  healthCooldown: 5
   stamina: 100
   staminaRegen: 10
   staminaCooldown: 2

@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour,IWidget
     public event System.Action<IWidget.State> onStateChange;
 
     private float staminaRegenCooldown = 1f;
+    private float healthRegenCooldown = 1f;
 
     protected PhotonView photonView;
 
@@ -50,7 +51,7 @@ public class Unit : MonoBehaviour,IWidget
     protected void Start() {
         photonView = GetComponent<PhotonView>();
         InvokeRepeating("RegenerateFields", 0.0f, regenInterval);
-        
+        Invoke(nameof(Born), .25f);
     }
 
     private void Stamina_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -61,6 +62,9 @@ public class Unit : MonoBehaviour,IWidget
     }
     protected void OnPropertyChanged(string name,FiniteField field) {
         FinitePropertyChanged?.Invoke(field, new PropertyChangedEventArgs(name));
+    }
+    public void Born() {
+        widgetAudio?.PlayAudio(WidgetAudio.Name.born);
     }
 
     public void Die() {
@@ -92,6 +96,7 @@ public class Unit : MonoBehaviour,IWidget
     {
         onDamageTaken?.Invoke(damage);
         health.Current -= damage;
+        healthRegenCooldown = health.Cooldown;
         if (health.Current <= 0)
         {
             Die();
@@ -134,8 +139,14 @@ public class Unit : MonoBehaviour,IWidget
 
     float drownCooldown;
 
+
     void RegenerateFields() {
-        health.Current += health.Regen*regenInterval;
+        if (healthRegenCooldown <= 0)
+            health.Current += health.Regen * regenInterval;
+        else
+            healthRegenCooldown -= regenInterval;
+
+        
         if (staminaRegenCooldown <= 0)
             stamina.Current += stamina.Regen * regenInterval;
         else

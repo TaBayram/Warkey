@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
   m_audioClip: {fileID: 8300000, guid: c818594189dec104a99e009f7273cdb0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.159
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -88,7 +88,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
+  audioSource: {fileID: 5865703988633012473}
   icon: {fileID: 0}
   isMainHandRight: 1
   animations: []
@@ -194,7 +195,7 @@ MonoBehaviour:
   maxTargetPerAttack: 0
   attacks:
   - animationClip: {fileID: -203655887218126122, guid: 5de2634dfaddddb44bf8eced338251d3, type: 3}
-    damageActivationDelay: 0.8
+    damageActivationDelay: 0.4
     damageEndTime: 1
     damageMultiplier: 1
     knockbackMultiplier: 3
@@ -212,7 +213,6 @@ MonoBehaviour:
     knockbackMultiplier: 5
     movement: {x: 0, y: 0, z: 0}
   defendClip: {fileID: -203655887218126122, guid: 7520581fd68c6954fbf737495f153dc5, type: 3}
-  audioSource: {fileID: 5865703988633012473}
   particle: {fileID: 7702604543404089153}
 --- !u!135 &8532591720314913252
 SphereCollider:

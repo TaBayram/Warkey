@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Arrow : Projectile
 {
+    [SerializeField] private AudioSource audioSource;
     private void Start() {
     }
 
@@ -11,6 +12,7 @@ public class Arrow : Projectile
         Ray ray = new Ray(transform.position, transform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, moveDistance, layerMask, QueryTriggerInteraction.Collide)) {
+            audioSource?.Play();
             OnHitObject(hit);
         }
     }
