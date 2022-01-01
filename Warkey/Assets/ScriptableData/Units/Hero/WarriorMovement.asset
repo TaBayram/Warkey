@@ -18,4 +18,4 @@ MonoBehaviour:
   sprintSpeed: 16
   sprintStaminaCost: 0.35
   jumpHeight: 5
-  jumpForwardScale: 2
+  jumpForwardScale: 1.5

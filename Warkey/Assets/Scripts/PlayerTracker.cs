@@ -25,7 +25,7 @@ public class PlayerTracker
     public float Experience { get => experience; }
     public int Level { get => level; }
     public int Gold { get => gold; }
-    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); } }
+    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); GameTracker.Instance.NetworkManager?.SendHero(hero.GetComponent<PhotonView>().ViewID); } }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
     public Player Player { get => player; set => player = value; }
