@@ -54,15 +54,17 @@ public class SpawnableObjectData
         for (int i = 0; i < objectPlaces.Count; i++) {
             GameObject gameObject;
             int index = RandomHelper.Range(0, settings.gameObjects.Length, ref random);
+            Vector3 position = parent.TransformPoint(objectPlaces[i].position);
             if (settings.isNetworkObject) {
-                gameObject = PhotonNetwork.Instantiate(settings.gameObjects[index].name, enviromentHolder.transform.position, Quaternion.identity);
+                gameObject = PhotonNetwork.Instantiate(settings.gameObjects[index].name, position, Quaternion.identity);
                 gameObject.transform.parent = enviromentHolder.transform;
             }
             else {
                 gameObject = MonoBehaviour.Instantiate(settings.gameObjects[index], enviromentHolder.transform);
+                gameObject.transform.position = position;
             }
 
-            gameObject.transform.localPosition = objectPlaces[i].position;
+            //gameObject.transform.localPosition = objectPlaces[i].position;
             gameObject.transform.Rotate(objectPlaces[i].rotation.x, 0, objectPlaces[i].rotation.z);
 
             gameObjects.Add(gameObject);

@@ -17,6 +17,8 @@ public class HUDPlayerContainer : MonoBehaviour
 
     [SerializeField] private GameObject onlyForTest;
 
+    private bool hasBinded = false;
+
     private void Start() {
         if (onlyForTest) {
             BindUnit(onlyForTest.GetComponent<Unit>());
@@ -28,7 +30,9 @@ public class HUDPlayerContainer : MonoBehaviour
     }
 
     private void BindListeners() {
+        if (hasBinded) return;
         var localPlayer = GameTracker.Instance.GetLocalPlayerTracker();
+        if (localPlayer == null) Invoke(nameof(BindListeners), 2);
         localPlayer.onLevelUp += HUDPlayerContainer_onLevelUp;
         localPlayer.onExperienceChange += HUDPlayerContainer_onExperienceChange;
         localPlayer.onHeroChanged += LocalPlayer_onHeroChanged;

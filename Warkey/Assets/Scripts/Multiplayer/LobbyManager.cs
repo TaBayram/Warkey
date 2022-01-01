@@ -57,7 +57,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer) {
         GameTracker.Instance.AddPlayer(newPlayer);
-
     }    
 
     public void SpawnPlayerHero() {
@@ -112,7 +111,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             manager.enabled = false;
         }
 
-        Invoke(nameof(ChangeScene), 2);
+        Invoke(nameof(ChangeScene), 3);
     }
 
     private void ChangeScene() {
