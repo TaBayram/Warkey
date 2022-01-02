@@ -35,6 +35,8 @@ public class AggresiveAIBehaviour : AIBehaviour
         if (lookAtTarget) {
             navMeshAgent.ResetPath();
             lookAtTarget = false;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.isStopped = true;
             transform.LookAt(target);
         }
             

@@ -10,15 +10,17 @@ public class PlayerStorage
     private StorageHandler storageHandler;
     private PlayerStorageData loaded;
     private PlayerStorageData saved;
+    private string nickname;
 
-    public PlayerStorage() {
+    public PlayerStorage(string nickname) {
+        this.nickname = nickname;
         storageHandler = new StorageHandler();
     }
 
     
 
     public PlayerStorageData Load() {
-        var obj = storageHandler.LoadData(filename);
+        var obj = storageHandler.LoadData(filename + nickname);
         if(obj == null) {
             loaded = new PlayerStorageData();
             loaded.experience = 0;
@@ -36,7 +38,7 @@ public class PlayerStorage
     public bool Save(PlayerStorageData save) {
         try {
             saved = save;
-            storageHandler.SaveData(save, filename);
+            storageHandler.SaveData(save, filename + nickname);
             return true;
         }
         catch (Exception) {

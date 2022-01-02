@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,14 @@ public class AimBorderManager : MonoBehaviour
     private void WeaponController_onWeaponChange(Weapon weapon) {
         float range = weapon.AttackRange;
         foreach(ColliderInfo colliderInfo in colliders) {
-            colliderInfo.boxCollider.transform.localPosition = new Vector3(colliderInfo.coordinate.x * range, 0f, colliderInfo.coordinate.y * range);
-            colliderInfo.boxCollider.size = new Vector3(colliderInfo.coordinate.y * range, range * 2f, colliderInfo.coordinate.x * range);
+            if (colliderInfo.boxCollider.enabled) {
+                colliderInfo.boxCollider.transform.localPosition = new Vector3(colliderInfo.coordinate.x * range, 0f, colliderInfo.coordinate.y * range);
+                colliderInfo.boxCollider.size = new Vector3(colliderInfo.coordinate.y * range, range * 2f, colliderInfo.coordinate.x * range);
+            }
+            
         }
     }
+
 
     [System.Serializable]
     private struct ColliderInfo

@@ -38,8 +38,19 @@ public class GameTracker
 
     public void RemovePlayer(Player player) {
         PlayerTracker exists = GetPlayerTracker(player);
-        if ((exists) != null) return;
+        if ((exists) == null) return;
+        exists.Removed();
         playerTrackers.Remove(exists);
+    }
+
+    public void RemoveInactive() {
+        for(int i = playerTrackers.Count-1; i >= 0; --i) {
+            if (playerTrackers[i].Player.IsInactive) {
+                playerTrackers[i].Removed();
+                playerTrackers.RemoveAt(i);
+            }
+                
+        }
     }
 
     public PlayerTracker GetPlayerTracker(Player player) {

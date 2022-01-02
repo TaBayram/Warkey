@@ -160,7 +160,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             if (iteration > 0)
                 return FindPosition(position, distance, iteration - 1);
             else
-                return transform.position;
+                return position;
         }
     }
 

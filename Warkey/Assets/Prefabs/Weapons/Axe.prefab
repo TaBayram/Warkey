@@ -42,9 +42,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
-  m_audioClip: {fileID: 8300000, guid: c818594189dec104a99e009f7273cdb0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5f465e0722a38ba46addb0dacb72b34e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.159
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 65536
-  attackSpeed: 1
+  attackSpeed: 0.8
   baseDamage: 20
   maxTargetPerAttack: 0
   attacks:

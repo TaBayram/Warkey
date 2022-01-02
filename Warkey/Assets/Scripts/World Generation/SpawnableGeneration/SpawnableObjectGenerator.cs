@@ -13,8 +13,9 @@ public static class SpawnableObjectGenerator
         if (settings.useNoise) {
             noiseMap = Noise.GenerateNoiseMap(heightMap.GetLength(0), heightMap.GetLength(1), settings.noiseSettings, coord);
         }
-
+        poissonDiscSettings.seed += settings.seedAdjustment;
         List<Vector2> poissonDiscGrid = PoissonDiscSampling.GeneratePoints(poissonDiscSettings,settings.blockRadius);
+        poissonDiscSettings.seed -= settings.seedAdjustment;
         List<ValidPoint> validGrid = new List<ValidPoint>();
         int mapWidth = heightMap.GetLength(0);
         int mapHeight = heightMap.GetLength(1);

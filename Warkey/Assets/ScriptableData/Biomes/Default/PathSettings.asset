@@ -24,7 +24,7 @@ MonoBehaviour:
   height:
     min: 0
     max: 2
-  negativeStrength: 0.3
+  negativeStrength: 0.15
   branchSettings:
   - branchChance: 0.005
     branchIteration: 500

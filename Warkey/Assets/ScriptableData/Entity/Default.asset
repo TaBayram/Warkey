@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Default
   m_EditorClassIdentifier: 
   entitySettings:
+  - prefab: {fileID: 7958137458794860659, guid: 5561747d88bfdf04a88ed05854ecb062, type: 3}
+    canDynamicSpawn: 1
+    canStaticSpawn: 0
+    spawnChance: 0.15
+    spawnDistance: 3
   - prefab: {fileID: 7958137458794860659, guid: aa9fb0b15ccde364ebbfac3f6aa5b57f, type: 3}
     canDynamicSpawn: 1
     canStaticSpawn: 1

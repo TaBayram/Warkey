@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ public class GamePlayMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject inGameMenuUI;
     GameObject settingsMenu, audioSettingsMenu, graphicSettingsMenu;
+
+    public bool quitGame = false;
     void Start()
     {
         settingsMenu = GameObject.Find("settingsMenu");
@@ -57,11 +60,20 @@ public class GamePlayMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 1) {
+        if(quitGame) {
             Application.Quit();
         }
-        else
-            SceneManager.LoadScene(1);
+        else {
+            if (PhotonNetwork.IsMasterClient) {
+                GameState.CurrentState = GameState.State.ingame;
+                PhotonNetwork.LoadLevel((int)LoadScene.Scenes.Camp);
+            }
+            else {
+                PhotonNetwork.LeaveRoom();
+                SceneManager.LoadScene((int)LoadScene.Scenes.Lobby);
+            }
+        }
+            
     }
 }
 

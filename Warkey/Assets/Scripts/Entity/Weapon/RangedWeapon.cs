@@ -42,7 +42,14 @@ public class RangedWeapon : Weapon
 		aimTransform.parent = transform.root;
 	}
 
-	public override void Attack(Vector3 entityVelocity) {
+    protected override void LateUpdate() {
+        base.LateUpdate();
+		/*if (CurrentState == State.attacking) {
+			OnRotateRequest(0.015f * Time.deltaTime, aimTransform);
+		}*/
+	}
+
+    public override void Attack(Vector3 entityVelocity) {
 		if (CurrentState == State.defending)
 			StartAttacking(entityVelocity);			
 	}

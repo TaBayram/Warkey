@@ -227,7 +227,7 @@ MonoBehaviour:
   attackDamage: 50
   launchSpeed: 40
   launchDelay: 0.2
-  attackCooldown: 1
+  attackCooldown: 0.8
   IsUnlimited: 1
   mainPool: 20
   subPool: 20

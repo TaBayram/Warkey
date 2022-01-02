@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class PlayerTracker
 {
@@ -25,9 +26,23 @@ public class PlayerTracker
     public float Experience { get => experience; }
     public int Level { get => level; }
     public int Gold { get => gold; }
-    public GameObject Hero { get => hero; set { hero = value; onHeroChanged?.Invoke(value); GameTracker.Instance.NetworkManager?.SendHero(hero.GetComponent<PhotonView>().ViewID); } }
+    public GameObject Hero { get => hero; 
+        set { 
+            hero = value; 
+            onHeroChanged?.Invoke(value); 
+            if(player == PhotonNetwork.LocalPlayer)
+                GameTracker.Instance.NetworkManager?.SendHero(hero.GetComponent<PhotonView>().ViewID); 
+        } 
+    }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
+
+    internal void Removed() {
+        if(hero != null && (PhotonNetwork.IsMasterClient && PhotonNetwork.LocalPlayer == player)) {
+            PhotonNetwork.Destroy(hero);
+        }
+    }
+
     public Player Player { get => player; set => player = value; }
     public int PrefabIndex { get => prefabIndex; }
     public GameObject HeroPrefab { get => heroPrefab; }
@@ -36,15 +51,8 @@ public class PlayerTracker
 
     public PlayerTracker(Player player) {
         this.player = player;
-        playerStorage = new PlayerStorage();
+        playerStorage = new PlayerStorage(player.NickName);
         LoadPlayer();
-    }
-
-    public GameObject CreatePlayerHero() {
-        if(hero != null) {
-            GameObject.Destroy(Hero);
-        }
-        return hero = GameObject.Instantiate<GameObject>(HeroesData.Instance.GetHeroByIndex(prefabIndex));
     }
 
     public void ChangeHeroByIndex(int index) {
