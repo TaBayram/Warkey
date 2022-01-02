@@ -31,6 +31,7 @@ public class AIEntity : Entity
     private bool playerLostSight;
     private bool playerIsAttackable;
 
+    [SerializeField] private bool getsKnocked = true;
     PhotonView photonView;
 
 
@@ -219,7 +220,7 @@ public class AIEntity : Entity
     }
 
     public void GetKnockedBack(Vector3 force) {
-        if (!photonView.IsMine) return;
+        if (!photonView.IsMine || !getsKnocked) return;
 
         navMeshAgent.enabled = false;
         var rigid = GetComponent<Rigidbody>();
@@ -228,11 +229,11 @@ public class AIEntity : Entity
         rigid.AddForce(force, ForceMode.Impulse);
         state = State.Knocked;
         weaponController?.Stop();
-        knockTime = 0.5f;
+        knockTime = 0.30f;
         StartCoroutine(StopKnock());
     }
     float knockTime;
-    const float knockbackDeceleration = 0.10f;
+    const float knockbackDeceleration = 0.08f;
     public IEnumerator StopKnock() {
         yield return new WaitForSeconds(0.01f);
         knockTime -= 0.01f;

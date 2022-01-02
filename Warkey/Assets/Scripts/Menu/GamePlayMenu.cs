@@ -70,7 +70,6 @@ public class GamePlayMenu : MonoBehaviour
             }
             else {
                 PhotonNetwork.LeaveRoom();
-                GameState.CurrentState = GameState.State.ingame;
                 SceneManager.LoadScene((int)LoadScene.Scenes.Lobby);
             }
         }
