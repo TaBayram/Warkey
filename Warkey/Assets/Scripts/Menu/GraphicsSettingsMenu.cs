@@ -10,6 +10,10 @@ public class GraphicsSettingsMenu : MonoBehaviour
     Resolution[] resolutions;
     GameObject toggleObj;
     public Toggle fullscreenToggle;
+
+    [SerializeField] private Slider FPS_Slider;
+    [SerializeField] private TextMeshProUGUI FPS_Value;
+
     void Start()
     {
         //Check the device's available resolutions and add them to the dropdown
@@ -45,8 +49,16 @@ public class GraphicsSettingsMenu : MonoBehaviour
         {
             fullscreenToggle.isOn = false;
         }
-    }
 
+    }
+    public void Awake()
+    {
+        FPS_Slider.onValueChanged.AddListener((v) =>
+        {
+            FPS_Value.text = v.ToString();
+            Application.targetFrameRate = (int)FPS_Slider.value;
+        });
+    }
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
@@ -63,4 +75,6 @@ public class GraphicsSettingsMenu : MonoBehaviour
     {
         Screen.fullScreen = isFullscreen;
     }
+
+
 }
