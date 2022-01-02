@@ -65,10 +65,12 @@ public class GamePlayMenu : MonoBehaviour
         }
         else {
             if (PhotonNetwork.IsMasterClient) {
+                GameState.CurrentState = GameState.State.ingame;
                 PhotonNetwork.LoadLevel((int)LoadScene.Scenes.Camp);
             }
             else {
                 PhotonNetwork.LeaveRoom();
+                GameState.CurrentState = GameState.State.ingame;
                 SceneManager.LoadScene((int)LoadScene.Scenes.Lobby);
             }
         }

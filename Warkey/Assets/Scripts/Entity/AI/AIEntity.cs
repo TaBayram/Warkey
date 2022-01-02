@@ -31,7 +31,7 @@ public class AIEntity : Entity
     private bool playerLostSight;
     private bool playerIsAttackable;
 
-    PhotonView PV;
+    PhotonView photonView;
 
 
     private float AttackRange { get { if (weaponController != null) return weaponController.AttackRange; else return aggresiveAISettings.attackRange; } }
@@ -50,22 +50,22 @@ public class AIEntity : Entity
     }
 
     private void Awake() {
-        PV = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         origin = transform.position;
 
         passiveAIBehaviour = new PassiveAIBehaviour(this, passiveAISettings);
         aggresiveAIBehaviour = new AggresiveAIBehaviour(this, aggresiveAISettings);
 
-
-        if (!IsOnNavMesh()) {
-            NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas);
-            if(navMeshHit.hit)
-                transform.position = (navMeshHit.position);
-        } 
     }
 
     protected override void Start() {
+        if (!IsOnNavMesh()) {
+            NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas);
+            if (navMeshHit.hit)
+                transform.position = (navMeshHit.position);
+        }
+
         CurrentState = originalPassiveState;
         Invoke(nameof(EnableNavMesh), 0.5f);
         base.Start();
@@ -75,8 +75,10 @@ public class AIEntity : Entity
         navMeshAgent.enabled = true;
     }
 
+    int notOnNavMeshErrorCount = 0;
+
     protected override void Update() {
-        if (!PV.IsMine) return;
+        if (!photonView.IsMine) return;
         if (IsDead || this.transform == null || !this.navMeshAgent.enabled) return;
         if (!IsOnNavMesh()) {
             NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 100f, NavMesh.AllAreas);
@@ -85,7 +87,11 @@ public class AIEntity : Entity
                 transform.position = (navMeshHit.position);
                 navMeshAgent.enabled = true;
             }
-                
+            notOnNavMeshErrorCount++;
+            if(notOnNavMeshErrorCount == 10) {
+                unit.TakeDamage(5000);
+            }
+
             return;
         }
 
@@ -213,7 +219,7 @@ public class AIEntity : Entity
     }
 
     public void GetKnockedBack(Vector3 force) {
-        if (!PV.IsMine) return;
+        if (!photonView.IsMine) return;
 
         navMeshAgent.enabled = false;
         var rigid = GetComponent<Rigidbody>();
