@@ -47,13 +47,6 @@ public class PlayerTracker
         LoadPlayer();
     }
 
-    public GameObject CreatePlayerHero() {
-        if(hero != null) {
-            GameObject.Destroy(Hero);
-        }
-        return hero = GameObject.Instantiate<GameObject>(HeroesData.Instance.GetHeroByIndex(prefabIndex));
-    }
-
     public void ChangeHeroByIndex(int index) {
         prefabIndex = index;
         heroPrefab = HeroesData.Instance.GetHeroByIndex(prefabIndex);

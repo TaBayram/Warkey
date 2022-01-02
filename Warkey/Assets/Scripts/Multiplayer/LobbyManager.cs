@@ -31,9 +31,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.IsMasterClient) {
             CreateNPCs();
         }
+        GameTracker.Instance.NetworkManager.onMasterChanged += NetworkManager_onMasterChanged;
+
         Invoke(nameof(SpawnPlayerHero), 1);
-        
         index = GameTracker.Instance.NetworkManager.playerIndex;
+    }
+
+    private void NetworkManager_onMasterChanged(PlayerTracker obj) {
+        foreach (GameObject gobject in spawnedNPCs) {
+            manager = gobject.GetComponent<DialogueManager>();
+            manager.player = obj.Hero;
+        }
     }
 
     private void Update() {
