@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4966029584428366324}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0.06065269, y: 9.663652, z: 0.33153087}
-  m_LocalScale: {x: 66.18323, y: 69.94311, z: 58.84}
+  m_LocalScale: {x: 47.76745, y: 43.67677, z: 42.467503}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3022769985651225549}
@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 3022769985651225549}
   - component: {fileID: 1106058060127782762}
   - component: {fileID: 5242685690119970710}
+  - component: {fileID: 7451527986720364278}
   m_Layer: 11
   m_Name: Broadleaf_Mobile_LOD0
   m_TagString: Untagged
@@ -418,3 +419,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &7451527986720364278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9044520127074755381}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 3.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.66, z: 0}
