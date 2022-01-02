@@ -14,8 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private List<Transform> playerSpawnLocations;
     [SerializeField] private List<Transform> npcSpawnLocations;
-
-    [HideInInspector] public List<GameObject> spawnedPlayers = new List<GameObject>();    
+  
     [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
 
     public AudioListener audioListener;
@@ -27,9 +26,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.CurrentRoom.IsOpen = true;
-
-        FindObjectOfType<NetworkManager>().onPlayerHeroReceived += LobyManager_onPlayerHeroReceived;
-
         dialogueMenuComponents = dialogueMenu.GetComponent<DialogueMenu>();
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient) {
@@ -37,11 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         Invoke(nameof(SpawnPlayerHero), 1);
         
-
-        foreach (Player player in PhotonNetwork.PlayerList) {
-            GameTracker.Instance.AddPlayer(player);
-        }
-        index = GameTracker.Instance.GetPlayerTrackers().Count -1;
+        index = GameTracker.Instance.NetworkManager.playerIndex;
     }
 
     private void Update() {
@@ -54,20 +46,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void LobyManager_onPlayerHeroReceived(PlayerTracker obj) {
-        spawnedPlayers.Add(obj.Hero);
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer) {
-        GameTracker.Instance.AddPlayer(newPlayer);
-    }    
 
     public void SpawnPlayerHero() {
         PlayerTracker player = GameTracker.Instance.GetPlayerTracker(PhotonNetwork.LocalPlayer);
         if(player != null) {
             audioListener.enabled = false;
             player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, playerSpawnLocations[index].position, Quaternion.identity);
-            spawnedPlayers.Add(player.Hero);
         }
 
         if (player.Player.IsMasterClient){
@@ -89,7 +73,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Vector3 position = availableLocations[randomIndex].position;
             availableLocations.RemoveAt(randomIndex);
             randomIndex = Random.Range(0, npcPrefabs.Length);
-            spawnedNPCs.Add(PhotonNetwork.Instantiate(npcPrefabs[randomIndex].name, position, Quaternion.identity));
+            spawnedNPCs.Add(PhotonNetwork.InstantiateRoomObject(npcPrefabs[randomIndex].name, position, Quaternion.identity));
         }
         
         foreach (GameObject gobject in spawnedNPCs) {

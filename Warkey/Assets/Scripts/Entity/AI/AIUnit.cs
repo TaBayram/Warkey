@@ -46,6 +46,7 @@ public class AIUnit : Unit
         if (State == IWidget.State.dead) return;
         animator.SetTrigger("hit");
         onDamageTaken?.Invoke(damage);
+        healthRegenCooldown = health.Cooldown;
         health.Current -= damage;
         if (health.Current <= 0)
         {

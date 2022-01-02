@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour,IWidget
     public event System.Action<IWidget.State> onStateChange;
 
     private float staminaRegenCooldown = 1f;
-    private float healthRegenCooldown = 1f;
+    protected float healthRegenCooldown = 1f;
 
     protected PhotonView photonView;
 
