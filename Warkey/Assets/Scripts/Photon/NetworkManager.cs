@@ -11,6 +11,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public event System.Action<PlayerTracker> onPlayerHeroReceived;
     public event System.Action<PlayerTracker> onPlayerLeft;
+    public event System.Action<PlayerTracker> onPlayerJoin;
+    public event System.Action<PlayerTracker> onMasterChanged;
+
+    public int playerIndex = 0;
 
     private void Start() {
         gameTracker.NetworkManager = this;
@@ -18,11 +22,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(this.gameObject);
     }
 
+    public override void OnJoinedRoom() {
+        foreach (Player player in PhotonNetwork.PlayerList) {
+            GameTracker.Instance.AddPlayer(player);
+        }
+        playerIndex = GameTracker.Instance.GetPlayerTrackers().Count - 1;
+    }
+
+
+    public override void OnPlayerEnteredRoom(Player newPlayer) {
+        GameTracker.Instance.AddPlayer(newPlayer);
+        onPlayerJoin?.Invoke(GameTracker.Instance.GetPlayerTracker(newPlayer));
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer) {
         gameTracker.RemovePlayer(otherPlayer);
+        gameTracker.RemoveInactive();
         onPlayerLeft?.Invoke(GameTracker.Instance.GetPlayerTracker(otherPlayer));
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient) {
+        onMasterChanged?.Invoke(GameTracker.Instance.GetPlayerTracker(newMasterClient));
+    }
+
 
     public void SendHero(int viewID) {
         this.photonView.RPC(nameof(BindHeroToPlayer), RpcTarget.OthersBuffered, viewID);
