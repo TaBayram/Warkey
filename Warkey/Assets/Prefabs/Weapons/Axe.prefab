@@ -190,7 +190,7 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 65536
-  attackSpeed: 1
+  attackSpeed: 0.8
   baseDamage: 20
   maxTargetPerAttack: 0
   attacks:
