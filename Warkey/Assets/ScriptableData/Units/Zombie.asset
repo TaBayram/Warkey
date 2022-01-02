@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   unitName: Default
-  health: 150
+  health: 50
   healthRegen: 2
   healthCooldown: 1
   stamina: 100

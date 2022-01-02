@@ -172,10 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b132ef56a29af764baa85750ebf5a214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bornClip: {fileID: 8300000, guid: 45c128dc3985c174aa17a8183c384d06, type: 3}
-  deathClip: {fileID: 8300000, guid: 6dffc2da625177a4f8310edc925d443f, type: 3}
-  attackClip: {fileID: 8300000, guid: 5946470c4bd21c1458a21baac86612c0, type: 3}
-  hitClip: {fileID: 8300000, guid: ef4ac69665943c347a1085452ac692f8, type: 3}
+  bornClip: {fileID: 8300000, guid: 57506f7e540ab8845a83eeb899a0c767, type: 3}
+  deathClip: {fileID: 8300000, guid: 153593ff96491cf4c8b51205ecb80bd5, type: 3}
+  attackClip: {fileID: 8300000, guid: 44a206900e14f794bb5192996a5ce9ff, type: 3}
+  hitClip: {fileID: 8300000, guid: df0a7173dda341043adf4c1989fa0d30, type: 3}
 --- !u!1 &7514088342993138541
 GameObject:
   m_ObjectHideFlags: 0
