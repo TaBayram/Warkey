@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     public AudioSource audioSource;
 
-    [HideInInspector] public GameObject player;
+    private GameObject player;
     [HideInInspector] public GameObject dialogueUI;
 
     [HideInInspector] public Text npcName;
@@ -32,9 +32,12 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] Animator animator;
 
+    private PhotonView photonView;
+
     // Start is called before the first frame update
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit raycastHit, 100f, 1 << LayerMask.NameToLayer("Ground"))) {
             transform.position = raycastHit.point;
         }
@@ -43,12 +46,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Update() {
         if (player == null) return;
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!PhotonNetwork.IsMasterClient || !photonView.IsMine) return;
 
         if (!audioSource.isPlaying) {
             animator.SetInteger("talkState", 0);
         }
-        
+        player = GameTracker.Instance.GetLocalPlayerTracker().Hero;
+
+
         distance = (player.transform.position- this.transform.position).magnitude;
         if (distance <= 2.5f)
         {

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,8 +63,16 @@ public class GamePlayMenu : MonoBehaviour
         if(quitGame) {
             Application.Quit();
         }
-        else
-            SceneManager.LoadScene(1);
+        else {
+            if (PhotonNetwork.IsMasterClient) {
+                PhotonNetwork.LoadLevel((int)LoadScene.Scenes.Camp);
+            }
+            else {
+                PhotonNetwork.LeaveRoom();
+                SceneManager.LoadScene((int)LoadScene.Scenes.Lobby);
+            }
+        }
+            
     }
 }
 

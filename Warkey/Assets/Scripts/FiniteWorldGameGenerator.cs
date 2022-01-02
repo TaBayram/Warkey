@@ -108,6 +108,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
 
         var players = GameTracker.Instance.GetPlayerTrackers();
         var player = players[Random.Range(0, players.Count)];
+        Debug.Log("Spawns for " + player.Nickname);
         Vector3 position = FindPosition(player.Hero.transform.position, entitySettings.spawnDistance, 10);
         GameObject enemy = InstantiateRoomObject(entitySettings.prefab.name, position);
         
@@ -160,7 +161,7 @@ public class FiniteWorldGameGenerator : MonoBehaviour
             if (iteration > 0)
                 return FindPosition(position, distance, iteration - 1);
             else
-                return transform.position;
+                return position;
         }
     }
 

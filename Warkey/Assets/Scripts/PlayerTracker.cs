@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class PlayerTracker
 {
@@ -35,6 +36,13 @@ public class PlayerTracker
     }
     public string Nickname { get => player.NickName; set => player.NickName = value; }
     public bool IsLocal { get => player.IsLocal; }
+
+    internal void Removed() {
+        if(hero != null && (PhotonNetwork.IsMasterClient && PhotonNetwork.LocalPlayer == player)) {
+            PhotonNetwork.Destroy(hero);
+        }
+    }
+
     public Player Player { get => player; set => player = value; }
     public int PrefabIndex { get => prefabIndex; }
     public GameObject HeroPrefab { get => heroPrefab; }

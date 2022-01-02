@@ -39,6 +39,7 @@ public class GameTracker
     public void RemovePlayer(Player player) {
         PlayerTracker exists = GetPlayerTracker(player);
         if ((exists) != null) return;
+        exists.Removed();
         playerTrackers.Remove(exists);
     }
 
