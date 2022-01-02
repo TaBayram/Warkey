@@ -121,7 +121,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _texturesCount: 1
-    - _texturesScale: 10
+    - _texturesScale: 5
     - _texturesStrength: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
