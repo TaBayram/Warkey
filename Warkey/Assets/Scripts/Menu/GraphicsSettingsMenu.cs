@@ -50,6 +50,9 @@ public class GraphicsSettingsMenu : MonoBehaviour
             fullscreenToggle.isOn = false;
         }
 
+        FPS_Value.text = "" + Application.targetFrameRate;
+        FPS_Slider.value = Application.targetFrameRate;
+
     }
     public void Awake()
     {
@@ -57,6 +60,7 @@ public class GraphicsSettingsMenu : MonoBehaviour
         {
             FPS_Value.text = v.ToString();
             Application.targetFrameRate = (int)FPS_Slider.value;
+            PlayerPrefs.SetInt("FrameRate", Application.targetFrameRate);
         });
     }
     public void SetResolution(int resolutionIndex)

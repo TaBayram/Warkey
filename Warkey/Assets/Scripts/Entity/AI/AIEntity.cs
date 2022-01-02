@@ -9,7 +9,7 @@ using Photon.Pun;
 public class AIEntity : Entity
 {
     private State state  = State.Wander;
-    private State originalPassiveState;
+    [SerializeField] private State originalPassiveState = State.Wander;
     private Movement.State movementState;
 
     public PassiveAISettings passiveAISettings;
@@ -61,21 +61,31 @@ public class AIEntity : Entity
         if (!IsOnNavMesh()) {
             NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas);
             if(navMeshHit.hit)
-                navMeshAgent.Warp(navMeshHit.position);
+                transform.position = (navMeshHit.position);
         } 
     }
 
     protected override void Start() {
-        CurrentState = State.Wander;
+        CurrentState = originalPassiveState;
+        Invoke(nameof(EnableNavMesh), 0.5f);
         base.Start();
     }
+
+    private void EnableNavMesh() {
+        navMeshAgent.enabled = true;
+    }
+
     protected override void Update() {
         if (!PV.IsMine) return;
-        if (IsDead || this.transform == null) return;
+        if (IsDead || this.transform == null || !this.navMeshAgent.enabled) return;
         if (!IsOnNavMesh()) {
             NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 100f, NavMesh.AllAreas);
-            if (navMeshHit.hit)
-                navMeshAgent.Warp(navMeshHit.position);
+            if (navMeshHit.hit) {
+                navMeshAgent.enabled = false;
+                transform.position = (navMeshHit.position);
+                navMeshAgent.enabled = true;
+            }
+                
             return;
         }
 
@@ -211,6 +221,7 @@ public class AIEntity : Entity
 
         rigid.AddForce(force, ForceMode.Impulse);
         state = State.Knocked;
+        weaponController?.Stop();
         knockTime = 0.5f;
         StartCoroutine(StopKnock());
     }

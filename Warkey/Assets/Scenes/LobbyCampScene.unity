@@ -2984,6 +2984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 923530848}
+  audioMixer: {fileID: 24100000, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
 --- !u!4 &862325033
 Transform:
   m_ObjectHideFlags: 0

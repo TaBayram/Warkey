@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb63b1c48247ba84ba3c1557e08e9ee6, type: 3}
-  m_Name: DefaultPassive
+  m_Name: DefaultPassive 2
   m_EditorClassIdentifier: 
-  wanderRange: 10
-  wanderStopTime: 0.5
+  wanderRange: 15
+  wanderStopTime: 1
   patrolRange: 30
   patrolStopTime: 1
   sightRange: 20
-  loseSightRange: 30
+  loseSightRange: 40
   fleeRange: 2

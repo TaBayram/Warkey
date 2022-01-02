@@ -293,9 +293,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.4
-  m_Height: 1.9
+  m_Height: 1.86
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.05, z: 0}
 --- !u!54 &2272787223927059381
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -319,14 +319,14 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7958137458794860659}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 8
-  m_Acceleration: 8
+  m_Acceleration: 4
   avoidancePriority: 5
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 270
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -351,7 +351,8 @@ MonoBehaviour:
   weaponController: {fileID: 1327399390864704522}
   animationController: {fileID: 1580791847241293630}
   velocity: {x: 0, y: 0, z: 0}
-  passiveAISettings: {fileID: 11400000, guid: 16452b592770c074a88d02f91e731a86, type: 2}
+  originalPassiveState: 1
+  passiveAISettings: {fileID: 11400000, guid: 72a3b018fcaae894f9d25c1127889017, type: 2}
   aggresiveAISettings: {fileID: 11400000, guid: 3228aa129856fbe42823d95cc9d3fc74, type: 2}
   navMeshAgent: {fileID: 7258323911612345828}
   groundLayer:
@@ -790,7 +791,7 @@ AudioSource:
   m_GameObject: {fileID: 8171913338624143107}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.05

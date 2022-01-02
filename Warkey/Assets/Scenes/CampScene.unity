@@ -7624,12 +7624,15 @@ MonoBehaviour:
     E
     to Interact with NPC
 
-    Mouse Scrool to Change Dialogue Response
+    Mouse Scroll to Change Dialogue Response
 
     Mouse
     Left Click to Attack
 
-    Mouse Right Click to Defense or Aim'
+    Mouse Right Click to Defense or Aim
+
+    Mouse Scroll
+    Button to Change Camera Zoom'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a7f4f5045a6756438dd3532cb07caf1, type: 2}
   m_sharedMaterial: {fileID: 6288108880278884896, guid: 0a7f4f5045a6756438dd3532cb07caf1, type: 2}
