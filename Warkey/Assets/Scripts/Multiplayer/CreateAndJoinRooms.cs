@@ -33,6 +33,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (!IsNicknameValid()) return;
 
         errorText.gameObject.SetActive(false);
+        PhotonNetwork.LocalPlayer.NickName = nicknameInput.text;
         PhotonNetwork.CreateRoom(createInput.text, new Photon.Realtime.RoomOptions { MaxPlayers = 4 });        
     }
 
@@ -41,6 +42,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (!IsNicknameValid()) return;
 
         errorText.gameObject.SetActive(false);
+        PhotonNetwork.LocalPlayer.NickName = nicknameInput.text;
         PhotonNetwork.JoinRoom(joinInput.text);
     }
 
@@ -70,8 +72,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("CampScene");
-        PhotonNetwork.LocalPlayer.NickName = nicknameInput.text;
+        PhotonNetwork.LoadLevel("CampScene");   
         GameTracker.Instance.AddPlayer(PhotonNetwork.LocalPlayer);
     }
 

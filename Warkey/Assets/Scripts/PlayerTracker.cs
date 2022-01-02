@@ -36,7 +36,7 @@ public class PlayerTracker
 
     public PlayerTracker(Player player) {
         this.player = player;
-        playerStorage = new PlayerStorage();
+        playerStorage = new PlayerStorage(player.NickName);
         LoadPlayer();
     }
 
