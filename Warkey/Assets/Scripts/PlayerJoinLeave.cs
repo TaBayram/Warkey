@@ -16,14 +16,14 @@ public class PlayerJoinLeave : MonoBehaviour
     }
 
     private void NetworkManager_onMasterChanged(PlayerTracker obj) {
-        text.text += (obj.Player.NickName + " is the new host!");
+        text.text += "\n" + (obj.Player.NickName + " is the new host!");
     }
 
     private void NetworkManager_onPlayerJoin(PlayerTracker obj) {
-        text.text += (obj.Player.NickName +" has joined!");
+        text.text += "\n" + (obj.Player.NickName +" has joined!");
     }
 
     private void NetworkManager_onPlayerLeft(PlayerTracker obj) {
-        text.text += (obj.Player.NickName + " has left!");
+        text.text += "\n" + (obj.Player.NickName + " has left!");
     }
 }
