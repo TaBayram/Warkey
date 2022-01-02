@@ -322,7 +322,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 5
   m_AngularSpeed: 120
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153aa35c06b18c14980ea966303ee45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widgetAudio: {fileID: 0}
+  widgetAudio: {fileID: 2269527320993172786}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

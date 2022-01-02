@@ -172,7 +172,7 @@ public static class PathGenerator
                 float sScore = (pathSettings.maxSteepChange - steepDifference)*5;
                 float hScore = Mathf.Min((height - pathSettings.height.min),(pathSettings.height.max - height));
 
-                if (sScore+hScore > topCandidate.steepScore + topCandidate.heightScore) {
+                if (hScore > topCandidate.heightScore) {
                     topCandidate.point = candidate;
                     topCandidate.steepScore = sScore;
                     topCandidate.heightScore = hScore;

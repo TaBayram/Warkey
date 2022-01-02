@@ -19,6 +19,7 @@ MonoBehaviour:
     sampleCountBeforeRejection: 1000
   objectSettings:
   - enabled: 1
+    seedAdjustment: 1
     gameObjects:
     - {fileID: 666778168186921404, guid: 90b18d6e77a59684993249af87bccdff, type: 3}
     - {fileID: 666778168186921404, guid: ffa641ef9ae547948a51e84cddcd2a8b, type: 3}
@@ -44,13 +45,14 @@ MonoBehaviour:
     minThreshold: 0.25
     maxThreshold: 2
   - enabled: 1
+    seedAdjustment: 5
     gameObjects:
     - {fileID: 7958137458794860659, guid: 206baadb900c5ff48ad505c69a938c84, type: 3}
     - {fileID: 7958137458794860659, guid: fae1c724a4de171499990953952336db, type: 3}
-    spawnLimit: 5
+    spawnLimit: 10
     isNetworkObject: 1
     handleVisibility: 1
-    visibilityLODIndex: 1
+    visibilityLODIndex: 0
     needsNavMesh: 1
     useNoise: 0
     noiseSettings:
@@ -64,6 +66,6 @@ MonoBehaviour:
     noiseMin: 0
     noiseMax: 0
     blockRadius: 50
-    elevation: 1
+    elevation: 5
     minThreshold: 0.25
     maxThreshold: 1.5

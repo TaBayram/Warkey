@@ -141,10 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b132ef56a29af764baa85750ebf5a214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bornClip: {fileID: 0}
-  deathClip: {fileID: 8300000, guid: b9682649b9981684ea7a6f3e178e31ce, type: 3}
-  attackClip: {fileID: 0}
-  hitClip: {fileID: 0}
+  bornClip: {fileID: 8300000, guid: ee27a058800bcfc45a121c39148a8303, type: 3}
+  deathClip: {fileID: 8300000, guid: 95166d3775b18e64fa594bd324d649fb, type: 3}
+  attackClip: {fileID: 8300000, guid: c540627af7cc56441b4e74a36f60b93e, type: 3}
+  hitClip: {fileID: 8300000, guid: 3b022064565f41c438f86bf26c75f0ae, type: 3}
 --- !u!1 &7514088342993138541
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,8 +290,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 6
-  m_Acceleration: 16
+  m_Speed: 15
+  m_Acceleration: 15
   avoidancePriority: 5
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153aa35c06b18c14980ea966303ee45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widgetAudio: {fileID: 0}
+  widgetAudio: {fileID: 2269527320993172786}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

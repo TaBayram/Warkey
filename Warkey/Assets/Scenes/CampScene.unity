@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGameMenuUI: {fileID: 1564732460}
+  quitGame: 1
 --- !u!4 &62795294 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4067346649098327064, guid: 905bd7758e4aa54429c07fbf6ba7b3c3, type: 3}
@@ -5693,6 +5694,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resume
       objectReference: {fileID: 0}
+    - target: {fileID: 8753657836274480310, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 37324432}
+    - target: {fileID: 8753657836274480310, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
     - target: {fileID: 8753657836487931602, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5981,7 +5990,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600515796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90.9, y: 0, z: 71.68}
+  m_LocalPosition: {x: 90.9, y: 0, z: 80.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8190,6 +8199,7 @@ MonoBehaviour:
   npcPrefabs:
   - {fileID: 3849744031446833251, guid: 3e12a4e179bf8ba4399291127575b884, type: 3}
   - {fileID: 3849744031446833251, guid: f6272284a84a4c54b81464ef10dbe214, type: 3}
+  - {fileID: 3849744031446833251, guid: 201d40360722de44d949e6f1f385b93e, type: 3}
   dialogueMenu: {fileID: 1264459178}
   playerSpawnLocations:
   - {fileID: 628509919}

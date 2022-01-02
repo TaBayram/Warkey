@@ -9,6 +9,8 @@ public class GamePlayMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject inGameMenuUI;
     GameObject settingsMenu, audioSettingsMenu, graphicSettingsMenu;
+
+    public bool quitGame = false;
     void Start()
     {
         settingsMenu = GameObject.Find("settingsMenu");
@@ -57,7 +59,7 @@ public class GamePlayMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 1) {
+        if(quitGame) {
             Application.Quit();
         }
         else

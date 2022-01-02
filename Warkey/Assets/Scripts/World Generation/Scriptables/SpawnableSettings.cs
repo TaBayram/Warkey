@@ -16,6 +16,7 @@ public class SpawnableSettings : UpdateableData
 public class ObjectSettings
 {
     public bool enabled;
+    public int seedAdjustment;
     public GameObject[] gameObjects;
     public int spawnLimit;
     public bool isNetworkObject;
