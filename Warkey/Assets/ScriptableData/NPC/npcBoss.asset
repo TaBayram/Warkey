@@ -12,47 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c055842b6b76ae64db528e90e8d27d8e, type: 3}
   m_Name: npcBoss
   m_EditorClassIdentifier: 
-  npcName: Ordome
+  npcName: Zehzat
   nPCDialogMessages:
   - dialogMessage:
-      message: May the god protect you warrior!
-      audio: {fileID: 8300000, guid: 3e17aee32cfb56246aef9902e9e41066, type: 3}
+      message: Good day to you!
+      audio: {fileID: 8300000, guid: 0bbf4c87735cb544abb16dfea15785df, type: 3}
     playerDialogIndexes: 0000000003000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
-      message: 'Yes, the Restless Sonmez has destroyed my house. Now they are coming
-        to this camp! Please help us! '
-      audio: {fileID: 8300000, guid: adef4bea50918b24f9e0437df256b7eb, type: 3}
+      message: If I may ask, can you help me?
+      audio: {fileID: 8300000, guid: 7f7c0d96cf7b3f54bb2455de3de0bc24, type: 3}
     playerDialogIndexes: 0100000002000000
     isExitMessage: 0
     isQuestAccepter: 0
   - dialogMessage:
-      message: Thank you! You must act now.
-      audio: {fileID: 8300000, guid: 2a77447e4e4728b43b904a0a183d7f08, type: 3}
+      message: The Restless Sonmez has taken my loot, you need to take it back.
+      audio: {fileID: 8300000, guid: 3d12a801d7fbe1b409933324a165b9c7, type: 3}
     playerDialogIndexes: 
     isExitMessage: 0
     isQuestAccepter: 1
   - dialogMessage:
-      message: Okay sir, May the God protect you.
-      audio: {fileID: 8300000, guid: 7685c97360415af4da080375b803e1cc, type: 3}
+      message: I see, good day
+      audio: {fileID: 8300000, guid: e93cc54e813dc6449809f18d72794787, type: 3}
     playerDialogIndexes: 
     isExitMessage: 1
     isQuestAccepter: 0
   playerDialogMessages:
   - dialogMessage:
-      message: You look in trouble, old man.
+      message: To you too.
       audio: {fileID: 0}
     npcDialogIndex: 1
   - dialogMessage:
-      message: Help is on the way.
+      message: Yes, what is it?
       audio: {fileID: 0}
     npcDialogIndex: 2
   - dialogMessage:
-      message: I can't do it right now.
+      message: No, sorry.
       audio: {fileID: 0}
     npcDialogIndex: 3
   - dialogMessage:
-      message: Goodbye
+      message: Bye.
       audio: {fileID: 0}
     npcDialogIndex: 3

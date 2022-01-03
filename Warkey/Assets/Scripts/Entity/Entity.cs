@@ -46,7 +46,7 @@ public class Entity : MonoBehaviour
         animationController?.StateChange(obj);
 
         if (movement == null) return;
-        if(obj == Weapon.State.defending) {
+        if(obj == Weapon.State.defending || (movement.GetType() == typeof(PlayerMovementThird) && obj == Weapon.State.attacking)) {
             movement.isRotating = true;
             unit.IsBlocking = true;
         }

@@ -49,7 +49,7 @@ public class WeaponController : MonoBehaviour
         equippedWeapon.onStateChange += EquippedWeapon_onStateChange;
         equippedWeapon.onAnimationChangeRequest += EquippedWeapon_onAnimationChangeRequest;
         equippedWeapon.onRotateRequest += EquippedWeapon_onRotateRequest;
-        equippedWeapon.onAttack += EquippedWeapon_onAttack; ;
+        equippedWeapon.onAttack += EquippedWeapon_onAttack;
 		equippedWeapon.enemyLayer = enemyLayer;
 		equippedWeapon.parent = transform;
 
@@ -78,6 +78,12 @@ public class WeaponController : MonoBehaviour
     public void Attack() {
 		if (equippedWeapon != null) {
 			equippedWeapon.Attack(GetComponent<Entity>().velocity);
+		}
+	}
+
+	public void Stop() {
+		if (equippedWeapon != null) {
+			equippedWeapon.Stop();
 		}
 	}
 

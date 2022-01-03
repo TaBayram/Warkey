@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 2.5
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 0ff3aa777f2ccae4dbada9366130d56b, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 6ffc18c9d70db394cae6ad1c45b60dc3, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1064,10 +1064,6 @@ PrefabInstance:
       propertyPath: meshSettings
       value: 
       objectReference: {fileID: 11400000, guid: a8ef0b264506adf4cbd9ea9a44faaf4c, type: 2}
-    - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
-      propertyPath: pathSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: 4fafaf54a5a60e2479379fec81290e1e, type: 2}
     - target: {fileID: 5991182829935078792, guid: 698e16aaf440a1648a7fc9d834ee5696, type: 3}
       propertyPath: groundSettings
       value: 

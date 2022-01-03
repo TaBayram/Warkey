@@ -124,7 +124,7 @@ MonoBehaviour:
     randomizeYRotation: 1
   - enabled: 1
     gameObject: {fileID: 2909564598486185049, guid: 89256dbf4fc400848a8fb7266056aca5, type: 3}
-    useNoise: 0
+    useNoise: 1
     noiseSettings:
       normalizeMode: 0
       scale: 30
@@ -133,12 +133,12 @@ MonoBehaviour:
       lacunarity: 2
       seed: 4
       offset: {x: 0, y: 0}
-    noiseMin: 0.127
-    noiseMax: 0.316
-    blockRadius: 100
+    noiseMin: 0
+    noiseMax: 0.987
+    blockRadius: 75
     elevation: 150
     minThreshold: 0.38
-    maxThreshold: 2
+    maxThreshold: 1.54
     lessenTowardsEdges: 1
     lessenScale: 0.442
     jitterScale: 0

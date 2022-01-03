@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGameMenuUI: {fileID: 1564732460}
+  quitGame: 1
 --- !u!4 &62795294 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4067346649098327064, guid: 905bd7758e4aa54429c07fbf6ba7b3c3, type: 3}
@@ -3470,7 +3471,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -4723739646925660918, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 31d15c3aa31654d47b184280421af645, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.117
+  m_Volume: 0.087
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5585,6 +5586,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 37324431}
     m_Modifications:
+    - target: {fileID: 1651173840800570155, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037808708316747051, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8753657835823704576, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5692,6 +5701,14 @@ PrefabInstance:
     - target: {fileID: 8753657836163167858, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753657836274480310, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 37324432}
+    - target: {fileID: 8753657836274480310, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 8753657836487931602, guid: b2d98595a40cf91489e334f22bed2b3f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5937,7 +5954,6 @@ GameObject:
   - component: {fileID: 1600515800}
   - component: {fileID: 1600515799}
   - component: {fileID: 1600515798}
-  - component: {fileID: 1600515797}
   m_Layer: 0
   m_Name: PlayerJoinAndLeave
   m_TagString: Untagged
@@ -5945,26 +5961,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1600515797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600515796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5867a53c8db0e6745818285bb6b6e1b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WindowRect:
-    serializedVersion: 2
-    x: 0
-    y: 100
-    width: 120
-    height: 100
-  WindowId: 101
-  Visible: 1
 --- !u!114 &1600515798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6002,7 +5998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600515796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90.9, y: 0, z: 71.68}
+  m_LocalPosition: {x: 90.9, y: 0, z: 80.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7628,12 +7624,15 @@ MonoBehaviour:
     E
     to Interact with NPC
 
-    Mouse Scrool to Change Dialogue Response
+    Mouse Scroll to Change Dialogue Response
 
     Mouse
     Left Click to Attack
 
-    Mouse Right Click to Defense or Aim'
+    Mouse Right Click to Defense or Aim
+
+    Mouse Scroll
+    Button to Change Camera Zoom'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a7f4f5045a6756438dd3532cb07caf1, type: 2}
   m_sharedMaterial: {fileID: 6288108880278884896, guid: 0a7f4f5045a6756438dd3532cb07caf1, type: 2}
@@ -8211,6 +8210,7 @@ MonoBehaviour:
   npcPrefabs:
   - {fileID: 3849744031446833251, guid: 3e12a4e179bf8ba4399291127575b884, type: 3}
   - {fileID: 3849744031446833251, guid: f6272284a84a4c54b81464ef10dbe214, type: 3}
+  - {fileID: 3849744031446833251, guid: 201d40360722de44d949e6f1f385b93e, type: 3}
   dialogueMenu: {fileID: 1264459178}
   playerSpawnLocations:
   - {fileID: 628509919}

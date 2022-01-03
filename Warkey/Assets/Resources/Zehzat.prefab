@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5962a9c99f1b3da409c717f8f9aa7641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 11400000, guid: fa84f6cdb92f0a4438f26d8a30500a3a, type: 2}
+  npc: {fileID: 11400000, guid: 5f53ad0afa7896d41aabcdab2f30676e, type: 2}
   audioSource: {fileID: 2216209799177048812}
   player: {fileID: 0}
   dialogueUI: {fileID: 0}

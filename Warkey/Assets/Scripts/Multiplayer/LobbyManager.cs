@@ -31,10 +31,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.IsMasterClient) {
             CreateNPCs();
         }
+
         Invoke(nameof(SpawnPlayerHero), 1);
-        
         index = GameTracker.Instance.NetworkManager.playerIndex;
     }
+
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Y) && !isSceneChanging) {
@@ -52,14 +53,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(player != null) {
             audioListener.enabled = false;
             player.Hero = PhotonNetwork.Instantiate(player.HeroPrefab.name, playerSpawnLocations[index].position, Quaternion.identity);
-        }
-
-        if (player.Player.IsMasterClient){
-            foreach (GameObject gobject in spawnedNPCs)
-            {
-                manager = gobject.GetComponent<DialogueManager>();
-                manager.player = player.Hero;
-            }
         }
     }
  

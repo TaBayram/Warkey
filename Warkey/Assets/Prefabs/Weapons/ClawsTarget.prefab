@@ -60,7 +60,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackSpeed: 1
-  baseDamage: 5
+  baseDamage: 15
   maxTargetPerAttack: 0
   attacks:
   - animationClip: {fileID: -203655887218126122, guid: eb2873aac34117b41a28552353fee1e6, type: 3}
@@ -126,9 +126,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6954896212873219610, guid: 065e65586da125948a7035bb851eeb9c, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 340ec8a76e0819e45b6f0c33f7669411, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 698146bdfee408f4ebfad1de9cc5cca9, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -151,6 +151,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2334621
+      value: 0.31837618
+      inSlope: -1.4720641
+      outSlope: -1.4720641
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
