@@ -45,13 +45,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void Update() {
-        if (player == null) return;
         if (!PhotonNetwork.IsMasterClient || !photonView.IsMine) return;
-
+        player = GameTracker.Instance.GetLocalPlayerTracker().Hero;
+        if (player == null) return;
         if (!audioSource.isPlaying) {
             animator.SetInteger("talkState", 0);
         }
-        player = GameTracker.Instance.GetLocalPlayerTracker().Hero;
 
 
         distance = (player.transform.position- this.transform.position).magnitude;

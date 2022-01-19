@@ -15,7 +15,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private List<Transform> playerSpawnLocations;
     [SerializeField] private List<Transform> npcSpawnLocations;
   
-    [HideInInspector] public List<GameObject> spawnedNPCs = new List<GameObject>();
+    public List<GameObject> spawnedNPCs = new List<GameObject>();
 
     public AudioListener audioListener;
 
@@ -34,6 +34,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         Invoke(nameof(SpawnPlayerHero), 1);
         index = GameTracker.Instance.NetworkManager.playerIndex;
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient) {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient) {
+            CreateNPCs();
+        }
     }
 
 
@@ -66,7 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Vector3 position = availableLocations[randomIndex].position;
             availableLocations.RemoveAt(randomIndex);
             randomIndex = Random.Range(0, npcPrefabs.Length);
-            spawnedNPCs.Add(PhotonNetwork.InstantiateRoomObject(npcPrefabs[randomIndex].name, position, Quaternion.identity));
+            spawnedNPCs.Add(PhotonNetwork.Instantiate(npcPrefabs[randomIndex].name, position, Quaternion.identity));
         }
         
         foreach (GameObject gobject in spawnedNPCs) {

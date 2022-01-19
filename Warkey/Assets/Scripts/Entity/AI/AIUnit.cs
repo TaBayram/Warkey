@@ -10,7 +10,7 @@ public class AIUnit : Unit
     public RagdollManager ragdollManager;
 
     public new event System.Action<float> onDamageTaken;
-
+    [SerializeField] private bool getsHurt = true;
     private new void Start() {
         base.Start();
 
@@ -44,7 +44,8 @@ public class AIUnit : Unit
     void RPC_TakeDamage(float damage)
     {
         if (State == IWidget.State.dead) return;
-        animator.SetTrigger("hit");
+        if(getsHurt)
+            animator.SetTrigger("hit");
         onDamageTaken?.Invoke(damage);
         healthRegenCooldown = health.Cooldown;
         health.Current -= damage;

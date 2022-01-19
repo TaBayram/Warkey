@@ -361,6 +361,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  getsKnocked: 1
 --- !u!114 &1580791847241293630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +398,7 @@ MonoBehaviour:
   widgetAudio: {fileID: 2269527320993172786}
   animator: {fileID: 3225575254289706947}
   ragdollManager: {fileID: 3208236918722676532}
+  getsHurt: 1
 --- !u!114 &1327399390864704522
 MonoBehaviour:
   m_ObjectHideFlags: 0

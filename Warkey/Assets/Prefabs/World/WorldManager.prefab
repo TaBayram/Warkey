@@ -360,13 +360,13 @@ MonoBehaviour:
     enviromentLOD: 2
     LODInfos:
     - lod: 0
-      visibleDistanceThreshold: 200
+      visibleDistanceThreshold: 150
     - lod: 1
-      visibleDistanceThreshold: 400
+      visibleDistanceThreshold: 300
     - lod: 2
-      visibleDistanceThreshold: 600
+      visibleDistanceThreshold: 450
     - lod: 4
-      visibleDistanceThreshold: 5000
+      visibleDistanceThreshold: 2000
   navMeshSurface: {fileID: 842496206912825782}
   viewer: {fileID: 0}
   FiniteWorldGameGenerator: {fileID: 4797322105704976725}

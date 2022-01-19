@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npc: {fileID: 11400000, guid: 111b0ce69d63ec840a3d39c466f13ae7, type: 2}
   audioSource: {fileID: 1207002364834686951}
-  player: {fileID: 0}
   dialogueUI: {fileID: 0}
   npcName: {fileID: 0}
   npcDialogueBox: {fileID: 0}

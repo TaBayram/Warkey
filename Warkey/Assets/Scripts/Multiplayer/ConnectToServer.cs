@@ -16,8 +16,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     void Start()
     {
         Application.targetFrameRate =  PlayerPrefs.GetInt("FrameRate", 60);
-        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 0));
-        audioMixer.SetFloat("GameplayVolume", PlayerPrefs.GetFloat("GameplayVolume", 0));
+        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 0.5f));
+        audioMixer.SetFloat("GameplayVolume", PlayerPrefs.GetFloat("GameplayVolume", 0.5f));
 
         createAndJoinRooms = GetComponent<CreateAndJoinRooms>();
         PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;

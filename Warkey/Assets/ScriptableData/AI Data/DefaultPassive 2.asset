@@ -16,6 +16,6 @@ MonoBehaviour:
   wanderStopTime: 1
   patrolRange: 30
   patrolStopTime: 1
-  sightRange: 20
-  loseSightRange: 40
+  sightRange: 35
+  loseSightRange: 60
   fleeRange: 2
